@@ -1,26 +1,78 @@
 import React, { Component } from "react";
 
 import Layout from "../../components/Layout";
-// import CharacterCard from "../../components/CharacterCard";
+import CharacterCard from "../../components/CharacterCard";
+
+import {getEpisode, getUrl} from "../../api";
 
 class Episode extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
-    // episode: null,
-    // characters: [],
-    // hasLoaded: false,
-    // hasError: false,
-    // errorMessage: null,
+    this.state = {
+      episode: null,
+      characters: [],
+      hasLoaded: false,
+      hasError: false,
+      errorMessage: null,
+    };
+
+    this.loadEpisode = this.loadEpisode.bind(this);
+  }
+
+  componentDidMount() {
+    console.log(this.props);
+    // If the check previus console.log we will see that on match property we have the ID information for the episode
+    const { match } = this.props;
+    const { episodeId } = match.params;
+
+    this.loadEpisode(episodeId);
+  }
+
+  async loadEpisode(episodeId) {
+    try {
+      const { data } = await getEpisode(episodeId);
+    } catch (error) {
+      this.setState({
+        hasLoaded: true,
+        hasError: true,
+        errorMessage: error.message
+      });
+    }
   }
 
   render() {
+    const {
+      episode,
+      characters,
+      hasLoaded,
+      hasError,
+      errorMessage
+    } = this.state;
     return (
       <Layout>
         <section className="row">
-          <div className="col col-12">
-            {/* {characters.map((character) => (
+          {!hasLoaded && (
+            <div className="col col-12">
+              <p>Episode loading...</p>
+            </div>
+          )}
+          {hasLoaded && (
+            <div className="col col-12">
+              <p>Episode loaded!</p>
+            </div>
+          )}
+          {hasError && (
+            <div className="col col-12">
+              <p>Episode error...</p>
+              <p>{errorMessage}</p>
+            </div>
+          )}
+          <hr />
+          {JSON.stringify(episode, null, 2)}
+          <hr />
+          {characters.length > 0 &&
+            characters.map((character) => (
               <CharacterCard
                 key={character.id}
                 id={character.id}
@@ -31,8 +83,7 @@ class Episode extends Component {
                 origin={character.origin}
                 location={character.location}
               />
-            ))} */}
-          </div>
+            ))}
         </section>
       </Layout>
     );
