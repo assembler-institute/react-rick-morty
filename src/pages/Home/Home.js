@@ -37,7 +37,7 @@ class Home extends Component {
     try {
       const { page } = this.state;
       const { data } = await getEpisodes(page);
-      // console.log(data);
+
       this.setState((prevState) => {
         return {
           episodes: [...prevState.episodes, ...data.results],
@@ -106,9 +106,10 @@ class Home extends Component {
           </div>
 
           <button
+            type="button"
+            disabled={paginationInfo && !paginationInfo.next}
             onClick={this.loadNextPage}
             className="btn btn-primary mx-auto"
-            type="button"
           >
             Load next page
           </button>
