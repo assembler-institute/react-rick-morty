@@ -15,7 +15,6 @@ function EpisodeCard({ id, name, airDate, episode }) {
         <p className="Episode__meta-item">{airDate}</p>
         <p className="Episode__meta-item">|</p>
         <p className="Episode__meta-item">{episode}</p>
-        <p>Hello</p>
       </div>
     </div>
   );
