@@ -66,7 +66,7 @@ class Home extends Component {
           </div>
           {episodes.map((episode) => (
             <EpisodeCard
-              key={uuidv4()}
+              key={episode.id}
               id={episode.id}
               name={episode.name}
               airDate={episode.air_date}
