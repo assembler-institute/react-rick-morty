@@ -9,10 +9,6 @@ export function getEpisodes(page = 1, api = makeAPI()) {
   return api.get(`/episode?page=${page}`);
 }
 
-export function getCharacter(character = 1, api = makeAPI()) {
-  return api.get(`/character/${character}`);
-}
-
 // Codi a Episode
 // const promises = data.characters.map(character) => axios.get(character))
 
