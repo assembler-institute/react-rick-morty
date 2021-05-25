@@ -9,8 +9,10 @@ export function getEpisodes(page = 1, api = makeAPI()) {
   return api.get(`/episode?page=${page}`);
 }
 
-// Codi a Episode
-// const promises = data.characters.map(character) => axios.get(character))
+export function getEpisode(episodeId, api = makeAPI()) {
+  return api.get(`/episode/${episodeId}`);
+}
 
-// const charactersResponse = await Promise.all(promises)
-// const characters  = charactersResponse(map(character) => characters.data )
+export function getUrl(url, api = makeAPI()) {
+  return api.get(`${url}`);
+}

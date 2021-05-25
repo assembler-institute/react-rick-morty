@@ -2,6 +2,11 @@ import React, { Component } from "react";
 
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
+import { getEpisode, getUrl } from "../../api";
+
+function makePromises(urls = []) {
+  return urls.map((url) => getUrl(url));
+}
 
 class Episode extends Component {
   constructor(props) {
@@ -14,6 +19,40 @@ class Episode extends Component {
       hasError: false,
       errorMessage: null,
     };
+
+    this.loadEpisode = this.loadEpisode.bind(this);
+  }
+
+  componentDidMount() {
+    // eslint-disable-next-line no-console
+    console.clear();
+    const { match } = this.props;
+    const { episodeId } = match.params;
+    this.loadEpisode(episodeId);
+  }
+
+  async loadEpisode(episodeId) {
+    try {
+      const { data } = await getEpisode(episodeId);
+      // eslint-disable-next-line compat/compat
+      const charactersResponse = await Promise.all(
+        makePromises(data.characters),
+      );
+      const characters = charactersResponse.map((character) => character.data);
+      console.log(characters);
+
+      this.setState({
+        hasLoaded: true,
+        episode: data,
+        characters: characters,
+      });
+    } catch (error) {
+      this.setState({
+        hasLoaded: true,
+        hasError: true,
+        errorMessage: error.message,
+      });
+    }
   }
 
   render() {
@@ -29,37 +68,35 @@ class Episode extends Component {
         <section className="row">
           {!hasLoaded && (
             <div className="col col-12">
-              <h1>Episode not loaded</h1>
+              <p>Episode not loaded</p>
             </div>
           )}
           {hasLoaded && (
             <div className="col col-12">
-              <h1>Episode loaded</h1>
+              <p>Episode loaded</p>
             </div>
           )}
           {hasError && (
             <div className="col col-12">
-              <h1>Something went wrong</h1>
+              <p>Something went wrong</p>
               <p>{errorMessage}</p>
             </div>
           )}
+          <hr />
+          {characters.length > 0 &&
+            characters.map((character) => (
+              <CharacterCard
+                key={character.id}
+                id={character.id}
+                name={character.name}
+                image={character.image}
+                species={character.species}
+                status={character.status}
+                origin={character.origin}
+                location={character.location}
+              />
+            ))}
         </section>
-        <hr />
-        {JSON.stringify(episode, null, 2)}
-        <hr />
-        {characters.length > 0 &&
-          characters.map((character) => (
-            <CharacterCard
-              key={character.id}
-              id={character.id}
-              name={character.name}
-              image={character.image}
-              species={character.species}
-              status={character.status}
-              origin={character.origin}
-              location={character.location}
-            />
-          ))}
       </Layout>
     );
   }
