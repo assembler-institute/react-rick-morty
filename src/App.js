@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Episode from "./pages/Episode";
+import Character from "./pages/Character";
 
 import * as routes from "./constants/routes";
 
@@ -12,6 +13,10 @@ function App() {
       <Route
         path={`${routes.EPISODE}/:episodId`}
         render={(routeProps) => <Episode {...routeProps} />}
+      />
+      <Route
+        path={`${routes.CHARACTER}/:characterId`}
+        render={(routeProps) => <Character {...routeProps} />}
       />
       <Route
         path={routes.HOME}

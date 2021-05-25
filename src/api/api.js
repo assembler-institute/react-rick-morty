@@ -12,6 +12,10 @@ export function getEpisode(episodeId, api = makeApi()) {
   return api.get(`/episode/${episodeId}`);
 }
 
-export function getCharacter(url) {
+export function getCharacter(characterId, api = makeApi()) {
+  return api.get(`/character/${characterId}`);
+}
+
+export function getUrl(url) {
   return axios.get(url);
 }
