@@ -99,6 +99,9 @@ class Location extends Component {
           <div className="col col-12 my-0">
             <hr />
           </div>
+          <div className="col col-12 mb-3">
+            <h4>Residents</h4>
+          </div>
           {residents.length > 0 &&
             residents.map((resident) => (
               <CharacterCard

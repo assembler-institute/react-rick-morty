@@ -1,7 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import {
-  // eslint-disable-next-line
   CHARACTER,
   EPISODE,
   // eslint-disable-next-line
@@ -12,6 +11,7 @@ import {
 import Home from "./pages/Home";
 import Episode from "./pages/Episode";
 import Location from "./pages/Location";
+import Character from "./pages/Character";
 
 function App() {
   return (
@@ -23,6 +23,10 @@ function App() {
       <Route
         path={`${LOCATION}/:locationId`}
         render={(routeProps) => <Location {...routeProps} />}
+      />
+      <Route
+        path={`${CHARACTER}/:characterId`}
+        render={(routeProps) => <Character {...routeProps} />}
       />
       <Route path={HOME} render={(routeProps) => <Home {...routeProps} />} />
     </Switch>
