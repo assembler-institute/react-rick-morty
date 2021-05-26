@@ -4,13 +4,13 @@ import {
   CHARACTER,
   EPISODE,
   SPECIES,
-  // eslint-disable-next-line
-  EPISODES,
+  STATUS,
   LOCATION,
   HOME,
 } from "./constants/routes";
 import Home from "./pages/Home";
 import Episode from "./pages/Episode";
+import Status from "./pages/Status";
 import Species from "./pages/Species";
 import Location from "./pages/Location";
 import Character from "./pages/Character";
@@ -18,6 +18,10 @@ import Character from "./pages/Character";
 function App() {
   return (
     <Switch>
+      <Route
+        path={`${STATUS}`}
+        render={(routeProps) => <Status {...routeProps} key={Date.now()} />}
+      />
       <Route
         path={`${SPECIES}`}
         render={(routeProps) => <Species {...routeProps} key={Date.now()} />}

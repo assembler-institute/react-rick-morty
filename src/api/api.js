@@ -25,6 +25,10 @@ export function getCharacterSpecies(species, api = makeAPI()) {
   return api.get(`/character/?species=${species}`);
 }
 
+export function getCharacterStatus(status, api = makeAPI()) {
+  return api.get(`/character/?status=${status}`);
+}
+
 export function getUrl(url, api = makeAPI()) {
   return api.get(`${url}`);
 }

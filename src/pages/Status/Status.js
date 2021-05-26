@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-import { getCharacterSpecies } from "../../api";
+import { getCharacterStatus } from "../../api";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
-class Species extends Component {
+class Status extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      species: null,
+      status: null,
       characters: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
     };
-    this.loadSpecies = this.loadSpecies.bind(this);
+    this.loadStatus = this.loadStatus.bind(this);
   }
 
   componentDidMount() {
@@ -23,21 +23,22 @@ class Species extends Component {
     const { location } = this.props;
     // eslint-disable-next-line compat/compat
     const querySearch = new URLSearchParams(location.search);
-    const species = querySearch.get("species");
+    const status = querySearch.get("status");
     // console.log(species);
-    this.loadSpecies(species);
+    this.loadStatus(status);
   }
 
-  async loadSpecies(specie) {
+  async loadStatus(stat) {
     try {
-      const { data } = await getCharacterSpecies(specie);
-      const { species } = this.state;
-      const charactersSpecies = data.results;
+      const { data } = await getCharacterStatus(stat);
+      const { status } = this.state;
+      console.log(data);
+      const charactersStatus = data.results;
 
       this.setState({
-        species: specie,
+        status: stat,
         hasLoaded: true,
-        characters: charactersSpecies,
+        characters: charactersStatus,
       });
     } catch (error) {
       this.setState({
@@ -50,7 +51,7 @@ class Species extends Component {
 
   render() {
     const {
-      species,
+      status,
       characters,
       hasLoaded,
       hasError,
@@ -62,7 +63,7 @@ class Species extends Component {
         <section className="row">
           {!hasLoaded && (
             <div className="col col-12">
-              <p>Species not loaded</p>
+              <p>Status not loaded</p>
             </div>
           )}
           {hasError && (
@@ -73,7 +74,9 @@ class Species extends Component {
           )}
           {hasLoaded && !hasError && (
             <div className="top-part mb-4 col col-12">
-              <h1>{species.charAt(0).toUpperCase() + species.slice(1)}s</h1>
+              <h1>
+                {status.charAt(0).toUpperCase() + status.slice(1)} characters
+              </h1>
             </div>
           )}
           <div className="col col-12 my-0">
@@ -98,4 +101,4 @@ class Species extends Component {
   }
 }
 
-export default Species;
+export default Status;

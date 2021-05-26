@@ -21,7 +21,7 @@ function InfoCard({
     const new2Id = subtitle2Id.toLowerCase();
     subtitleRoute = `${routes.SPECIES}?species=${newId}`;
     if (subtitle2 !== null) {
-      subtitle2Route = `${routes.STATUS}=${new2Id}`;
+      subtitle2Route = `${routes.STATUS}?status=${new2Id}`;
     }
   } else if (title === "ORIGIN") {
     subtitleRoute = `${routes.LOCATION}/${returnLocationId(subtitleURL)}`;
