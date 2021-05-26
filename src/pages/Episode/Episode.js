@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import Layout from "../../components/Layout";
+/* import { EPISODE, URL } from "../../constants/routes"; */
 // import CharacterCard from "../../components/CharacterCard";
 
 class Episode extends Component {
@@ -20,6 +21,7 @@ class Episode extends Component {
       <Layout>
         <section className="row">
           <div className="col col-12">
+            <p>Hola</p>
             {/* {characters.map((character) => (
               <CharacterCard
                 key={character.id}

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 
-import { v4 as uuidv4 } from "uuid";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { EPISODE, URL } from "../../constants/routes";
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
+import Episode from "../Episode";
 
 const axios = require("axios");
 
@@ -45,39 +46,52 @@ class Home extends Component {
 
   render() {
     const { hasLoaded, hasError, errorMessage, episodes } = this.state;
+    const { id } = episodes;
     return (
-      <Layout>
-        <section className="row">
-          {hasLoaded && !hasError && (
-            <div className="col col-12">
-              <h1>Episodes loaded!</h1>
-            </div>
-          )}
+      <>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/episode/">
+              <Episode id={id} />
+            </Route>
 
-          {hasError && (
-            <div className="col col-12">
-              <h1>Something went wrong...</h1>
-              <h2>{errorMessage}</h2>
-            </div>
-          )}
+            <Route path="/" exact>
+              <Layout>
+                <section className="row">
+                  {hasLoaded && !hasError && (
+                    <div className="col col-12">
+                      <h1>Episodes loaded!</h1>
+                    </div>
+                  )}
 
-          <div className="col col-12">
-            <hr />
-          </div>
-          {episodes.map((episode) => (
-            <EpisodeCard
-              key={episode.id}
-              id={episode.id}
-              name={episode.name}
-              airDate={episode.air_date}
-              episode={episode.episode}
-            />
-          ))}
-          <div className="col col-12">
-            <hr />
-          </div>
-        </section>
-      </Layout>
+                  {hasError && (
+                    <div className="col col-12">
+                      <h1>Something went wrong...</h1>
+                      <h2 className="errorMessage">{errorMessage}</h2>
+                    </div>
+                  )}
+
+                  <div className="col col-12">
+                    <hr />
+                  </div>
+                  {episodes.map((episode) => (
+                    <EpisodeCard
+                      key={episode.id}
+                      id={episode.id}
+                      name={episode.name}
+                      airDate={episode.air_date}
+                      episode={episode.episode}
+                    />
+                  ))}
+                  <div className="col col-12">
+                    <hr />
+                  </div>
+                </section>
+              </Layout>
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </>
     );
   }
 }
