@@ -20,3 +20,7 @@ export function getLocation(locationId, api = makeAPI()) {
 export function getUrl(url, api = makeAPI()) {
   return api.get(`${url}`);
 }
+
+export function makePromises(urls = []) {
+  return urls.map((url) => getUrl(url));
+}

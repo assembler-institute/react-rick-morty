@@ -2,11 +2,7 @@ import React, { Component } from "react";
 
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
-import { getEpisode, getUrl } from "../../api";
-
-function makePromises(urls = []) {
-  return urls.map((url) => getUrl(url));
-}
+import { getEpisode, makePromises } from "../../api";
 
 class Episode extends Component {
   constructor(props) {

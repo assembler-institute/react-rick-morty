@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { getLocation } from "../../api";
+import { getLocation, makePromises } from "../../api";
 import Layout from "../../components/Layout";
-// import CharacterCard from "../../components/CharacterCard";
+import CharacterCard from "../../components/CharacterCard";
 
 class Location extends Component {
   constructor(props) {
@@ -9,6 +9,7 @@ class Location extends Component {
 
     this.state = {
       location: null,
+      characters: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
@@ -24,11 +25,29 @@ class Location extends Component {
     this.loadLocation(locationId);
   }
 
+  componentDidUpdate() {
+    console.log(this.state);
+  }
+
   async loadLocation(locationId) {
     try {
+      // Location data
       const { data } = await getLocation(locationId);
-      // const { location } = data.location;
-      console.log(data.id);
+      // eslint-disable-next-line compat/compat
+      const charactersOriginResponse = await Promise.all(
+        makePromises(data.residents),
+      );
+
+      const charactersOrigin = charactersOriginResponse.map(
+        (character) => character.data,
+      );
+
+      console.log(data, charactersOriginResponse);
+      this.setState({
+        hasLoaded: true,
+        location: data,
+        // characters: charactersOrigin,
+      });
     } catch (error) {
       this.setState({
         hasLoaded: true,
@@ -39,7 +58,13 @@ class Location extends Component {
   }
 
   render() {
-    const { location, hasLoaded, hasError, errorMessage } = this.state;
+    const {
+      location,
+      characters,
+      hasLoaded,
+      hasError,
+      errorMessage,
+    } = this.state;
     return (
       <Layout>
         <section className="row" location={location}>
@@ -60,7 +85,11 @@ class Location extends Component {
             </div>
           )}
           <hr />
-          {/* {characters.length > 0 &&
+          <div className="top-part col col-12">
+            <h1>Location name</h1>
+          </div>
+          <hr />
+          {characters.length > 0 &&
             characters.map((character) => (
               <CharacterCard
                 key={character.id}
@@ -72,7 +101,7 @@ class Location extends Component {
                 origin={character.origin}
                 location={character.location}
               />
-            ))} */}
+            ))}
         </section>
       </Layout>
     );
