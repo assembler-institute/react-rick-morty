@@ -3,9 +3,6 @@ import { getLocation, makePromises } from "../../api";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
-// eslint-disable-next-line import/no-unresolved
-import "./Location.scss";
-
 class Location extends Component {
   constructor(props) {
     super(props);
@@ -21,15 +18,17 @@ class Location extends Component {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line no-console
     console.clear();
     const { match } = this.props;
     const { locationId } = match.params;
-    console.log("Location id", locationId);
-    console.log("Params", match.params);
+    // console.log("Location id", locationId);
+    // console.log("Params", match.params);
     this.loadLocation(locationId);
   }
 
   componentDidUpdate() {
+    // eslint-disable-next-line no-console
     console.log(this.state);
   }
 
@@ -37,7 +36,6 @@ class Location extends Component {
     try {
       // Location data
       const { data } = await getLocation(locationId);
-      console.log("Data, ", data);
       // eslint-disable-next-line compat/compat
       const charactersOriginResponse = await Promise.all(
         makePromises(data.residents),
