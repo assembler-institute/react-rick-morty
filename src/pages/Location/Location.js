@@ -3,6 +3,9 @@ import { getLocation, makePromises } from "../../api";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
+// eslint-disable-next-line import/no-unresolved
+import "./Location.scss";
+
 class Location extends Component {
   constructor(props) {
     super(props);
@@ -89,6 +92,10 @@ class Location extends Component {
           {hasLoaded && !hasError && (
             <div className="top-part mb-4 col col-12">
               <h1>{location.name}</h1>
+              <div className="d-flex">
+                <p className="badge badge-primary p-1 mr-1">{location.type}</p>
+                <p className="badge badge-dark p-1">{location.dimension}</p>
+              </div>
             </div>
           )}
           <hr />
