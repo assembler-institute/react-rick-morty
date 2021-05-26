@@ -60,7 +60,7 @@ class Home extends Component {
 
   render() {
     const {
-      page,
+      /* page, */
       paginationInfo,
       episodes,
       hasLoaded,

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
@@ -81,7 +82,16 @@ class Episode extends Component {
               <div className="row">
                 <div className="col col-4">
                   <h6>ORIGIN</h6>
-                  <p>{character.origin.name}</p>
+
+                  <Link
+                    className="CharacterCard__meta-item"
+                    to={() => {
+                      const splitted = character.location.url.split("/");
+                      return `/location/${splitted[splitted.length - 1]}`;
+                    }}
+                  >
+                    {character.origin.name}
+                  </Link>
                 </div>
                 <div className="col col-6">
                   <h6>LOCATION</h6>
