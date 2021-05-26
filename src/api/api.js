@@ -15,6 +15,10 @@ export function getEpisode(episodeId, api = makeApi()) {
     return api.get(`/episode/${episodeId}`);
 }
 
+export function getCharacter(characterId, api = makeApi()) {
+    return api.get(`/character/${characterId}`);
+}
+
 export function getUrl(url, api = makeApi()) {
     return api.get(url);
 }

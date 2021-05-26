@@ -5,6 +5,10 @@ import CharacterCard from "../../components/CharacterCard";
 
 import {getEpisode, getUrl} from "../../api";
 
+function makePromises (urls = []) {
+  return urls.map((url) => getUrl(url));
+}
+
 class Episode extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +35,22 @@ class Episode extends Component {
 
   async loadEpisode(episodeId) {
     try {
+      // data is the information of the hole episode
       const { data } = await getEpisode(episodeId);
+      // charactersResponse is an array with all characters
+      const charactersResponse = await Promise.all(makePromises(data.characters));
+      // Because of the structure of the charactersResponse:
+      const characters = charactersResponse.map((character) => character.data);
+      console.log(data);
+      console.log(charactersResponse);
+      console.log(characters);
+
+      this.setState ({
+        hasLoaded: true,
+        hasError: false,
+        episode: data,
+        characters: characters,
+      });
     } catch (error) {
       this.setState({
         hasLoaded: true,
@@ -68,8 +87,6 @@ class Episode extends Component {
               <p>{errorMessage}</p>
             </div>
           )}
-          <hr />
-          {JSON.stringify(episode, null, 2)}
           <hr />
           {characters.length > 0 &&
             characters.map((character) => (
