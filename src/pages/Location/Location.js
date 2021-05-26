@@ -1,48 +1,34 @@
 import React, { Component } from "react";
-
+import { getLocation } from "../../api";
 import Layout from "../../components/Layout";
-import CharacterCard from "../../components/CharacterCard";
-import { getEpisode, getUrl } from "../../api";
+// import CharacterCard from "../../components/CharacterCard";
 
-function makePromises(urls = []) {
-  return urls.map((url) => getUrl(url));
-}
-
-class Episode extends Component {
+class Location extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      episode: null,
-      characters: [],
+      location: null,
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
     };
-
-    this.loadEpisode = this.loadEpisode.bind(this);
+    this.loadLocation = this.loadLocation.bind(this);
   }
 
   componentDidMount() {
+    console.clear();
     const { match } = this.props;
-    const { episodeId } = match.params;
-    this.loadEpisode(episodeId);
+    const { locationId } = match.params;
+    console.log("Location id", locationId);
+    this.loadLocation(locationId);
   }
 
-  async loadEpisode(episodeId) {
+  async loadLocation(locationId) {
     try {
-      const { data } = await getEpisode(episodeId);
-      // eslint-disable-next-line compat/compat
-      const charactersResponse = await Promise.all(
-        makePromises(data.characters),
-      );
-      const characters = charactersResponse.map((character) => character.data);
-
-      this.setState({
-        hasLoaded: true,
-        episode: data,
-        characters: characters,
-      });
+      const { data } = await getLocation(locationId);
+      // const { location } = data.location;
+      console.log(data.id);
     } catch (error) {
       this.setState({
         hasLoaded: true,
@@ -53,24 +39,18 @@ class Episode extends Component {
   }
 
   render() {
-    const {
-      episode,
-      characters,
-      hasLoaded,
-      hasError,
-      errorMessage,
-    } = this.state;
+    const { location, hasLoaded, hasError, errorMessage } = this.state;
     return (
       <Layout>
-        <section className="row" episode={episode}>
+        <section className="row" location={location}>
           {!hasLoaded && (
             <div className="col col-12">
-              <p>Episode not loaded</p>
+              <p>Location not loaded</p>
             </div>
           )}
           {hasLoaded && (
             <div className="col col-12">
-              <p>Episode loaded</p>
+              <p>Location loaded</p>
             </div>
           )}
           {hasError && (
@@ -80,7 +60,7 @@ class Episode extends Component {
             </div>
           )}
           <hr />
-          {characters.length > 0 &&
+          {/* {characters.length > 0 &&
             characters.map((character) => (
               <CharacterCard
                 key={character.id}
@@ -92,11 +72,11 @@ class Episode extends Component {
                 origin={character.origin}
                 location={character.location}
               />
-            ))}
+            ))} */}
         </section>
       </Layout>
     );
   }
 }
 
-export default Episode;
+export default Location;

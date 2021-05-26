@@ -6,12 +6,12 @@ import {
   EPISODE,
   // eslint-disable-next-line
   EPISODES,
-  // eslint-disable-next-line
   LOCATION,
   HOME,
 } from "./constants/routes";
 import Home from "./pages/Home";
 import Episode from "./pages/Episode";
+import Location from "./pages/Location";
 
 function App() {
   return (
@@ -19,6 +19,10 @@ function App() {
       <Route
         path={`${EPISODE}/:episodeId`}
         render={(routeProps) => <Episode {...routeProps} />}
+      />
+      <Route
+        path={`${LOCATION}/:locationId`}
+        render={(routeProps) => <Location {...routeProps} />}
       />
       <Route path={HOME} render={(routeProps) => <Home {...routeProps} />} />
     </Switch>

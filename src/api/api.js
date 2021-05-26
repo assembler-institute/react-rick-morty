@@ -13,6 +13,10 @@ export function getEpisode(episodeId, api = makeAPI()) {
   return api.get(`/episode/${episodeId}`);
 }
 
+export function getLocation(locationId, api = makeAPI()) {
+  return api.get(`/location/${locationId}`);
+}
+
 export function getUrl(url, api = makeAPI()) {
   return api.get(`${url}`);
 }
