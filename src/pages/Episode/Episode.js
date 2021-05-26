@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Layout from "../../components/Layout";
 import { EPISODE, URL } from "../../constants/routes";
+import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
+import Character from "../Character";
+import Home from "../Home";
 
 const axios = require("axios");
 
@@ -65,41 +67,47 @@ class Episode extends Component {
     } = this.state;
     return (
       <>
-        <Layout>
-          {hasLoaded && !hasError && (
-            <section className="row">
-              <div className="col col-12">
-                <h1>{name}</h1>
-                <p>
-                  {episode} / {airDate}
-                </p>
-                {characters.map((character) => (
-                  <CharacterCard
-                    key={character.id}
-                    id={character.id}
-                    name={character.name}
-                    image={character.image}
-                    species={character.species}
-                    status={character.status}
-                    origin={character.origin}
-                    location={character.location}
-                  />
-                ))}
-              </div>
-            </section>
-          )}
-
-          {hasError && (
-            <div className="col col-12">
-              <h1>Something went wrong...</h1>
-              <h2 className="errorMessage">{errorMessage}</h2>
-            </div>
-          )}
-        </Layout>
-
         <BrowserRouter>
           <Switch>
-            <Route></Route>
+            <Route path="/character/" component={Character} />
+
+            <Route path="/episode/">
+              <Layout>
+                {hasLoaded && !hasError && (
+                  <section className="row">
+                    <div className="col col-12">
+                      <h1>{name}</h1>
+                      <p>
+                        {episode} / {airDate}
+                      </p>
+                      {characters.map((character) => (
+                        <CharacterCard
+                          key={character.id}
+                          id={character.id}
+                          name={character.name}
+                          image={character.image}
+                          species={character.species}
+                          status={character.status}
+                          origin={character.origin}
+                          location={character.location}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {hasError && (
+                  <div className="col col-12">
+                    <h1>Something went wrong...</h1>
+                    <h2 className="errorMessage">{errorMessage}</h2>
+                  </div>
+                )}
+              </Layout>
+            </Route>
+
+            <Route path="/">
+              <Home />
+            </Route>
           </Switch>
         </BrowserRouter>
       </>
