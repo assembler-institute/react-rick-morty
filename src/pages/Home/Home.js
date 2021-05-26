@@ -38,8 +38,6 @@ class Home extends Component {
   }
 
   async loadEpisodes(page) {
-    console.log(this);
-
     try {
       const { data } = await getEpisodes(page);
       this.setState((prevState) => ({

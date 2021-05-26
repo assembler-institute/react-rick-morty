@@ -2,13 +2,8 @@ import React, { Component } from "react";
 
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
-import CharacterCard from "../../components/CharacterCard";
 
-import { getCharacter, getUrl } from "../../api";
-
-function makePromises(urls = []) {
-    return urls.map((url) => getUrl(url));
-}
+import { getCharacter, makePromises } from "../../api";
 
 class Character extends Component {
     constructor(props) {
@@ -28,7 +23,6 @@ class Character extends Component {
     componentDidMount() {
         const { match } = this.props;
         const { characterId } = match.params;
-        console.log({ characterId });
 
         this.loadCharacter(characterId);
     }
@@ -38,9 +32,9 @@ class Character extends Component {
             const { data } = await getCharacter(characterId);
             const episodeResponse = await Promise.all(makePromises(data.episode));
             const episodes = episodeResponse.map((episode) => episode.data);
-            console.log({ data });
-            console.log(episodeResponse);
-            console.log(episodes);
+            // console.log({ data });
+            // console.log({ episodeResponse });
+            // console.log({ episodes });
 
             this.setState({
                 character: data,

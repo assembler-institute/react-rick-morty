@@ -3,11 +3,7 @@ import React, { Component } from "react";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
-import {getEpisode, getUrl} from "../../api";
-
-function makePromises (urls = []) {
-  return urls.map((url) => getUrl(url));
-}
+import {getEpisode, makePromises} from "../../api";
 
 class Episode extends Component {
   constructor(props) {
@@ -25,7 +21,6 @@ class Episode extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     // If the check previus console.log we will see that on match property we have the ID information for the episode
     const { match } = this.props;
     const { episodeId } = match.params;
@@ -41,9 +36,6 @@ class Episode extends Component {
       const charactersResponse = await Promise.all(makePromises(data.characters));
       // Because of the structure of the charactersResponse:
       const characters = charactersResponse.map((character) => character.data);
-      console.log(data);
-      console.log(charactersResponse);
-      console.log(characters);
 
       this.setState ({
         hasLoaded: true,
