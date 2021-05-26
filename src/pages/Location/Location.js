@@ -9,7 +9,7 @@ class Location extends Component {
 
     this.state = {
       location: null,
-      characters: [],
+      residents: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
@@ -22,6 +22,7 @@ class Location extends Component {
     const { match } = this.props;
     const { locationId } = match.params;
     console.log("Location id", locationId);
+    console.log("Params", match.params);
     this.loadLocation(locationId);
   }
 
@@ -33,12 +34,11 @@ class Location extends Component {
     try {
       // Location data
       const { data } = await getLocation(locationId);
-      console.log(data);
+      console.log("Data, ", data);
       // eslint-disable-next-line compat/compat
       const charactersOriginResponse = await Promise.all(
         makePromises(data.residents),
       );
-
       const charactersOrigin = charactersOriginResponse.map(
         (character) => character.data,
       );
@@ -46,7 +46,7 @@ class Location extends Component {
       this.setState({
         hasLoaded: true,
         location: data,
-        characters: charactersOrigin,
+        residents: charactersOrigin,
       });
     } catch (error) {
       this.setState({
@@ -60,24 +60,25 @@ class Location extends Component {
   render() {
     const {
       location,
-      characters,
+      residents,
       hasLoaded,
       hasError,
       errorMessage,
     } = this.state;
+
     return (
       <Layout>
-        <section className="row" location={location}>
+        <section className="row">
           {!hasLoaded && (
             <div className="col col-12">
               <p>Location not loaded</p>
             </div>
           )}
-          {hasLoaded && (
+          {/* {hasLoaded && (
             <div className="col col-12">
               <p>Location loaded</p>
             </div>
-          )}
+          )} */}
           {hasError && (
             <div className="col col-12">
               <p>Something went wrong</p>
@@ -85,21 +86,23 @@ class Location extends Component {
             </div>
           )}
           <hr />
-          <div className="top-part col col-12">
-            <h1>Location name</h1>
-          </div>
+          {hasLoaded && !hasError && (
+            <div className="top-part mb-4 col col-12">
+              <h1>{location.name}</h1>
+            </div>
+          )}
           <hr />
-          {characters.length > 0 &&
-            characters.map((character) => (
+          {residents.length > 0 &&
+            residents.map((resident) => (
               <CharacterCard
-                key={character.id}
-                id={character.id}
-                name={character.name}
-                image={character.image}
-                species={character.species}
-                status={character.status}
-                origin={character.origin}
-                location={character.location}
+                key={resident.id}
+                id={resident.id}
+                name={resident.name}
+                image={resident.image}
+                species={resident.species}
+                status={resident.status}
+                origin={resident.origin}
+                location={resident.location}
               />
             ))}
         </section>
