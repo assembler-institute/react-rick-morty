@@ -3,7 +3,7 @@ import axios from "axios";
 export function makeApi() {
   return axios.create({
     baseURL: "https://rickandmortyapi.com/api",
-    timeout: 1000,
+    timeout: 4000,
   });
 }
 

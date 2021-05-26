@@ -114,19 +114,24 @@ class Episode extends Component {
           {/* <hr />
           {episode && JSON.stringify(episode, null, 2)}
           <hr /> */}
-          {characters.length > 0 &&
-            characters.map((character) => (
-              <CharacterCard
-                key={character.id}
-                id={character.id}
-                name={character.name}
-                image={character.image}
-                species={character.species}
-                status={character.status}
-                origin={character.origin}
-                location={character.location}
-              />
-            ))}
+          {/* <div className="col col-12 d-flex"> */}
+          <hr />
+            {characters.length > 0 &&
+              characters.map((character) => (
+                <CharacterCard
+                  key={character.id}
+                  id={character.id}
+                  name={character.name}
+                  image={character.image}
+                  species={character.species}
+                  status={character.status}
+                  origin={character.origin}
+                  location={character.location}
+                />
+              ))
+            }
+          {/* </div> */}
+          <hr />
         </section>
       </Layout>
     );
