@@ -1,6 +1,11 @@
 .top-part {
   height: fit-content;
-  p {
-    width: fit-content;
+  .location-tags {
+    height: fit-content;
+    p {
+      width: fit-content;
+      height: fit-content;
+      margin-bottom: 0;
+    }
   }
 }

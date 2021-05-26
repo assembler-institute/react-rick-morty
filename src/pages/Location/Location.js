@@ -92,13 +92,15 @@ class Location extends Component {
           {hasLoaded && !hasError && (
             <div className="top-part mb-4 col col-12">
               <h1>{location.name}</h1>
-              <div className="d-flex">
+              <div className="location-tags d-flex">
                 <p className="badge badge-primary p-1 mr-1">{location.type}</p>
                 <p className="badge badge-dark p-1">{location.dimension}</p>
               </div>
             </div>
           )}
-          <hr />
+          <div className="col col-12 my-0">
+            <hr />
+          </div>
           {residents.length > 0 &&
             residents.map((resident) => (
               <CharacterCard
