@@ -35,9 +35,9 @@ class Episode extends Component {
       const charactersResponse = await Promise.all(promises);
 
       const characters = charactersResponse.map((character) => character.data);
-      // console.log({ data });
-      // console.log({ charactersResponse });
-      // console.log({ characters });
+      console.log({ data });
+      console.log({ charactersResponse });
+      console.log({ characters });
       this.setState({
         episode: data,
         characters: characters,
