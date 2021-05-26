@@ -19,22 +19,18 @@ class Character extends Component {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line no-console
     console.clear();
     const { match } = this.props;
     const { characterId } = match.params;
     this.loadCharacter(characterId);
   }
 
-  componentDidUpdate() {
-    // eslint-disable-next-line no-console
-    console.log(this.state);
-  }
-
   async loadCharacter(characterId) {
     try {
       const { data } = await getCharacter(characterId);
+      // eslint-disable-next-line no-console
       console.log(data);
-
       // eslint-disable-next-line compat/compat
       const characterEpisodesResponse = await Promise.all(
         makePromises(data.episode),
@@ -74,11 +70,6 @@ class Character extends Component {
               <p>Character not loaded</p>
             </div>
           )}
-          {/* {hasLoaded && (
-            <div className="col col-12">
-              <p>Location loaded</p>
-            </div>
-          )} */}
           {hasError && (
             <div className="col col-12">
               <p>Something went wrong</p>
@@ -89,7 +80,7 @@ class Character extends Component {
           {hasLoaded && !hasError && (
             <div className="top-part row px-0 mb-4 col col-12 d-flex justify-content-between">
               <div className="right-part col col-5 p-0">
-                <img src={character.image} alt={`${character.name} image`} />
+                <img src={character.image} alt={`${character.name} profile`} />
               </div>
 
               <div className="left-part col col-6 px-0">
@@ -101,12 +92,19 @@ class Character extends Component {
                   <InfoCard
                     title="CHARACTER"
                     subtitle={character.species}
+                    subtitleId={character.species}
                     subtitle2={character.status}
+                    subtitle2Id={character.status}
                   />
-                  <InfoCard title="ORIGIN" subtitle={character.origin.name} />
+                  <InfoCard
+                    title="ORIGIN"
+                    subtitle={character.origin.name}
+                    subtitleURL={character.origin.url}
+                  />
                   <InfoCard
                     title="LOCATION"
                     subtitle={character.location.name}
+                    subtitleURL={character.location.url}
                   />
                 </div>
               </div>

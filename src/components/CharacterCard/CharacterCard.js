@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { returnLocationId } from "../../api";
 
 import "./CharacterCard.scss";
 
@@ -15,10 +16,6 @@ class CharacterCard extends Component {
   render() {
     const { id, name, image, species, status, origin, location } = this.props;
 
-    const originArr = origin.url.split("/");
-    const originId = originArr[originArr.length - 1];
-    // console.log(originArr, originId);
-
     return (
       <div
         species={species}
@@ -32,7 +29,7 @@ class CharacterCard extends Component {
         <div className="CharacterCard__meta">
           <Link
             className="CharacterCard__meta-item"
-            to={`${routes.LOCATION}/${originId}`}
+            to={`${routes.LOCATION}/${returnLocationId(origin.url)}`}
           >
             {origin.name}
           </Link>

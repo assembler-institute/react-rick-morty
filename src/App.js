@@ -18,17 +18,20 @@ function App() {
     <Switch>
       <Route
         path={`${EPISODE}/:episodeId`}
-        render={(routeProps) => <Episode {...routeProps} />}
+        render={(routeProps) => <Episode {...routeProps} key={Date.now()} />}
       />
       <Route
         path={`${LOCATION}/:locationId`}
-        render={(routeProps) => <Location {...routeProps} />}
+        render={(routeProps) => <Location {...routeProps} key={Date.now()} />}
       />
       <Route
         path={`${CHARACTER}/:characterId`}
-        render={(routeProps) => <Character {...routeProps} />}
+        render={(routeProps) => <Character {...routeProps} key={Date.now()} />}
       />
-      <Route path={HOME} render={(routeProps) => <Home {...routeProps} />} />
+      <Route
+        path={HOME}
+        render={(routeProps) => <Home {...routeProps} key={Date.now()} />}
+      />
     </Switch>
   );
 }

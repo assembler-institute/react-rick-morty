@@ -22,8 +22,6 @@ class Location extends Component {
     console.clear();
     const { match } = this.props;
     const { locationId } = match.params;
-    // console.log("Location id", locationId);
-    // console.log("Params", match.params);
     this.loadLocation(locationId);
   }
 
@@ -86,7 +84,6 @@ class Location extends Component {
               <p>{errorMessage}</p>
             </div>
           )}
-          <hr />
           {hasLoaded && !hasError && (
             <div className="top-part mb-4 col col-12">
               <h1>{location.name}</h1>

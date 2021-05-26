@@ -25,6 +25,12 @@ export function getUrl(url, api = makeAPI()) {
   return api.get(`${url}`);
 }
 
+export function returnLocationId(url) {
+  const originArr = url.split("/");
+  const originId = originArr[originArr.length - 1];
+  return originId;
+}
+
 export function makePromises(urls = []) {
   return urls.map((url) => getUrl(url));
 }
