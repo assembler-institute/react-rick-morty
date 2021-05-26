@@ -73,11 +73,6 @@ class Location extends Component {
               <p>Location not loaded</p>
             </div>
           )}
-          {/* {hasLoaded && (
-            <div className="col col-12">
-              <p>Location loaded</p>
-            </div>
-          )} */}
           {hasError && (
             <div className="col col-12">
               <p>Something went wrong</p>

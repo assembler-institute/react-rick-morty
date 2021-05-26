@@ -12,16 +12,14 @@ function InfoCard({
   subtitleURL = null,
   subtitle2 = null,
   subtitle2Id = null,
-  subtitle2URL = null,
 }) {
   let subtitleRoute = null;
   let subtitle2Route = null;
 
   if (title === "CHARACTER") {
-    // eslint-disable-next-line no-shadow
     const newId = subtitleId.toLowerCase();
     const new2Id = subtitle2Id.toLowerCase();
-    subtitleRoute = `${routes.SPECIES}=${newId}`;
+    subtitleRoute = `${routes.SPECIES}?species=${newId}`;
     if (subtitle2 !== null) {
       subtitle2Route = `${routes.STATUS}=${new2Id}`;
     }
@@ -38,7 +36,6 @@ function InfoCard({
         <Link className="subtitle-link" to={subtitleRoute}>
           <p className="mr-2">{subtitle}</p>
         </Link>
-        {/* Only add bar & subtitle2 if there's subtitle2 */}
         {subtitle2 && (
           <>
             <p className="mr-2">|</p>
