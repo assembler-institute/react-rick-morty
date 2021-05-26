@@ -16,6 +16,10 @@ export function getCharacter(characterId, api = makeApi()) {
   return api.get(`/character/${characterId}`);
 }
 
+export function getLocation(locationId, api = makeApi()) {
+  return api.get(`/location/${locationId}`);
+}
+
 export function getUrl(url) {
   return axios.get(url);
 }

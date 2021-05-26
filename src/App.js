@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import Episode from "./pages/Episode";
 import Character from "./pages/Character";
+import Location from "./pages/Location";
 
 import * as routes from "./constants/routes";
 
@@ -17,6 +18,12 @@ function App() {
       <Route
         path={`${routes.CHARACTER}/:characterId`}
         render={(routeProps) => <Character {...routeProps} />}
+      />
+      <Route
+        path={`${routes.LOCATION}/:locationId`}
+        render={(routeProps) => (
+          <Location key={routeProps.location.key} {...routeProps} />
+        )}
       />
       <Route
         path={routes.HOME}
