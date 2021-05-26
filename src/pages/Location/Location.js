@@ -33,6 +33,7 @@ class Location extends Component {
     try {
       // Location data
       const { data } = await getLocation(locationId);
+      console.log(data);
       // eslint-disable-next-line compat/compat
       const charactersOriginResponse = await Promise.all(
         makePromises(data.residents),
@@ -42,11 +43,10 @@ class Location extends Component {
         (character) => character.data,
       );
 
-      console.log(data, charactersOriginResponse);
       this.setState({
         hasLoaded: true,
         location: data,
-        // characters: charactersOrigin,
+        characters: charactersOrigin,
       });
     } catch (error) {
       this.setState({

@@ -17,7 +17,7 @@ class CharacterCard extends Component {
 
     const originArr = origin.url.split("/");
     const originId = originArr[originArr.length - 1];
-    console.log(originArr, originId);
+    // console.log(originArr, originId);
 
     return (
       <div
