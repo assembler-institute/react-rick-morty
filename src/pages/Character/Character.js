@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getCharacter, makePromises } from "../../api";
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
+import InfoCard from "../../components/InfoCard";
 
 class Character extends Component {
   constructor(props) {
@@ -86,8 +87,29 @@ class Character extends Component {
           )}
           <hr />
           {hasLoaded && !hasError && (
-            <div className="top-part mb-4 col col-12">
-              <h1>{character.name}</h1>
+            <div className="top-part row px-0 mb-4 col col-12 d-flex justify-content-between">
+              <div className="right-part col col-5 p-0">
+                <img src={character.image} alt={`${character.name} image`} />
+              </div>
+
+              <div className="left-part col col-6 px-0">
+                <h1>{character.name}</h1>
+                <div className="col col-12 mb-4 px-0">
+                  <hr />
+                </div>
+                <div className="col col-12 mb-3 px-0 d-flex flex-wrap">
+                  <InfoCard
+                    title="CHARACTER"
+                    subtitle={character.species}
+                    subtitle2={character.status}
+                  />
+                  <InfoCard title="ORIGIN" subtitle={character.origin.name} />
+                  <InfoCard
+                    title="LOCATION"
+                    subtitle={character.location.name}
+                  />
+                </div>
+              </div>
             </div>
           )}
           <div className="col col-12 my-0">
