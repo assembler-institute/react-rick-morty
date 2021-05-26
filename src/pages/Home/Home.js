@@ -19,13 +19,25 @@ class Home extends Component {
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
+      currentId: null,
     };
 
     this.loadEpisodes = this.loadEpisodes.bind(this);
+    this.gettingId = this.gettingId.bind(this);
   }
 
   async componentDidMount() {
     await this.loadEpisodes();
+  }
+
+  gettingId(e) {
+    const { episodes } = this.state;
+    const currentEpisode = episodes.find(
+      (epi) => epi.name === e.target.innerHTML,
+    );
+    this.setState({
+      currentId: currentEpisode.id,
+    });
   }
 
   async loadEpisodes() {
@@ -45,14 +57,19 @@ class Home extends Component {
   }
 
   render() {
-    const { hasLoaded, hasError, errorMessage, episodes } = this.state;
-    const { id } = episodes;
+    const {
+      hasLoaded,
+      hasError,
+      errorMessage,
+      episodes,
+      currentId,
+    } = this.state;
     return (
       <>
         <BrowserRouter>
           <Switch>
             <Route path="/episode/">
-              <Episode id={id} />
+              <Episode id={currentId} />
             </Route>
 
             <Route path="/" exact>
@@ -81,6 +98,7 @@ class Home extends Component {
                       name={episode.name}
                       airDate={episode.air_date}
                       episode={episode.episode}
+                      gettingId={this.gettingId}
                     />
                   ))}
                   <div className="col col-12">

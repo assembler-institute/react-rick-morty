@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import "./CharacterCard.scss";
 
 import * as routes from "../../constants/routes";
 
 function CharacterCard({ id, name, image, species, status, origin, location }) {
+  const { urlID } = useParams();
   return (
     <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
       <img className="CharacterCard__img" src={image} alt="" />
