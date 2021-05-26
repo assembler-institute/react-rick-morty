@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { EPISODE, URL } from "../../constants/routes";
 import CharacterCard from "../../components/CharacterCard";
@@ -63,37 +64,45 @@ class Episode extends Component {
       airDate,
     } = this.state;
     return (
-      <Layout>
-        {hasLoaded && !hasError && (
-          <section className="row">
-            <div className="col col-12">
-              <h1>{name}</h1>
-              <p>
-                {episode} / {airDate}
-              </p>
-              {characters.map((character) => (
-                <CharacterCard
-                  key={character.id}
-                  id={character.id}
-                  name={character.name}
-                  image={character.image}
-                  species={character.species}
-                  status={character.status}
-                  origin={character.origin}
-                  location={character.location}
-                />
-              ))}
-            </div>
-          </section>
-        )}
+      <>
+        <Layout>
+          {hasLoaded && !hasError && (
+            <section className="row">
+              <div className="col col-12">
+                <h1>{name}</h1>
+                <p>
+                  {episode} / {airDate}
+                </p>
+                {characters.map((character) => (
+                  <CharacterCard
+                    key={character.id}
+                    id={character.id}
+                    name={character.name}
+                    image={character.image}
+                    species={character.species}
+                    status={character.status}
+                    origin={character.origin}
+                    location={character.location}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
 
-        {hasError && (
-          <div className="col col-12">
-            <h1>Something went wrong...</h1>
-            <h2 className="errorMessage">{errorMessage}</h2>
-          </div>
-        )}
-      </Layout>
+          {hasError && (
+            <div className="col col-12">
+              <h1>Something went wrong...</h1>
+              <h2 className="errorMessage">{errorMessage}</h2>
+            </div>
+          )}
+        </Layout>
+
+        <BrowserRouter>
+          <Switch>
+            <Route></Route>
+          </Switch>
+        </BrowserRouter>
+      </>
     );
   }
 }
