@@ -1,0 +1,38 @@
+.characterProfile {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  img {
+    margin-right: 30px;
+  }
+}
+
+.characterInfo {
+  width: 100%;
+  h1 {
+    display: block;
+    margin-bottom: 25px;
+  }
+  hr {
+    width: 100%;
+  }
+  p {
+    font-size: 1.2em;
+  }
+}
+
+.characterOrigin {
+  display: inline-block;
+  margin-right: 80px;
+}
+
+.characterLocation {
+  display: inline-block;
+}
+
+.episodes {
+  h2 {
+    width: 90%;
+    margin: 40px 0 15px 15px;
+  }
+}

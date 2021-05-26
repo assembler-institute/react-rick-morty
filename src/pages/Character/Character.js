@@ -4,6 +4,8 @@ import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 import { CHARACTER, URL } from "../../constants/routes";
 
+import "./Character.scss";
+
 const axios = require("axios");
 
 class Character extends Component {
@@ -79,23 +81,30 @@ class Character extends Component {
     return (
       <>
         <Layout>
-          <section className="charachterProfile">
+          <section className="characterProfile">
             <img src={img} alt={name} />
-            <h1>{name}</h1>
-            <p>
+
+            <div className="characterInfo">
+              <h1>{name}</h1>
+              <hr />
               <h3>CHARACTER</h3>
-              {species} | {status}
-            </p>
-            <p>
-              <h3>ORIGIN</h3>
-              <a href={ourl}>{oname}</a>
-            </p>
-            <p>
-              <h3>LOCATION</h3>
-              <a href={lurl}>{lname}</a>
-            </p>
+              <p>
+                {species} | {status}
+              </p>
+              <hr />
+              <div className="characterOrigin">
+                <h3>ORIGIN</h3>
+                <a href={ourl}>{oname}</a>
+              </div>
+              <div className="characterLocation">
+                <h3>LOCATION</h3>
+                <a href={lurl}>{lname}</a>
+              </div>
+            </div>
           </section>
-          <section className="row">
+
+          <section className="row episodes">
+            <h2>Episodes</h2>
             {episodes.map((episode) => (
               <EpisodeCard
                 key={episode.id}
