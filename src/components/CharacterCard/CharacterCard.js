@@ -5,7 +5,7 @@ import "./CharacterCard.scss";
 
 import * as routes from "../../constants/routes";
 
-function CharacterCard({ id, name, image, species, status, origin, location }) {
+function CharacterCard({ id, name, image, species, status, origin }) {
   return (
     <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
       <img className="CharacterCard__img" src={image} alt="" />
@@ -21,6 +21,8 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
         </Link>
         <p className="CharacterCard__meta-item">|</p>
         <p className="CharacterCard__meta-item">{status}</p>
+        <p className="CharacterCard__meta-item">|</p>
+        <p className="CharacterCard__meta-item text-muted">{species}</p>
       </div>
     </div>
   );
