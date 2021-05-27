@@ -25,14 +25,8 @@ class Location extends Component {
     this.loadLocation(locationId);
   }
 
-  componentDidUpdate() {
-    // eslint-disable-next-line no-console
-    console.log(this.state);
-  }
-
   async loadLocation(locationId) {
     try {
-      // Location data
       const { data } = await getLocation(locationId);
       // eslint-disable-next-line compat/compat
       const charactersOriginResponse = await Promise.all(

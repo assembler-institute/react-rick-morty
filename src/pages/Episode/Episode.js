@@ -58,7 +58,7 @@ class Episode extends Component {
     } = this.state;
     return (
       <Layout>
-        <section className="row" episode={episode}>
+        <section className="row">
           {!hasLoaded && (
             <div className="col col-12">
               <p>Episode not loaded</p>
@@ -70,12 +70,14 @@ class Episode extends Component {
               <p>{errorMessage}</p>
             </div>
           )}
-          <hr />
-          {hasLoaded && (
+          {hasLoaded && !hasError && (
             <div className="col col-12">
               <h1>Episode {episode.name}</h1>
             </div>
           )}
+          <div className="col col-12">
+            <hr />
+          </div>
           {characters.length > 0 &&
             characters.map((character) => (
               <CharacterCard

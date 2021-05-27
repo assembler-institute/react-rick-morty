@@ -70,7 +70,7 @@ class Status extends Component {
             </div>
           )}
           {hasLoaded && !hasError && (
-            <div className="top-part mb-4 col col-12">
+            <div className="top-part col col-12">
               <h1>
                 {status.charAt(0).toUpperCase() + status.slice(1)} characters
               </h1>

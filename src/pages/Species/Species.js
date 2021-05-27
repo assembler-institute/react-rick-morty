@@ -70,8 +70,10 @@ class Species extends Component {
             </div>
           )}
           {hasLoaded && !hasError && (
-            <div className="top-part mb-4 col col-12">
-              <h1>{species.charAt(0).toUpperCase() + species.slice(1)}s</h1>
+            <div className="top-part col col-12">
+              <h1>
+                {species.charAt(0).toUpperCase() + species.slice(1)} characters
+              </h1>
             </div>
           )}
           <div className="col col-12 my-0">
