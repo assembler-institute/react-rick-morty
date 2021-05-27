@@ -86,7 +86,7 @@ class Location extends Component {
             <hr />
           </div>
           <div className="col col-12 mb-3">
-            <h4>Residents</h4>
+            <h2>Residents</h2>
           </div>
           {/* RESIDENTS IN LOCATION */}
           {residents.length > 0 &&
