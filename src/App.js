@@ -7,12 +7,13 @@ import {
   EPISODE,
   // EPISODES,
   HOME,
-  // LOCATION,
+  LOCATION,
 } from "./constants/routes";
 
 import Home from "./pages/Home";
 import Episode from "./pages/Episode";
 import CharacterPage from "./pages/Character";
+import LocationPage from "./pages/LocationPage";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
       <Route
         path={`${CHARACTER}/:characterId`}
         render={(routeProps) => <CharacterPage {...routeProps} />}
+      />
+      <Route
+        path={`${LOCATION}/:locationId`}
+        render={(routeProps) => <LocationPage {...routeProps} />}
       />
       <Route path={HOME} render={(routeProps) => <Home {...routeProps} />} />
     </Switch>
