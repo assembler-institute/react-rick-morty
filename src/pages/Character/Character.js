@@ -1,48 +1,50 @@
 import React, { Component } from "react";
 
 import Layout from "../../components/Layout";
-import CharacterCard from "../../components/CharacterCard";
+import CharacterLayout from "../../components/CharacterLayout";
+import EpisodeCard from "../../components/EpisodeCard";
 
-import { getEpisode, getUrl } from "../../api/api";
+import { getCharacter, getUrl } from "../../api/api";
 
 function makePromises(data) {
-  return data.characters.map((character) => getUrl(character));
+  return data.episode.map((episode) => getUrl(episode));
 }
 
-class Episode extends Component {
+class Character extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      episode: null,
-      characters: [],
+      character: null,
+      episodes: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
     };
 
-    this.loadCharacters = this.loadCharacters.bind(this);
+    this.loadCharacter = this.loadCharacter.bind(this);
   }
 
   componentDidMount() {
     const {
       match: {
-        params: { episodId },
+        params: { characterId },
       },
     } = this.props;
-    this.loadCharacters(episodId);
+
+    this.loadCharacter(characterId);
   }
 
-  async loadCharacters(episodId) {
+  async loadCharacter(characterId) {
     try {
-      const { data } = await getEpisode(episodId);
+      const { data } = await getCharacter(characterId);
       // eslint-disable-next-line compat/compat
       const response = await Promise.all(makePromises(data));
-      const characters = response.map((element) => element.data);
+      const episodes = response.map((element) => element.data);
 
       this.setState({
-        episode: data,
-        characters: characters,
+        character: data,
+        episodes: episodes,
         hasLoaded: true,
       });
     } catch (error) {
@@ -56,8 +58,8 @@ class Episode extends Component {
 
   render() {
     const {
-      episode,
-      characters,
+      character,
+      episodes,
       hasLoaded,
       hasError,
       errorMessage,
@@ -66,15 +68,6 @@ class Episode extends Component {
     return (
       <Layout>
         <section className="row">
-          {hasLoaded && !hasError && (
-            <div className="col col-12">
-              <h1>{episode.name}</h1>
-              <hr />
-              <p className="m-0">
-                {episode.episode} | {episode.air_date}
-              </p>
-            </div>
-          )}
           {!hasLoaded && !hasError && (
             <div className="col col-12">
               <h1>Loading episode...</h1>
@@ -89,24 +82,37 @@ class Episode extends Component {
             <hr />
           </div>
 
-          {/* <div className="col col-12"> */}
-          {characters.map((character) => (
-            <CharacterCard
-              key={character.id}
-              id={character.id}
+          {character && (
+            <CharacterLayout
               name={character.name}
               image={character.image}
               species={character.species}
               status={character.status}
-              origin={character.origin}
-              location={character.location}
+              origin={character.origin.name}
+              location={character.location.name}
+            />
+          )}
+          <div className="col col-12">
+            <hr />
+          </div>
+          <div className="col col-12">
+            <h4>Episodes</h4>
+            <hr />
+          </div>
+
+          {episodes.map((episode) => (
+            <EpisodeCard
+              key={episode.id}
+              id={episode.id}
+              name={episode.name}
+              airDate={episode.air_date}
+              episode={episode.episode}
             />
           ))}
-          {/* </div> */}
         </section>
       </Layout>
     );
   }
 }
 
-export default Episode;
+export default Character;
