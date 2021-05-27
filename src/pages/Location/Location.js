@@ -30,16 +30,13 @@ class Location extends Component {
     this.loadLocation(locationId);
   }
 
-  /*   componentDidUpdate() {
-    // console.log(this.props);  Mirar en match.params que está lo que pedimos antes por url!
+  componentDidUpdate(prevProps) {
     const { match } = this.props;
-    const { locationId } = match.params;
-    // console.log(characterId);
-    const { location } = this.props;
-    if (locationId !== location.id) {
-      this.loadLocation(locationId);
+    const { match: prevMatch } = prevProps;
+    if (match !== prevMatch) {
+      this.loadLocation(match.locationId);
     }
-  } */
+  }
 
   async loadLocation(locationId) {
     try {

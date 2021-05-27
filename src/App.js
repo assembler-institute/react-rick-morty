@@ -27,7 +27,9 @@ function App() {
       />
       <Route
         path={`${LOCATION}/:locationId`}
-        render={(routeProps) => <Location {...routeProps} key={Date.now()} />} // Solution tu update the page when changing between locations. ASK
+        render={(routeProps) => (
+          <Location {...routeProps} /* key={Date.now()}  */ />
+        )} // Solution tu update the page when changing between locations. ASK
       />
       <Route path={HOME} render={(routeProps) => <Home {...routeProps} />} />
     </Switch>
