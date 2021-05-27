@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { axios } from "axios";
+// import { axios } from "axios";
 
 import { getEpisode, getUrl } from "../../api";
 
@@ -76,10 +76,10 @@ class Episode extends Component {
         characters: characters,
       });
 
-      console.log(data);
-      console.log(characterResponse);
+      // console.log(data);
+      // console.log(characterResponse);
       // console.log(promises);
-      console.log(characters);
+      // console.log(characters);
     } catch (error) {
       this.setState({
         hasLoaded: true,

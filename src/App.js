@@ -3,7 +3,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import {
-  // CHARACTER,
+  CHARACTER,
   EPISODE,
   // EPISODES,
   HOME,
@@ -12,6 +12,7 @@ import {
 
 import Home from "./pages/Home";
 import Episode from "./pages/Episode";
+import CharacterPage from "./pages/Character";
 
 function App() {
   return (
@@ -19,6 +20,10 @@ function App() {
       <Route
         path={`${EPISODE}/:episodeId`}
         render={(routeProps) => <Episode {...routeProps} />}
+      />
+      <Route
+        path={`${CHARACTER}/:characterId`}
+        render={(routeProps) => <CharacterPage {...routeProps} />}
       />
       <Route path={HOME} render={(routeProps) => <Home {...routeProps} />} />
     </Switch>
