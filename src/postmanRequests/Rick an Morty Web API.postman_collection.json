@@ -1,0 +1,102 @@
+{
+	"info": {
+		"_postman_id": "4d41d72b-a50d-4966-8a49-a65941584772",
+		"name": "Rick an Morty Web API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetEpisodes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/episode?page=1",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"episode"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				},
+				"description": "This request receives all episodes thatand shows them in first page depending on the parameter count and the quantity of episodes to show per page."
+			},
+			"response": []
+		},
+		{
+			"name": "GetEpisode",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/episode/1",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"episode",
+						"1"
+					]
+				},
+				"description": "This request receives an episode depending on the given id at the end. In this case it's episode 1"
+			},
+			"response": []
+		},
+		{
+			"name": "GetCharacter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/character/1",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"character",
+						"1"
+					]
+				},
+				"description": "This request receives a character depending on the character id passed at the end. In this case it is character 1."
+			},
+			"response": []
+		},
+		{
+			"name": "GetLocation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/location/1",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"location",
+						"1"
+					]
+				},
+				"description": "This request receives a location depending on the the locationID passed at the end. In this case it is location 1."
+			},
+			"response": []
+		}
+	]
+}

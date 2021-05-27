@@ -38,9 +38,11 @@ class Location extends Component {
       const residentsResponse = await Promise.all(promises);
 
       const residents = residentsResponse.map((resident) => resident.data);
+
       console.log({ data });
       console.log({ residentsResponse });
       console.log({ residents });
+
       this.setState({
         name: data.name,
         type: data.type,
