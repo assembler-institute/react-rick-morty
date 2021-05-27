@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "b549a6fb-7e54-491b-96bd-84e5d9b7389f",
+		"name": "ReactRickAndMorty",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Episodes Page 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/episode?page=1",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"episode"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Episodes Page 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/episode?page=2",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"episode"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Episodes Page 3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/episode?page=3",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"episode"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Episode nº3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/episode/3",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"episode",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Episode nº28",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/episode/28",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"episode",
+						"28"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Character nº5",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/character/5",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"character",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Character nº41",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/character/41",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"character",
+						"41"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Location nº6",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/location/6",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"location",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Location nº31",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rickandmortyapi.com/api/location/31",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"api",
+						"location",
+						"31"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
