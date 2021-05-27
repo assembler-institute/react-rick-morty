@@ -1,0 +1,172 @@
+{
+	"id": "b323cd95-d741-4b03-bcbb-0c5b8f262d40",
+	"name": "Rick and Morty API",
+	"timestamp": "2021-05-27T06:32:51.144Z",
+	"collection_id": "0f8b9182-bda7-4226-b241-e7c11340a306",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "2ec06477-a212-4967-87e9-04c886b8179f",
+			"name": "Get All data with Base URL",
+			"url": "https://rickandmortyapi.com/api/",
+			"time": 421,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				421
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "8e350da3-58a0-41d1-9a6e-2d9e3951c8c0",
+			"name": "Get Page 1  Episodes ",
+			"url": "https://rickandmortyapi.com/api/episode?page=1",
+			"time": 337,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				337
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "b8274fe3-cbe5-4b03-8a90-6bb7abc05324",
+			"name": "Get Page 2 Episodes",
+			"url": "https://rickandmortyapi.com/api/episode?page=2",
+			"time": 129,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				129
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "1b05d818-5a4f-4c05-aa67-f4ea1e083bee",
+			"name": "Get Page 3 Episodes",
+			"url": "https://rickandmortyapi.com/api/episode?page=3",
+			"time": 105,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				105
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "b2caa40c-ad5b-46bf-8170-e11e4d088fb1",
+			"name": "Get An Episode by Id",
+			"url": "https://rickandmortyapi.com/api/episode/41",
+			"time": 56,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				56
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "767399ac-8848-4d00-a303-7541f6ba2dad",
+			"name": "Get A Character by Id",
+			"url": "https://rickandmortyapi.com/api/character/1",
+			"time": 60,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				60
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "e1d5740b-e820-4a04-9614-3fe900e9306d",
+			"name": "Get a Location by Id",
+			"url": "https://rickandmortyapi.com/api/location/4",
+			"time": 65,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				65
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 1173,
+	"collection": {
+		"requests": [
+			{
+				"id": "2ec06477-a212-4967-87e9-04c886b8179f",
+				"method": "GET"
+			},
+			{
+				"id": "8e350da3-58a0-41d1-9a6e-2d9e3951c8c0",
+				"method": "GET"
+			},
+			{
+				"id": "b8274fe3-cbe5-4b03-8a90-6bb7abc05324",
+				"method": "GET"
+			},
+			{
+				"id": "1b05d818-5a4f-4c05-aa67-f4ea1e083bee",
+				"method": "GET"
+			},
+			{
+				"id": "b2caa40c-ad5b-46bf-8170-e11e4d088fb1",
+				"method": "GET"
+			},
+			{
+				"id": "767399ac-8848-4d00-a303-7541f6ba2dad",
+				"method": "GET"
+			},
+			{
+				"id": "e1d5740b-e820-4a04-9614-3fe900e9306d",
+				"method": "GET"
+			}
+		]
+	}
+}
