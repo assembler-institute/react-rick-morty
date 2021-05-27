@@ -24,14 +24,12 @@ class Species extends Component {
     // eslint-disable-next-line compat/compat
     const querySearch = new URLSearchParams(location.search);
     const species = querySearch.get("species");
-    // console.log(species);
     this.loadSpecies(species);
   }
 
   async loadSpecies(specie) {
     try {
       const { data } = await getCharacterSpecies(specie);
-      const { species } = this.state;
       const charactersSpecies = data.results;
 
       this.setState({

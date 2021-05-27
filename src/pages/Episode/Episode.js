@@ -64,11 +64,6 @@ class Episode extends Component {
               <p>Episode not loaded</p>
             </div>
           )}
-          {hasLoaded && (
-            <div className="col col-12">
-              <p>Episode loaded</p>
-            </div>
-          )}
           {hasError && (
             <div className="col col-12">
               <p>Something went wrong</p>
@@ -76,6 +71,11 @@ class Episode extends Component {
             </div>
           )}
           <hr />
+          {hasLoaded && (
+            <div className="col col-12">
+              <h1>Episode {episode.name}</h1>
+            </div>
+          )}
           {characters.length > 0 &&
             characters.map((character) => (
               <CharacterCard
@@ -83,10 +83,10 @@ class Episode extends Component {
                 id={character.id}
                 name={character.name}
                 image={character.image}
-                species={character.species}
+                // species={character.species}
                 status={character.status}
                 origin={character.origin}
-                location={character.location}
+                // location={character.location}
               />
             ))}
         </section>

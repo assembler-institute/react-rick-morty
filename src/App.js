@@ -2,10 +2,10 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import {
   CHARACTER,
-  EPISODE,
   SPECIES,
   STATUS,
   LOCATION,
+  EPISODE,
   HOME,
 } from "./constants/routes";
 import Home from "./pages/Home";

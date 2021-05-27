@@ -24,15 +24,12 @@ class Status extends Component {
     // eslint-disable-next-line compat/compat
     const querySearch = new URLSearchParams(location.search);
     const status = querySearch.get("status");
-    // console.log(species);
     this.loadStatus(status);
   }
 
   async loadStatus(stat) {
     try {
       const { data } = await getCharacterStatus(stat);
-      const { status } = this.state;
-      console.log(data);
       const charactersStatus = data.results;
 
       this.setState({
