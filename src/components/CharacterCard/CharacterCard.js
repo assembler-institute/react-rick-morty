@@ -5,7 +5,10 @@ import "./CharacterCard.scss";
 
 import * as routes from "../../constants/routes";
 
-function CharacterCard({ id, name, image, species, status, origin, location }) {
+function CharacterCard({ id, name, image, status, origin }) {
+  const { url } = origin;
+  const originId = url.replace("https://rickandmortyapi.com/api/location/", "");
+
   return (
     <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
       <img className="CharacterCard__img" src={image} alt={name} />
@@ -15,7 +18,7 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
       <div className="CharacterCard__meta">
         <Link
           className="CharacterCard__meta-item"
-          to={`${routes.LOCATION}/${id}`}
+          to={`${routes.LOCATION}/${originId}`}
         >
           {origin.name}
         </Link>

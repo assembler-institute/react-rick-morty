@@ -1,10 +1,11 @@
 import React from "react";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { HOME, EPISODE, CHARACTER } from "./constants/routes";
+import { HOME, EPISODE, CHARACTER, LOCATION } from "./constants/routes";
 import Home from "./pages/Home";
 import Episode from "./pages/Episode";
 import Character from "./pages/Character";
+import Location from "./pages/Location";
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
         <Route
           path={`${CHARACTER}/:characterId`}
           render={(routerProps) => <Character {...routerProps} />}
+        />
+        <Route
+          path={`${LOCATION}/:locationId`}
+          render={(routerProps) => <Location {...routerProps} />}
         />
         <Route
           path={`${EPISODE}/:episodeId`}

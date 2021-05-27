@@ -1,50 +1,54 @@
-import React, { Component } from "react";
+import { React, Component } from "react";
 
-import { EPISODE, URL } from "../../constants/routes";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
+import { LOCATION, URL } from "../../constants/routes";
 
 const axios = require("axios");
 
-class Episode extends Component {
+class Location extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       name: null,
-      episode: null,
-      airDate: null,
-      characters: [],
+      type: null,
+      dimension: null,
+      residents: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
     };
-
-    this.loadSingleEpisode = this.loadSingleEpisode.bind(this);
   }
 
   async componentDidMount() {
-    await this.loadSingleEpisode();
+    await this.loadLocation();
   }
 
-  async loadSingleEpisode() {
+  async componentDidUpdate() {
+    await this.loadLocation();
+  }
+
+  async loadLocation() {
     try {
       const { location } = this.props;
-      const id = location.pathname.replace("/episode/", "");
-      const response = await axios.get(`${URL}${EPISODE}/${id}`);
+      const id = location.pathname.replace("/location/", "");
+      const response = await axios.get(`${URL}${LOCATION}/${id}`);
       const data = response.data;
-      const { name, episode, air_date: airDate, characters } = data;
-      const pjs = characters.map((pj) => axios.get(pj));
-      const charactersArr = [];
+
+      const { name, type, dimension, residents } = data;
+      const locResidents = residents.map((resident) => axios.get(resident));
+      const residentsArr = [];
       // eslint-disable-next-line compat/compat
-      await Promise.all(pjs).then((result) =>
-        result.forEach((r) => charactersArr.push(r.data)),
+      await Promise.all(locResidents).then((result) =>
+        result.forEach((e) => residentsArr.push(e.data)),
       );
+
       this.setState({
         name: name,
-        episode: episode,
-        airDate: airDate,
-        characters: charactersArr,
+        type: type,
+        dimension: dimension,
+        residents: residentsArr,
         hasLoaded: true,
       });
     } catch (error) {
@@ -57,13 +61,13 @@ class Episode extends Component {
 
   render() {
     const {
-      characters,
       hasLoaded,
       hasError,
       errorMessage,
-      episode,
       name,
-      airDate,
+      type,
+      dimension,
+      residents,
     } = this.state;
     return (
       <Layout>
@@ -72,9 +76,9 @@ class Episode extends Component {
             <div className="col col-12">
               <h1>{name}</h1>
               <p>
-                {episode} / {airDate}
+                {type} / {dimension}
               </p>
-              {characters.map((character) => (
+              {residents.map((character) => (
                 <CharacterCard
                   key={character.id}
                   id={character.id}
@@ -101,4 +105,4 @@ class Episode extends Component {
   }
 }
 
-export default Episode;
+export default Location;
