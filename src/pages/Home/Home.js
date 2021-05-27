@@ -11,8 +11,8 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      /* page: 1,
-      paginationInfo: null, */
+      page: 1,
+      paginationInfo: null,
       episodes: [],
       hasLoaded: false,
       hasError: false,
@@ -20,20 +20,38 @@ class Home extends Component {
     };
 
     this.loadEpisodes = this.loadEpisodes.bind(this);
+    this.loadMore = this.loadMore.bind(this);
   }
 
   async componentDidMount() {
-    await this.loadEpisodes();
+    const { page } = this.state;
+    await this.loadEpisodes(page);
   }
 
-  async loadEpisodes() {
+  componentDidUpdate(_prevProps, prevState) {
+    const { page: prevPage } = prevState;
+    const { page } = this.state;
+    if (prevPage !== page) {
+      this.loadEpisodes(page);
+    }
+  }
+
+  loadMore() {
+    this.setState((prevState) => ({
+      page: prevState.page + 1,
+    }));
+  }
+
+  async loadEpisodes(page) {
     try {
-      const response = await axios.get(`${URL}${EPISODE}`);
+      const response = await axios.get(`${URL}${EPISODE}?page=${page}`);
       const data = response.data.results;
-      this.setState({
+      const info = response.data.info;
+      this.setState((prevState) => ({
+        paginationInfo: info,
         hasLoaded: true,
-        episodes: data,
-      });
+        episodes: [...prevState.episodes, ...data],
+      }));
     } catch (error) {
       this.setState({
         errorMessage: error.message,
@@ -43,7 +61,13 @@ class Home extends Component {
   }
 
   render() {
-    const { hasLoaded, hasError, errorMessage, episodes } = this.state;
+    const {
+      hasLoaded,
+      hasError,
+      errorMessage,
+      episodes,
+      paginationInfo,
+    } = this.state;
     return (
       <Layout>
         <section className="row">
@@ -77,6 +101,17 @@ class Home extends Component {
             <hr />
           </div>
         </section>
+
+        <div className="d-flex justify-content-center">
+          <button
+            type="button"
+            className="btn btn-primary"
+            disabled={paginationInfo && !paginationInfo.next}
+            onClick={this.loadMore}
+          >
+            Load more
+          </button>
+        </div>
       </Layout>
     );
   }
