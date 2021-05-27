@@ -5,7 +5,21 @@ import "./CharacterCard.scss";
 
 import * as routes from "../../constants/routes";
 
-function CharacterCard({ id, name, image, species, status, origin, location }) {
+function CharacterCard({
+  id,
+  name,
+  image,
+  species,
+  status,
+  origin,
+  location,
+  extraInfo,
+}) {
+  function locationEndPoint(data) {
+    const endPoint = data.split("/");
+    return endPoint[endPoint.length - 1];
+  }
+
   return (
     <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
       <img className="CharacterCard__img" src={image} alt="" />
@@ -15,13 +29,20 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
       <div className="CharacterCard__meta">
         <Link
           className="CharacterCard__meta-item"
-          to={`${routes.LOCATION}/${id}`}
+          to={`${routes.LOCATION}/${locationEndPoint(origin.url)}`}
         >
           {origin.name}
         </Link>
         <p className="CharacterCard__meta-item">|</p>
-        <p className="CharacterCard__meta-item">{status}</p>
+        <p className="CharacterCard__meta-item">{species}</p>
       </div>
+      {extraInfo && (
+        <div className="CharacterCard__meta">
+          <p className="CharacterCard__meta-item">{status}</p>
+          <p className="CharacterCard__meta-item">|</p>
+          <p className="CharacterCard__meta-item">{location.name}</p>
+        </div>
+      )}
     </div>
   );
 }
