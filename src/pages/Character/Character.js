@@ -111,6 +111,9 @@ class Character extends Component {
           <div className="col col-12 my-0">
             <hr />
           </div>
+          <div className="col col-12 mb-3">
+            <h2>Episodes</h2>
+          </div>
           {/* EPISODES FOR CHARACTER */}
           {episodes.length > 0 &&
             episodes.map((episode) => (
