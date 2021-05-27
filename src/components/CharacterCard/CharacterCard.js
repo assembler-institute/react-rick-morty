@@ -25,7 +25,7 @@ class CharacterCard extends Component {
                 Species
               </p>
               <Link
-                className="CharacterCard__meta-item"
+                className="CharacterCard__meta-item text-right"
                 to={`${routes.SPECIES}?species=${species.toLowerCase()}`}
               >
                 {species}
@@ -38,7 +38,7 @@ class CharacterCard extends Component {
               Status
             </p>
             <Link
-              className="CharacterCard__meta-item"
+              className="CharacterCard__meta-item text-right"
               to={`${routes.STATUS}?status=${status.toLowerCase()}`}
             >
               {status}
@@ -51,7 +51,7 @@ class CharacterCard extends Component {
             </p>
             <br />
             <Link
-              className="CharacterCard__meta-item"
+              className="CharacterCard__meta-item text-right"
               to={`${routes.LOCATION}/${returnLocationId(origin.url)}`}
             >
               {origin.name}
@@ -65,7 +65,7 @@ class CharacterCard extends Component {
               </p>
               <br />
               <Link
-                className="CharacterCard__meta-item"
+                className="CharacterCard__meta-item text-right"
                 to={`${routes.LOCATION}/${returnLocationId(location.url)}`}
               >
                 {location.name}
