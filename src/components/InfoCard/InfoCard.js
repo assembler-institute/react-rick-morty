@@ -16,6 +16,7 @@ function InfoCard({
   let subtitleRoute = null;
   let subtitle2Route = null;
 
+  // CHARACTER
   if (title === "CHARACTER") {
     const newId = subtitleId.toLowerCase();
     const new2Id = subtitle2Id.toLowerCase();
@@ -23,15 +24,19 @@ function InfoCard({
     if (subtitle2 !== null) {
       subtitle2Route = `${routes.STATUS}?status=${new2Id}`;
     }
+    // ORIGIN
   } else if (title === "ORIGIN") {
     subtitleRoute = `${routes.LOCATION}/${returnLocationId(subtitleURL)}`;
+    // LOCATION
   } else {
     subtitleRoute = `${routes.LOCATION}/${returnLocationId(subtitleURL)}`;
   }
 
   return (
     <div className="col col-5 mr-3 px-0">
+      {/* TITLE */}
       <h5>{title}</h5>
+      {/* SUBTITLES */}
       <div className="d-flex">
         <Link className="subtitle-link" to={subtitleRoute}>
           <p className="mr-2">{subtitle}</p>

@@ -79,6 +79,7 @@ class Species extends Component {
           <div className="col col-12 my-0">
             <hr />
           </div>
+          {/* CHARACTERS BELONGING TO SPECIES */}
           {characters.length > 0 &&
             characters.map((character) => (
               <CharacterCard

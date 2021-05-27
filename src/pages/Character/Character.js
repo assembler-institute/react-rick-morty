@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { getCharacter, makePromises } from "../../api";
 import Layout from "../../components/Layout";
-import EpisodeCard from "../../components/EpisodeCard";
 import InfoCard from "../../components/InfoCard";
+import EpisodeCard from "../../components/EpisodeCard";
+import { getCharacter, makePromises } from "../../api";
 
 class Character extends Component {
   constructor(props) {
@@ -29,8 +29,6 @@ class Character extends Component {
   async loadCharacter(characterId) {
     try {
       const { data } = await getCharacter(characterId);
-      // eslint-disable-next-line no-console
-      console.log(data);
       // eslint-disable-next-line compat/compat
       const characterEpisodesResponse = await Promise.all(
         makePromises(data.episode),
@@ -77,12 +75,12 @@ class Character extends Component {
             </div>
           )}
           <hr />
+          {/* CHARACTER INFO */}
           {hasLoaded && !hasError && (
             <div className="top-part row px-0 mb-4 col col-12 d-flex justify-content-between">
               <div className="right-part col col-5 p-0">
                 <img src={character.image} alt={`${character.name} profile`} />
               </div>
-
               <div className="left-part col col-6 px-0">
                 <h1>{character.name}</h1>
                 <div className="col col-12 mb-4 px-0">
@@ -113,6 +111,7 @@ class Character extends Component {
           <div className="col col-12 my-0">
             <hr />
           </div>
+          {/* EPISODES FOR CHARACTER */}
           {episodes.length > 0 &&
             episodes.map((episode) => (
               <EpisodeCard

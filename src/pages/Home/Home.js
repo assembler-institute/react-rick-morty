@@ -31,7 +31,6 @@ class Home extends Component {
   async componentDidUpdate(_prevProps, prevState) {
     const { page: prevPage } = prevState;
     const { page } = this.state;
-
     if (prevPage !== page) {
       this.loadEpisodes(page);
     }
@@ -46,7 +45,6 @@ class Home extends Component {
   async loadEpisodes(page) {
     try {
       const { data } = await getEpisodes(page);
-
       this.setState((prevState) => ({
         paginationInfo: data.info,
         episodes: [...prevState.episodes, ...data.results],
@@ -91,6 +89,7 @@ class Home extends Component {
           <div className="col col-12">
             <hr />
           </div>
+          {/* EPISODES */}
           {episodes.length > 0 &&
             episodes.map((episode) => (
               <EpisodeCard

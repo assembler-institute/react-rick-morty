@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-
+import { getEpisode, makePromises } from "../../api";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
-import { getEpisode, makePromises } from "../../api";
 
 class Episode extends Component {
   constructor(props) {
@@ -78,6 +77,7 @@ class Episode extends Component {
           <div className="col col-12">
             <hr />
           </div>
+          {/* CHARACTERS IN EPISODE */}
           {characters.length > 0 &&
             characters.map((character) => (
               <CharacterCard
@@ -85,10 +85,8 @@ class Episode extends Component {
                 id={character.id}
                 name={character.name}
                 image={character.image}
-                // species={character.species}
                 status={character.status}
                 origin={character.origin}
-                // location={character.location}
               />
             ))}
         </section>

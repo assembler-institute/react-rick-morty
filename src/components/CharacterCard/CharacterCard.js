@@ -8,11 +8,6 @@ import * as routes from "../../constants/routes";
 
 // eslint-disable-next-line react/prefer-stateless-function
 class CharacterCard extends Component {
-  // eslint-disable-next-line no-useless-constructor
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { id, name, image, species, status, origin, location } = this.props;
 
@@ -23,6 +18,7 @@ class CharacterCard extends Component {
           <h3 className="CharacterCard__name h4 mb-2">{name}</h3>
         </Link>
         <div className="CharacterCard__meta d-flex flex-column">
+          {/* SPECIES */}
           {species && (
             <div className="d-flex justify-content-between">
               <p className="CharacterCard__meta-item CharacterCard__meta-title">
@@ -36,6 +32,7 @@ class CharacterCard extends Component {
               </Link>
             </div>
           )}
+          {/* STATUS */}
           <div className="d-flex justify-content-between">
             <p className="CharacterCard__meta-item CharacterCard__meta-title">
               Status
@@ -47,6 +44,7 @@ class CharacterCard extends Component {
               {status}
             </Link>
           </div>
+          {/* ORIGIN */}
           <div className="d-flex justify-content-between">
             <p className="CharacterCard__meta-item CharacterCard__meta-title">
               Origin
@@ -59,6 +57,7 @@ class CharacterCard extends Component {
               {origin.name}
             </Link>
           </div>
+          {/* LOCATION */}
           {location && (
             <div className="d-flex justify-content-between">
               <p className="CharacterCard__meta-item CharacterCard__meta-title">
