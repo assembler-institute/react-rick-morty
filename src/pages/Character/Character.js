@@ -1,50 +1,46 @@
 import React, { Component } from "react";
 
-import { getEpisodes } from "../../api";
-
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
+import CharacterTitle from "../../components/CharacterTitle";
 
-class Home extends Component {
+import { getCharacter, getUrl } from "../../api";
+
+function makePromises(urls = []) {
+  return urls.map((url) => getUrl(url));
+}
+
+class Character extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      page: 1,
-      paginationInfo: null,
+      character: null,
       episodes: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
     };
 
-    this.loadEpisodes = this.loadEpisodes.bind(this);
-    this.loadNextPage = this.loadNextPage.bind(this);
+    this.loadCharacter = this.loadCharacter.bind(this);
   }
 
   componentDidMount() {
-    const { page } = this.state;
-    this.loadEpisodes(page);
+    const { match } = this.props;
+    const { characterId } = match.params;
+    this.loadCharacter(characterId);
   }
 
-  componentDidUpdate(_prevProps, prevState) {
-    const { page: prevPage } = prevState;
-    const { page } = this.state;
-
-    if (prevPage !== page) {
-      this.loadEpisodes(page);
-    }
-  }
-
-  async loadEpisodes(page) {
+  async loadCharacter(characterId) {
     try {
-      const { data } = await getEpisodes(page);
-
-      this.setState((prevState) => ({
-        paginationInfo: data.info,
-        episodes: [...prevState.episodes, ...data.results],
+      const { data } = await getCharacter(characterId);
+      const episodesResponse = await Promise.all(makePromises(data.episode));
+      const episodes = episodesResponse.map((episode) => episode.data);
+      this.setState({
+        episodes: episodes,
         hasLoaded: true,
-      }));
+        character: data,
+      });
     } catch (error) {
       this.setState({
         hasLoaded: true,
@@ -54,15 +50,9 @@ class Home extends Component {
     }
   }
 
-  loadNextPage() {
-    this.setState((prevState) => ({
-      page: prevState.page + 1,
-    }));
-  }
-
   render() {
     const {
-      paginationInfo,
+      character,
       episodes,
       hasLoaded,
       hasError,
@@ -71,14 +61,9 @@ class Home extends Component {
     return (
       <Layout>
         <section className="row">
-          {hasLoaded && !hasError && (
-            <div className="col col-12">
-              <h1>Episodes loaded!</h1>
-            </div>
-          )}
           {!hasLoaded && (
             <div className="col col-12">
-              <h1>Loading episodes...</h1>
+              <h1>Loading character...</h1>
             </div>
           )}
           {hasError && (
@@ -87,6 +72,21 @@ class Home extends Component {
               <p>{errorMessage}</p>
             </div>
           )}
+          {hasLoaded && !hasError && character && (
+            <CharacterTitle
+              key={character.id}
+              id={character.id}
+              name={character.name}
+              image={character.image}
+              species={character.species}
+              status={character.status}
+              origin={character.origin}
+              location={character.location}
+            />
+          )}
+          <div className="col col-12">
+            <h4>Episodes</h4>
+          </div>
           <div className="col col-12">
             <hr />
           </div>
@@ -100,21 +100,10 @@ class Home extends Component {
                 episode={episode.episode}
               />
             ))}
-          <div className="col col-12">
-            <hr />
-          </div>
-          <button
-            className="btn btn-primary mx-auto"
-            type="button"
-            disabled={paginationInfo && !paginationInfo.next}
-            onClick={this.loadNextPage}
-          >
-            Load next page
-          </button>
         </section>
       </Layout>
     );
   }
 }
 
-export default Home;
+export default Character;
