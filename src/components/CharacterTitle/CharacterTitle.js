@@ -28,15 +28,23 @@ function CharacterTitle({
         <div className="d-flex flex-row mt-4">
           <div className="mr-4">
             <h6>ORIGIN</h6>
-            <Link to={`${routes.LOCATION}/${originId}`}>
-              <p>{origin.name}</p>
-            </Link>
+            {origin.url ? (
+              <Link to={`${routes.LOCATION}/${originId}`}>
+                <p>{origin.name}</p>
+              </Link>
+            ) : (
+              <p className="mr-2">{origin.name}</p>
+            )}
           </div>
           <div>
             <h6>LOCATION</h6>
-            <Link to={`${routes.LOCATION}/${locationId}`}>
-              <p>{location.name}</p>
-            </Link>
+            {location.url ? (
+              <Link to={`${routes.LOCATION}/${locationId}`}>
+                <p>{location.name}</p>
+              </Link>
+            ) : (
+              <p className="mr-2">{location.name}</p>
+            )}
           </div>
         </div>
       </div>
