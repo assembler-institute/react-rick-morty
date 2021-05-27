@@ -25,8 +25,16 @@ class Location extends Component {
     await this.loadLocation();
   }
 
-  async componentDidUpdate() {
-    await this.loadLocation();
+  componentDidUpdate(prevProps) {
+    const { match: prevMatch } = prevProps;
+    const { locationId: prevLocationId } = prevMatch.params;
+
+    const { match } = this.props;
+    const { locationId } = match.params;
+
+    if (prevLocationId !== locationId) {
+      this.loadLocation();
+    }
   }
 
   async loadLocation() {
