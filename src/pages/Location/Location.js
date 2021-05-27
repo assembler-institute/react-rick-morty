@@ -1,57 +1,51 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { getCharacter } from "../../api";
+import { getLocation } from "../../api";
 import Layout from "../../components/Layout";
-import EpisodeCard from "../../components/EpisodeCard";
+import CharacterCard from "../../components/CharacterCard";
 
-class Character extends Component {
+class Location extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       name: "",
-      species: "",
-      status: "",
-      originName: "",
-      locationName: "",
-      image: "",
-      episodes: [],
+      type: "",
+      dimension: "",
+      residents: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
     };
 
-    this.loadCharacter = this.loadCharacter.bind(this);
+    this.loadLocation = this.loadLocation.bind(this);
   }
 
   componentDidMount() {
     // console.log(this.props);
     const { match } = this.props;
-    const { characterId } = match.params;
+    const { locationId } = match.params;
     // console.log(characterId);
-    this.loadCharacter(characterId);
+    this.loadLocation(locationId);
   }
 
-  async loadCharacter(characterId) {
+  async loadLocation(locationId) {
     try {
-      const { data } = await getCharacter(characterId);
+      const { data } = await getLocation(locationId);
 
-      const promises = data.episode.map((episode) => axios.get(episode));
+      const promises = data.residents.map((resident) => axios.get(resident));
       // eslint-disable-next-line compat/compat
-      const episodesResponse = await Promise.all(promises);
+      const residentsResponse = await Promise.all(promises);
 
-      const episodes = episodesResponse.map((episode) => episode.data);
-      // console.log({ data });
-      // console.log({ episodesResponse });
-      // console.log({ episodes });
+      const residents = residentsResponse.map((resident) => resident.data);
+      console.log({ data });
+      console.log({ residentsResponse });
+      console.log({ residents });
       this.setState({
         name: data.name,
-        species: data.species,
-        status: data.status,
-        originName: data.origin.name,
-        locationName: data.location.name,
-        image: data.image,
-        episodes: episodes,
+        type: data.type,
+        dimension: data.dimension,
+        residents: residents,
         hasLoaded: true,
       });
     } catch (error) {
@@ -66,12 +60,9 @@ class Character extends Component {
   render() {
     const {
       name,
-      species,
-      status,
-      originName,
-      locationName,
-      image,
-      episodes,
+      type,
+      dimension,
+      residents,
       hasLoaded,
       hasError,
       errorMessage,
@@ -80,18 +71,64 @@ class Character extends Component {
       <Layout>
         {!hasLoaded && (
           <div className="col col-12">
-            <h1>Loading character...</h1>
+            <h1>Loading location...</h1>
           </div>
         )}
         {hasError && (
           <div className="col col-12">
-            <h1>Unable to load character. Something went wrong!</h1>
+            <h1>Unable to load location. Something went wrong!</h1>
             <p>{errorMessage}</p>
           </div>
         )}
         {hasLoaded && !hasError && (
           <div>
+            <section>
+              <div className="col col-12 p-0">
+                <hr />
+              </div>
+              <div className="row d-flex justify-content-center">
+                <h1 className="col col-6 text-center">{name}</h1>
+              </div>
+              <div className="col col-12 p-0">
+                <hr />
+              </div>
+              <div className="row d-flex justify-content-between">
+                <div className="col col-4">
+                  <div className="col col-9 text-center">
+                    <h5>TYPE</h5>
+                    <p>{type}</p>
+                  </div>
+                </div>
+                <div className="col col-4">
+                  <div className="col col-9 text-center">
+                    <h5>DIMENSION</h5>
+                    <p>{dimension}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col col-12 p-0">
+                <hr />
+              </div>
+            </section>
             <section className="row">
+              <div className="col col-12 mb-4">
+                <h5>Residents</h5>
+              </div>
+              {residents.length > 0 &&
+                residents.map((resident) => (
+                  <CharacterCard
+                    key={resident.id}
+                    id={resident.id}
+                    name={resident.name}
+                    image={resident.image}
+                    species={resident.species}
+                    status={resident.status}
+                    origin={resident.origin}
+                    location={resident.location}
+                  />
+                ))}
+            </section>
+            {/* <section className="row">
               <div className="col col-4">
                 <img className="CharacterCard__img" src={image} alt="" />
               </div>
@@ -139,7 +176,7 @@ class Character extends Component {
                     episode={episode.episode}
                   />
                 ))}
-            </section>
+            </section> */}
           </div>
         )}
       </Layout>
@@ -148,4 +185,4 @@ class Character extends Component {
   }
 }
 
-export default Character;
+export default Location;

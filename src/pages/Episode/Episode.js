@@ -23,7 +23,7 @@ class Episode extends Component {
     // console.log(this.props);
     const { match } = this.props;
     const { episodeId } = match.params;
-    console.log(episodeId);
+    // console.log(episodeId);
     this.loadEpisode(episodeId);
   }
 
@@ -35,9 +35,9 @@ class Episode extends Component {
       const charactersResponse = await Promise.all(promises);
 
       const characters = charactersResponse.map((character) => character.data);
-      console.log({ data });
-      console.log({ charactersResponse });
-      console.log({ characters });
+      // console.log({ data });
+      // console.log({ charactersResponse });
+      // console.log({ characters });
       this.setState({
         episode: data,
         characters: characters,
@@ -80,9 +80,17 @@ class Episode extends Component {
             <hr />
           </div> */}
         <section className="row">
-          {hasLoaded &&
-            !hasError &&
-            characters.length > 0 &&
+          {hasLoaded && !hasError && (
+            <div className="col col-12">
+              <h1 className="col col-12">{episode.name}</h1>
+              <div className="CharacterCard__meta col col-12">
+                <p className="CharacterCard__meta-item">{episode.episode}</p>
+                <p className="CharacterCard__meta-item">|</p>
+                <p className="CharacterCard__meta-item">{episode.air_date}</p>
+              </div>
+            </div>
+          )}
+          {characters.length > 0 &&
             characters.map((character) => (
               <CharacterCard
                 key={character.id}
