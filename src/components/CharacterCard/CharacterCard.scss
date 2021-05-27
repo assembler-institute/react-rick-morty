@@ -14,8 +14,12 @@
     margin: 0.75rem 0;
   }
 
+  &__meta-line {
+    margin: 0;
+  }
   &__meta {
     display: flex;
+    padding: 0;
     &-item {
       margin-right: 0.5rem;
     }

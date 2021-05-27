@@ -29,9 +29,18 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
         ) : (
           <p className="CharacterCard__meta-item">{origin.name}</p>
         )}
-
-        <p className="CharacterCard__meta-item">|</p>
-        <p className="CharacterCard__meta-item">{status}</p>
+      </div>
+      <p className="CharacterCard__meta-line">Status: {status}</p>
+      <div className="">
+        {species && (
+          <p className="CharacterCard__meta-line">Species: {species}</p>
+        )}
+        {/* {species && location && <p className="CharacterCard__meta-item">|</p>} */}
+        {location && (
+          <p className="CharacterCard__meta-line">
+            Resident of {location.name}
+          </p>
+        )}
       </div>
     </div>
   );

@@ -55,7 +55,7 @@ class Location extends Component {
         location: data,
         residents: residents,
       });
-      // console.log(characters);
+      // console.log(residents);
     } catch (error) {
       this.setState({
         hasLoaded: true,

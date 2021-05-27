@@ -106,10 +106,10 @@ class Episode extends Component {
               id={character.id}
               name={character.name}
               image={character.image}
-              species={character.species}
+              // species={character.species}
               status={character.status}
               origin={character.origin}
-              location={character.location}
+              // location={character.location}
             />
           ))}
         </section>
