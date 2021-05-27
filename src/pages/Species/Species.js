@@ -1,42 +1,41 @@
 import React, { Component } from "react";
-import { getEpisode, makePromises } from "../../api";
+import { getCharacterSpecies } from "../../api";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
-class Episode extends Component {
+class Species extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      episode: null,
+      species: null,
       characters: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
     };
-
-    this.loadEpisode = this.loadEpisode.bind(this);
+    this.loadSpecies = this.loadSpecies.bind(this);
   }
 
   componentDidMount() {
-    const { match } = this.props;
-    const { episodeId } = match.params;
-    this.loadEpisode(episodeId);
+    // eslint-disable-next-line no-console
+    console.clear();
+    const { location } = this.props;
+    // eslint-disable-next-line compat/compat
+    const querySearch = new URLSearchParams(location.search);
+    const species = querySearch.get("species");
+    this.loadSpecies(species);
   }
 
-  async loadEpisode(episodeId) {
+  async loadSpecies(specie) {
     try {
-      const { data } = await getEpisode(episodeId);
-      // eslint-disable-next-line compat/compat
-      const charactersResponse = await Promise.all(
-        makePromises(data.characters),
-      );
-      const characters = charactersResponse.map((character) => character.data);
+      const { data } = await getCharacterSpecies(specie);
+      const charactersSpecies = data.results;
 
       this.setState({
+        species: specie,
         hasLoaded: true,
-        episode: data,
-        characters: characters,
+        characters: charactersSpecies,
       });
     } catch (error) {
       this.setState({
@@ -49,18 +48,19 @@ class Episode extends Component {
 
   render() {
     const {
-      episode,
+      species,
       characters,
       hasLoaded,
       hasError,
       errorMessage,
     } = this.state;
+
     return (
       <Layout>
         <section className="row">
           {!hasLoaded && (
             <div className="col col-12">
-              <p>Episode not loaded</p>
+              <p>Species not loaded</p>
             </div>
           )}
           {hasError && (
@@ -70,14 +70,16 @@ class Episode extends Component {
             </div>
           )}
           {hasLoaded && !hasError && (
-            <div className="col col-12">
-              <h1>Episode {episode.name}</h1>
+            <div className="top-part col col-12">
+              <h1>
+                {species.charAt(0).toUpperCase() + species.slice(1)} characters
+              </h1>
             </div>
           )}
-          <div className="col col-12">
+          <div className="col col-12 my-0">
             <hr />
           </div>
-          {/* CHARACTERS IN EPISODE */}
+          {/* CHARACTERS BELONGING TO SPECIES */}
           {characters.length > 0 &&
             characters.map((character) => (
               <CharacterCard
@@ -85,8 +87,10 @@ class Episode extends Component {
                 id={character.id}
                 name={character.name}
                 image={character.image}
+                species={character.species}
                 status={character.status}
                 origin={character.origin}
+                location={character.location}
               />
             ))}
         </section>
@@ -95,4 +99,4 @@ class Episode extends Component {
   }
 }
 
-export default Episode;
+export default Species;

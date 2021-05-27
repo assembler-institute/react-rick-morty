@@ -1,6 +1,4 @@
-.CharacterCard {
-  margin-bottom: 2rem;
-
+.Episode {
   &__img {
     display: block;
     width: 100%;
@@ -18,10 +16,6 @@
     display: flex;
     &-item {
       margin-right: 0.5rem;
-      margin-bottom: 0;
-    }
-    &-title {
-      font-weight: bold;
     }
   }
 }

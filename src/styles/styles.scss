@@ -1,0 +1,19 @@
+// Location/Character page
+.top-part {
+  height: fit-content;
+  .right-part {
+    img {
+      max-width: 350px;
+      width: inherit;
+      height: auto;
+    }
+  }
+  .location-tags {
+    height: fit-content;
+    p {
+      width: fit-content;
+      height: fit-content;
+      margin-bottom: 0;
+    }
+  }
+}
