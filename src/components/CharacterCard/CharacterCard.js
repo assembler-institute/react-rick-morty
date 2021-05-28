@@ -12,15 +12,16 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
       <Link to={`${routes.CHARACTER}/${id}`}>
         <h3 className="CharacterCard__name h4">{name}</h3>
       </Link>
-      <div className="CharacterCard__meta">
+      <div className="d-flex">
         <Link
           className="CharacterCard__meta-item"
           to={`${routes.LOCATION}/${id}`}
         >
           {origin.name}
         </Link>
-        <p className="CharacterCard__meta-item">|</p>
-        <p className="CharacterCard__meta-item">{status}</p>
+        <p className="CharacterCard__meta-item text-info">{location.name}</p>
+        <p className="CharacterCard__meta-item text-warning">{status}</p>
+        <p className="CharacterCard__meta-item text-muted">{species}</p>
       </div>
     </div>
   );
