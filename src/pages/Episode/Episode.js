@@ -75,7 +75,6 @@ class Episode extends Component {
               <hr />
             </div>
           )}
-
           {hasError && (
             <div className="col col-12">
               <p>Episode error...</p>
