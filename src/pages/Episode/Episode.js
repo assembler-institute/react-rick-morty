@@ -1,26 +1,97 @@
 import React, { Component } from "react";
-
+import axios from "axios";
+import { getEpisode } from "../../api";
 import Layout from "../../components/Layout";
-// import CharacterCard from "../../components/CharacterCard";
+import CharacterCard from "../../components/CharacterCard";
 
 class Episode extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
-    // episode: null,
-    // characters: [],
-    // hasLoaded: false,
-    // hasError: false,
-    // errorMessage: null,
+    this.state = {
+      episode: null,
+      characters: [],
+      hasLoaded: false,
+      hasError: false,
+      errorMessage: null,
+    };
+
+    this.loadEpisode = this.loadEpisode.bind(this);
+  }
+
+  componentDidMount() {
+    // console.log(this.props);
+    const { match } = this.props;
+    const { episodeId } = match.params;
+    // console.log(episodeId);
+    this.loadEpisode(episodeId);
+  }
+
+  async loadEpisode(episodeId) {
+    try {
+      const { data } = await getEpisode(episodeId);
+      const promises = data.characters.map((character) => axios.get(character));
+      // eslint-disable-next-line compat/compat
+      const charactersResponse = await Promise.all(promises);
+
+      const characters = charactersResponse.map((character) => character.data);
+      // console.log({ data });
+      // console.log({ charactersResponse });
+      // console.log({ characters });
+      this.setState({
+        episode: data,
+        characters: characters,
+        hasLoaded: true,
+      });
+    } catch (error) {
+      this.setState({
+        hasLoaded: true,
+        hasError: true,
+        errorMessage: error.message,
+      });
+    }
   }
 
   render() {
+    const {
+      episode,
+      characters,
+      hasLoaded,
+      hasError,
+      errorMessage,
+    } = this.state;
     return (
       <Layout>
-        <section className="row">
+        {!hasLoaded && (
           <div className="col col-12">
-            {/* {characters.map((character) => (
+            <h1>Loading episode...</h1>
+          </div>
+        )}
+        {hasError && (
+          <div className="col col-12">
+            <h1>Unable to load episode. Something went wrong!</h1>
+            <p>{errorMessage}</p>
+          </div>
+        )}
+
+        {/* <div className="col col-12">
+            <hr />
+            {JSON.stringify(episode, null, 2)}
+            <hr />
+          </div> */}
+        <section className="row">
+          {hasLoaded && !hasError && (
+            <div className="col col-12">
+              <h1 className="col col-12">{episode.name}</h1>
+              <div className="CharacterCard__meta col col-12">
+                <p className="CharacterCard__meta-item">{episode.episode}</p>
+                <p className="CharacterCard__meta-item">|</p>
+                <p className="CharacterCard__meta-item">{episode.air_date}</p>
+              </div>
+            </div>
+          )}
+          {characters.length > 0 &&
+            characters.map((character) => (
               <CharacterCard
                 key={character.id}
                 id={character.id}
@@ -31,8 +102,7 @@ class Episode extends Component {
                 origin={character.origin}
                 location={character.location}
               />
-            ))} */}
-          </div>
+            ))}
         </section>
       </Layout>
     );
