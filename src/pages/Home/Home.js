@@ -26,6 +26,7 @@ class Home extends Component {
   }
 
   async componentDidUpdate(_prevProps, prevState) {
+    // destructuring page property from state and changing its name to prevPage
     const { page: prevPage } = prevState;
     const { page } = this.state;
     // console.log({ page });
