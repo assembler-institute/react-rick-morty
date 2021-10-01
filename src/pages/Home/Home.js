@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
-import Layout from "../../components/Layout";
-import EpisodeCard from "../../components/EpisodeCard";
+import { EpisodeCard, Layout } from "components";
 
 class Home extends Component {
   constructor(props) {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./CharacterCard.scss";
 
-import * as routes from "../../constants/routes";
+import * as routes from "constants/routes";
 
 function CharacterCard({ id, name, image, species, status, origin, location }) {
   return (

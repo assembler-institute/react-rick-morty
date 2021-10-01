@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Layout from "../../components/Layout";
+import { Layout } from "components";
 
 class Location extends Component {
   constructor(props) {

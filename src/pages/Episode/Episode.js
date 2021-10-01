@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
-import Layout from "../../components/Layout";
-import CharacterCard from "../../components/CharacterCard";
+import { CharacterCard, Layout } from "components";
 
 class Episode extends Component {
   constructor(props) {

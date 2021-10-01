@@ -1,15 +1,8 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import {
-  HOME,
-  EPISODE,
-  CHARACTER,
-  LOCATION,
-} from "./constants/routes";
-import Home from "./pages/Home";
-import Episode from "./pages/Episode";
-import Character from "./pages/Character";
-import Location from "./pages/Location";
+
+import { CHARACTER, EPISODE, HOME, LOCATION, } from "constants/routes";
+import { Character, Episode, Home, Location, } from "pages";
 
 function App() {
   return (
@@ -27,7 +20,6 @@ function App() {
         render={(routeProps) => <Location {...routeProps} />}
       />
       <Route
-        exact
         path={HOME}
         render={(routeProps) => <Home {...routeProps} />}
       />
