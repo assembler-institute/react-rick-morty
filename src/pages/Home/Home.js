@@ -51,17 +51,6 @@ class Home extends Component {
         errorMessage: error.message
       }))
     }
-
-    // const pokemons = await fetch(url);
-    // const jsonPokemons = await pokemons.json();
-
-    // let arrayPokemons = await Promise.all(
-    //   jsonPokemons.results.map(async (pokemon) => {
-    //     let pokemonResponse = await fetch(pokemon.url);
-    //     return pokemonResponse.json()
-    //   })
-    // );
-
   }
 
   render() {
