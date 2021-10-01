@@ -30,14 +30,13 @@ class Home extends Component {
     this.loadEpisodes()
   }
 
-
   loadEpisodes = async () => {
     try {
       const { page } = this.state;
 
       const url = `https://rickandmortyapi.com/api/episode?page=${page}`;
-      const result = await fetch(url)
-      const { results, info } = await result.json();
+      const data = await fetch(url)
+      const { results, info } = await data.json();
 
       this.setState((prevState) => ({
         episodes: [...prevState.episodes, ...results],
@@ -47,8 +46,9 @@ class Home extends Component {
 
     } catch (error) {
       this.setState(() => ({
+        hasLoaded: true,
         hasError: true,
-        errorMessage: error
+        errorMessage: error.message
       }))
     }
 
@@ -79,15 +79,17 @@ class Home extends Component {
           <div className="col col-12">
             <hr />
           </div>
-          {episodes.map((episode) => (
-            <EpisodeCard
-              key={episode.id}
-              id={episode.id}
-              name={episode.name}
-              airDate={episode.air_date}
-              episode={episode.episode}
-            />
-          ))}
+          {episodes.length > 0 &&
+            episodes.map((episode) => (
+              <EpisodeCard
+                key={episode.id}
+                id={episode.id}
+                name={episode.name}
+                airDate={episode.air_date}
+                episode={episode.episode}
+              />
+            ))
+          }
           <div className="col col-12 text-center">
             <hr />
             {
