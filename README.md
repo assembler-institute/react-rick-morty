@@ -147,3 +147,5 @@ Thanks goes to these wonderful people
 This project follows the
 [all-contributors](https://github.com/all-contributors/all-contributors)
 specification. Contributions of any kind welcome!
+
+- https://rickandmortyapi.com/api/episode?page=1
