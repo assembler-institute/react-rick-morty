@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -10,7 +10,10 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Switch>
+        <Route path="/episode"><App page="episode" /></Route>
+        <Route path="/"><App page="home" /></Route>
+      </Switch>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root"),

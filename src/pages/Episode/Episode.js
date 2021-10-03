@@ -1,18 +1,40 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 import Layout from "../../components/Layout";
-// import CharacterCard from "../../components/CharacterCard";
+import CharacterCard from "../../components/CharacterCard";
 
 class Episode extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
-    // episode: null,
-    // characters: [],
-    // hasLoaded: false,
-    // hasError: false,
-    // errorMessage: null,
+    this.state = {
+      episode: null,
+      characters: [],
+      hasLoaded: true,
+      hasError: false,
+      errorMessage: null,
+    };
+  }
+
+  componentDidMount() {
+    this.loadCharacters();
+  }
+
+  async loadCharacters() {
+    let episodeId = window.location.pathname.slice(9)
+    const res = await axios.get(`https://rickandmortyapi.com/api/episode/${episodeId}`)
+
+    let newArray = []
+    await res.data.characters.forEach(urlCharacter => {
+      axios.get(urlCharacter)
+        .then(response => newArray.push(response.data))
+    })
+
+    //! NO TIMEOUT
+    setTimeout(() => {
+      this.setState({characters: newArray})
+    }, 50)
   }
 
   render() {
@@ -20,7 +42,7 @@ class Episode extends Component {
       <Layout>
         <section className="row">
           <div className="col col-12">
-            {/* {characters.map((character) => (
+            {this.state.characters.map((character) => (
               <CharacterCard
                 key={character.id}
                 id={character.id}
@@ -31,7 +53,7 @@ class Episode extends Component {
                 origin={character.origin}
                 location={character.location}
               />
-            ))} */}
+            ))}
           </div>
         </section>
       </Layout>
