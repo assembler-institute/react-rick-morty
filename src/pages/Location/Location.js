@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import { getEpisode } from "../../api/requests";
+import { getLocation } from "../../api/requests";
 
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
-export default class Episode extends Component {
+export default class Location extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			episode: null,
+			location: null,
 			characters: [],
 			hasLoaded: false,
 			hasError: false,
@@ -17,20 +17,24 @@ export default class Episode extends Component {
 		};
 	}
 
-	async componentDidMount() {
+	componentDidMount() {
 		this.loadEpisode();
+	}
+
+	componentDidUpdate(prevProps) {
+		if (prevProps.id !== this.props.id) this.loadEpisode();
 	}
 
 	loadEpisode = async () => {
 		try {
-			const data = await getEpisode({
-				episode: this.props.id,
+			const data = await getLocation({
+				location: this.props.id,
 			});
 
 			this.setState((prevState) => ({
 				...prevState,
 				hasLoaded: true,
-				episode: data.episode,
+				location: data.location,
 				characters: data.characters,
 			}));
 		} catch (error) {
@@ -43,7 +47,7 @@ export default class Episode extends Component {
 	};
 
 	render() {
-		const { hasLoaded, hasError, episode, characters } = this.state;
+		const { hasLoaded, hasError, location, characters } = this.state;
 
 		return (
 			<Layout>
@@ -51,14 +55,14 @@ export default class Episode extends Component {
 					{hasLoaded && !hasError && (
 						<>
 							<div className="col col-12">
-								<h3>{episode.name}</h3>
+								<h3>{location.name}</h3>
 							</div>
 							<div className="col col-12">
 								<hr />
 							</div>
 							<div className="col col-12">
 								<h6>
-									{episode.episode} | {episode.air_date}
+									{location.type} | {location.dimension}
 								</h6>
 							</div>
 							<div className="col col-12">

@@ -22,7 +22,7 @@ class Home extends Component {
 		this.loadEpisodes();
 	}
 
-	async componentDidUpdate(prevProps, prevState) {
+	async componentDidUpdate(_, prevState) {
 		prevState.page !== this.state.page && this.loadEpisodes();
 	}
 

@@ -1,0 +1,10 @@
+.CharacterProfile {
+  &__img {
+    display: block;
+    width: 100%;
+    border-radius: 3px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 1.5rem;
+  }
+}
