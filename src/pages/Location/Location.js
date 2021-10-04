@@ -18,14 +18,14 @@ export default class Location extends Component {
 	}
 
 	componentDidMount() {
-		this.loadEpisode();
+		this.loadLocation();
 	}
 
 	componentDidUpdate(prevProps) {
-		if (prevProps.id !== this.props.id) this.loadEpisode();
+		prevProps.id !== this.props.id && this.loadLocation();
 	}
 
-	loadEpisode = async () => {
+	loadLocation = async () => {
 		try {
 			const data = await getLocation({
 				location: this.props.id,

@@ -21,6 +21,10 @@ export default class Character extends Component {
 		this.loadCharacter();
 	}
 
+	componentDidUpdate(prevProps) {
+		prevProps.id !== this.props.id && this.loadCharacter();
+	}
+
 	loadCharacter = async () => {
 		try {
 			const data = await getCharacter({

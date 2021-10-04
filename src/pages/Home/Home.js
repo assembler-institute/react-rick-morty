@@ -18,11 +18,11 @@ class Home extends Component {
 		};
 	}
 
-	async componentDidMount() {
+	componentDidMount() {
 		this.loadEpisodes();
 	}
 
-	async componentDidUpdate(_, prevState) {
+	componentDidUpdate(_, prevState) {
 		prevState.page !== this.state.page && this.loadEpisodes();
 	}
 

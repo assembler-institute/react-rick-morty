@@ -17,8 +17,12 @@ export default class Episode extends Component {
 		};
 	}
 
-	async componentDidMount() {
+	componentDidMount() {
 		this.loadEpisode();
+	}
+
+	componentDidUpdate(prevProps) {
+		prevProps.id !== this.props.id && this.loadEpisode();
 	}
 
 	loadEpisode = async () => {
