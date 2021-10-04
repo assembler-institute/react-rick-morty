@@ -3,6 +3,8 @@ import { getEpisodes } from "../../api/requests";
 
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
+import SpinnerLoader from "../../components/SpinnerLoader";
+import ErrorMessage from "../../components/ErrorMessage";
 
 class Home extends Component {
 	constructor(props) {
@@ -29,6 +31,8 @@ class Home extends Component {
 	goNextPage = () => {
 		this.setState((prevState) => ({
 			...prevState,
+			hasLoaded: false,
+			hasError: false,
 			page: ++prevState.page,
 		}));
 	};
@@ -36,6 +40,8 @@ class Home extends Component {
 	goPrevPage = () => {
 		this.setState((prevState) => ({
 			...prevState,
+			hasLoaded: false,
+			hasError: false,
 			page: --prevState.page,
 		}));
 	};
@@ -67,7 +73,11 @@ class Home extends Component {
 		return (
 			<Layout>
 				<section className="row">
-					{hasLoaded && !hasError && (
+					{!hasLoaded ? (
+						<SpinnerLoader />
+					) : hasError ? (
+						<ErrorMessage />
+					) : (
 						<>
 							<div className="col col-12">
 								<h1>Episodes loaded!</h1>
