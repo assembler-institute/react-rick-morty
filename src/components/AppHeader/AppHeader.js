@@ -18,6 +18,12 @@ function AppHeader({ ...props }) {
                 >
                   Home
                 </NavLink>
+                <NavLink
+                className="nav-link"
+                activeClassName="active" 
+                to={routes.EPISODE}
+                >Episode
+                </NavLink>
               </li>
             </ul>
           </nav>
