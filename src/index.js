@@ -11,7 +11,9 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Switch>
+        <Route path="/character"><App page="character" /></Route>
         <Route path="/episode"><App page="episode" /></Route>
+        <Route path="/location"><App page="location" /></Route>
         <Route path="/"><App page="home" /></Route>
       </Switch>
     </BrowserRouter>

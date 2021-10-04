@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import axios from "axios";
 
 import Layout from "../../components/Layout";
@@ -9,7 +10,9 @@ class Episode extends Component {
     super(props);
 
     this.state = {
+      name: null,
       episode: null,
+      air_date: null,
       characters: [],
       hasLoaded: true,
       hasError: false,
@@ -18,29 +21,61 @@ class Episode extends Component {
   }
 
   componentDidMount() {
-    this.loadCharacters();
+    this.loadEpisode()
+    this.loadCharacters()
   }
+
+  async loadEpisode() {
+    // let episodeId = window.location.pathname.slice(9)
+    // const res = await axios.get(`https://rickandmortyapi.com/api/episode/${episodeId}`)
+    const res = await axios.get(`https://rickandmortyapi.com/api/${this.props.location.pathname}`)
+
+    this.setState({
+      name: res.data.name,
+      episode: res.data.episode,
+      air_date: res.data.air_date,
+    })
+  }
+
+  // * JUST TESTING, WILL ERASE LATER
+  // async loadCharacters() {
+  //   let episodeId = window.location.pathname.slice(9)
+  //   const res = await axios.get(`https://rickandmortyapi.com/api/episode/${episodeId}`)
+
+  //   let newArray = []
+  //   await res.data.characters.forEach(urlCharacter => {
+  //     axios.get(urlCharacter)
+  //       .then(response => newArray.push(response.data))
+  //   })
+
+  //   setTimeout(() => {
+  //     this.setState({characters: newArray})
+  //   }, 50)
+  // }
 
   async loadCharacters() {
-    let episodeId = window.location.pathname.slice(9)
-    const res = await axios.get(`https://rickandmortyapi.com/api/episode/${episodeId}`)
+    // let episodeId = window.location.pathname.slice(9)
+    // const res = await axios.get(`https://rickandmortyapi.com/api/episode/${episodeId}`)
+    const res = await axios.get(`https://rickandmortyapi.com/api/${this.props.location.pathname}`)
 
-    let newArray = []
-    await res.data.characters.forEach(urlCharacter => {
-      axios.get(urlCharacter)
-        .then(response => newArray.push(response.data))
-    })
+    const promiseArray = res.data.characters.map(characterURL => axios.get(characterURL))
 
-    //! NO TIMEOUT
-    setTimeout(() => {
-      this.setState({characters: newArray})
-    }, 50)
-  }
+    try {
+      const charactersInfo = (await axios.all(promiseArray)).map(response => response.data)
+      this.setState({ characters: charactersInfo })
+    } catch(error) {
+      console.error(error)
+    }
+}
 
   render() {
     return (
       <Layout>
         <section className="row">
+          <div className="col col-12">
+            <h1 className="col col-12">{this.state.name}</h1>
+            <p className="col col-12">{this.state.episode} | {this.state.air_date}</p>
+          </div>
           <div className="col col-12">
             {this.state.characters.map((character) => (
               <CharacterCard
@@ -51,7 +86,7 @@ class Episode extends Component {
                 species={character.species}
                 status={character.status}
                 origin={character.origin}
-                location={character.location}
+                location={character.origin.url}
               />
             ))}
           </div>
@@ -61,4 +96,4 @@ class Episode extends Component {
   }
 }
 
-export default Episode;
+export default withRouter(Episode);
