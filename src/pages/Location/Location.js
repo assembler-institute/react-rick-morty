@@ -5,6 +5,8 @@ import axios from "axios";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
+import rickImg from "../../images/icons/rick-sanchez.svg"
+
 class Location extends Component {
   constructor(props) {
     super(props)
@@ -16,7 +18,6 @@ class Location extends Component {
 
   componentDidMount() {
     this.loadLocation()
-    console.log(this.props);
   }
 
   async loadLocation() {
@@ -33,9 +34,9 @@ class Location extends Component {
   }
 
   async loadResidents(response) {
-    const promiseArray = response.data.residents.map(residentURL => axios.get(residentURL))
-
+    
     try {
+      const promiseArray = response.data.residents.map(residentURL => axios.get(residentURL))
       const residentsInfo = (
         await axios.all(promiseArray)
       ).map(res => res.data)
@@ -57,7 +58,7 @@ class Location extends Component {
               <h1 className="col col-12 col-sm-6 col-xl-3">{this.state.name}</h1>
               <p className="col col-12 col-sm-6 col-xl-3">{this.state.type} | {this.state.dimension}</p>
             </div>
-            <div className="col col-12">
+            <div className="col col-12 d-flex flex-wrap">
             {this.state.residents.map((character) => (
               <CharacterCard
                 key={character.id}
@@ -75,7 +76,7 @@ class Location extends Component {
           }
           {this.state.name === undefined &&
             <div className="col col-12">
-              <h1 className="col col-12">This location doesn't exist, Rick!</h1>
+              <h1 className="col col-12">This location doesn't exist, Rick! <img src={rickImg} alt="Rick"/></h1>
             </div>
           }
         </section>

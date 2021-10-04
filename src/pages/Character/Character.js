@@ -62,15 +62,15 @@ class Character extends Component {
           <div className="col col-12">
             <div className="d-flex justify-content-start">
               <img src={this.state.image} alt={`${this.state.name} image`}/>
-              <div>
+              <div className="ml-5">
                 <h2>{this.state.name}</h2>
-                <div>
+                <div className="mt-4">
                   <h6>CHARACTER</h6>
-                  <span>{this.state.species}</span>
-                  <span>|</span>
+                  <span className="mr-1">{this.state.species}</span>
+                  <span className="mr-1">|</span>
                   <span>{this.state.status}</span>
-                  <div className="d-flex">
-                    <div>
+                  <div className="d-flex mt-3">
+                    <div className="mr-4">
                       <h6>ORIGIN</h6>
                       <span>{this.state.origin}</span>
                     </div>
@@ -87,16 +87,18 @@ class Character extends Component {
             </div>
           </div>
           <div className="col col-12">
-            <h5>Episodes</h5>
-            {this.state.episodes.map((episode) => (
-              <EpisodeCard
-                key={episode.id}
-                id={episode.id}
-                name={episode.name}
-                airDate={episode.air_date}
-                episode={episode.episode}
-              />
-            ))}
+            <h4 className="ml-3 mt-3">Episodes</h4>
+            <div className="col col-12 d-flex flex-wrap">
+              {this.state.episodes.map((episode) => (
+                <EpisodeCard
+                  key={episode.id}
+                  id={episode.id}
+                  name={episode.name}
+                  airDate={episode.air_date}
+                  episode={episode.episode}
+                />
+              ))}
+            </div>
           </div>
         </section>
       </Layout>

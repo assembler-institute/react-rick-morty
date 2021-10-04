@@ -76,7 +76,7 @@ class Episode extends Component {
             <h1 className="col col-12">{this.state.name}</h1>
             <p className="col col-12">{this.state.episode} | {this.state.air_date}</p>
           </div>
-          <div className="col col-12">
+          <div className="col col-12 d-flex flex-wrap">
             {this.state.characters.map((character) => (
               <CharacterCard
                 key={character.id}
