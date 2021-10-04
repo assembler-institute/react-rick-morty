@@ -2,17 +2,16 @@ import axios from "axios";
 import React, { Component } from "react";
 
 import Layout from "../../components/Layout";
-import CharacterCard from "../../components/CharacterCard";
+import EpisodeCard from "../../components/EpisodeCard";
 
-const url = "https://rickandmortyapi.com/api/episode";
+const url = "https://rickandmortyapi.com/api/character";
 
-class Episode extends Component {
+class Character extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      episode: null,
-      characters: [],
+      character: null,
+      episode: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
@@ -22,21 +21,21 @@ class Episode extends Component {
   async componentDidMount() {
     const { match } = this.props;
     const { id } = match.params;
-    this.loadCharacters(id);
+    this.loadCharacter(id);
   }
 
-  async loadCharacters(id) {
+  async loadCharacter(id) {
     const response = await axios.get(`${url}/${id}`);
-    const episodeResponse = response.data;
-    const characterUrls = response.data.characters;
-    const requests = characterUrls.map((characterUrl) =>
-      axios.get(characterUrl).catch((err) => null),
+    const characterResponse = response.data;
+    const episodeUrls = response.data.episode;
+    const requests = episodeUrls.map((episodeUrl) =>
+      axios.get(episodeUrl).catch((err) => null),
     );
     try {
-      const characters = await axios.all(requests);
+      const episodes = await axios.all(requests);
       this.setState({
-        episode: episodeResponse,
-        characters: characters,
+        episode: episodes,
+        character: characterResponse,
         hasLoaded: true,
       });
     } catch (err) {
@@ -53,19 +52,21 @@ class Episode extends Component {
     // console.log(this.props);
     const {
       episode,
-      characters,
+      character,
       hasLoaded,
       hasError,
       errorMessage,
     } = this.state;
     return (
       <Layout>
+        <p>Character page</p>
         <section className="row">
           {hasLoaded && !hasError && (
             <div className="col col-12">
-              <h3>{episode.name}</h3>
-              <h5>{episode.air_date}</h5>
-              <h5>{episode.episode}</h5>
+              <h1>Character loaded!</h1>
+              <h2>{character.name}</h2>
+              <h4>{character.status}</h4>
+              <h4>{character.species}</h4>
             </div>
           )}
           {hasError && (
@@ -74,18 +75,19 @@ class Episode extends Component {
             </div>
           )}
           <div className="col col-12">
-            {characters.map((character) => (
-              <CharacterCard
-                key={character.data.id}
-                id={character.data.id}
-                name={character.data.name}
-                image={character.data.image}
-                species={character.data.species}
-                status={character.data.status}
-                origin={character.data.origin}
-                location={character.data.location}
-              />
-            ))}
+            <hr />
+          </div>
+          {episode.map((ele) => (
+            <EpisodeCard
+              key={ele.data.id}
+              id={ele.data.id}
+              name={ele.data.name}
+              airDate={ele.data.air_date}
+              episode={ele.data.episode}
+            />
+          ))}
+          <div className="col col-12">
+            <hr />
           </div>
         </section>
       </Layout>
@@ -93,4 +95,4 @@ class Episode extends Component {
   }
 }
 
-export default Episode;
+export default Character;
