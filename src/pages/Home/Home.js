@@ -13,9 +13,9 @@ class Home extends Component {
       // page: 1,
       // paginationInfo: null,
       episodes: [],
-      // hasLoaded: false,
-      // hasError: false,
-      // errorMessage: null,
+      hasLoaded: false,
+      hasError: false,
+      errorMessage: null,
     };
   }
 
@@ -24,23 +24,39 @@ class Home extends Component {
   }
 
   async loadEpisodes() {
-    axios.get(url).then((res) => {
-      const episodes = res.data.results;
-      this.setState({ episodes });
-    });
-    console.log(this);
+    try {
+      await axios.get(url).then((res) => {
+        const episodes = res.data.results;
+        this.setState({
+          episodes: episodes,
+          hasLoaded: true,
+        });
+      });
+    } catch (err) {
+      this.setState({
+        hasLoaded: true,
+        hasError: true,
+        errorMessage: err.message,
+      });
+    }
+    // console.log(this);
   }
 
   render() {
-    const { episodes } = this.state;
+    const { episodes, hasLoaded, hasError, errorMessage } = this.state;
     return (
       <Layout>
         <section className="row">
-          {/* {hasLoaded && !hasError && (
+          {hasLoaded && !hasError && (
             <div className="col col-12">
               <h1>Episodes loaded!</h1>
             </div>
-          )} */}
+          )}
+          {hasError && (
+            <div className="col col-12">
+              <h1>{errorMessage}</h1>
+            </div>
+          )}
           <div className="col col-12">
             <hr />
           </div>
