@@ -36,7 +36,6 @@ class Home extends Component {
         this.setState({ hasError: true });
         console.log(error);
       });
-    console.log(this);
   }
 
   render() {
