@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 import "./CharacterCard.scss";
 
@@ -24,6 +25,16 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
       </div>
     </div>
   );
+}
+
+CharacterCard.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  species: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  origin: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default CharacterCard;
