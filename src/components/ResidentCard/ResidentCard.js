@@ -4,19 +4,19 @@ import PropTypes from 'prop-types';
 function ResidentCard({ id, image, name, species, status, origin, location }) {
   return (
     <div className="row">
-      <img className="col col-6" src={image} alt="" />
+      <img className="col col-6" src={image} alt={name} />
       <div className="col col-6 my-auto">
         <h3>{name}</h3>
         <hr />
-        <h4 className="font-weight-bold">CHARACTER</h4>
+        <h6 className="font-weight-bold">CHARACTER</h6>
         <p>{`${species} | ${status}`}</p>
         <div className="row">
-          <div className="col col-6">
-            <h4 className="font-weight-bold">ORIGIN</h4>
+          <div className="col col-12 col-sm-6">
+            <h6 className="font-weight-bold">ORIGIN</h6>
             <p>{`${origin.name}`}</p>
           </div>
-          <div className="col col-6">
-            <h4 className="font-weight-bold">LOCATION</h4>
+          <div className="col col-12 col-sm-6">
+            <h6 className="font-weight-bold">LOCATION</h6>
             <p>{`${location.name}`}</p>
           </div>
         </div>
