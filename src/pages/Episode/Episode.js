@@ -21,19 +21,28 @@ class Episode extends Component {
     await this.loadCharacters();
   }
 
-  loadCharacters = () => {
+  async loadCharacters() {
     let episodeId = this.props.match.params.id;
+    const EPISODE_URL = `https://rickandmortyapi.com/api/episode/${episodeId}`;
 
     axios
-      .get(`https://rickandmortyapi.com/api/episode/${episodeId}`)
+      .get(EPISODE_URL)
       .then((result) => {
-        this.setState({
-          episode: result.data.name,
-          characters: result.data.characters,
-          hasLoaded: true,
+        const newCharacters = result.data.characters;
+        const newEpisode = result.data.name;
+
+        axios.all(newCharacters.map((url) => axios.get(url))).then((data) => {
+          const res = data.map((i) => i.data);
+
+          this.setState({
+            episode: newEpisode,
+            characters: res,
+            hasLoaded: true,
+          });
         });
-      });
-  };
+      })
+      .catch((error) => console.log(error));
+  }
 
   render() {
     const { episode, characters, hasLoaded } = this.state;
@@ -44,17 +53,16 @@ class Episode extends Component {
             <h1>{episode}</h1>
             {hasLoaded &&
               characters.map((character) => (
-                <p>{character}</p>
-                // <CharacterCard
-                //   key={character.id}
-                //   id={character.id}
-                //   name={character.name}
-                //   image={character.image}
-                //   species={character.species}
-                //   status={character.status}
-                //   origin={character.origin}
-                //   location={character.location}
-                // />
+                <CharacterCard
+                  key={character.id}
+                  id={character.id}
+                  name={character.name}
+                  image={character.image}
+                  species={character.species}
+                  status={character.status}
+                  origin={character.origin}
+                  location={character.location}
+                />
               ))}
           </div>
         </section>
