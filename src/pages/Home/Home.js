@@ -81,16 +81,12 @@ class Home extends Component {
 							<div className="col col-12">
 								<hr />
 								<div className="d-flex justify-content-center">
-									{paginationInfo.prev && (
-										<button onClick={this.goPrevPage} className="btn btn-primary mx-3">
-											Load prev
-										</button>
-									)}
-									{paginationInfo.next && (
-										<button onClick={this.goNextPage} className="btn btn-primary mx-3">
-											Load next
-										</button>
-									)}
+									<button onClick={this.goPrevPage} className="btn btn-primary mx-3" disabled={!Boolean(paginationInfo.prev)}>
+										Load prev
+									</button>
+									<button onClick={this.goNextPage} className="btn btn-primary mx-3" disabled={!Boolean(paginationInfo.next)}>
+										Load next
+									</button>
 								</div>
 							</div>
 						</>
