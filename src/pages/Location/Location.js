@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Layout } from "components";
+import { ResidentCard, Layout } from "components";
 
 import locationsApi from "api/locations";
 
@@ -70,25 +70,16 @@ class Location extends Component {
               <hr />
               {residents.length > 0 &&
                 residents.map((resident) => (
-                  <div className="row" key={resident.id}>
-                    <img className="col col-6" src={resident.image} alt="" />
-                    <div className="col col-6 my-auto">
-                      <h3>{resident.name}</h3>
-                      <hr />
-                      <h6 className="font-weight-bold">CHARACTER</h6>
-                      <p>{`${resident.species} | ${resident.status}`}</p>
-                      <div className="row">
-                        <div className="col col-6">
-                          <h6 className="font-weight-bold">ORIGIN</h6>
-                          <p>{`${resident.origin.name}`}</p>
-                        </div>
-                        <div className="col col-6">
-                          <h6 className="font-weight-bold">LOCATION</h6>
-                          <p>{`${resident.location.name}`}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ResidentCard
+                    key={resident.id}
+                    id={resident.id}
+                    name={resident.name}
+                    image={resident.image}
+                    species={resident.species}
+                    status={resident.status}
+                    origin={resident.origin}
+                    location={resident.location}
+                  />
                 ))}
             </div>
           )}
