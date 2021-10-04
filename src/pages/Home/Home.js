@@ -5,13 +5,13 @@ import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 import SpinnerLoader from "../../components/SpinnerLoader";
 import ErrorMessage from "../../components/ErrorMessage";
+import { NavLink } from "react-router-dom";
 
 class Home extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			page: 1,
 			paginationInfo: null,
 			episodes: [],
 			hasLoaded: false,
@@ -24,32 +24,15 @@ class Home extends Component {
 		this.loadEpisodes();
 	}
 
-	componentDidUpdate(_, prevState) {
-		prevState.page !== this.state.page && this.loadEpisodes();
+	componentDidUpdate(prevProps) {
+		prevProps.page !== this.props.page && this.loadEpisodes();
+		console.log(this.state);
 	}
-
-	goNextPage = () => {
-		this.setState((prevState) => ({
-			...prevState,
-			hasLoaded: false,
-			hasError: false,
-			page: ++prevState.page,
-		}));
-	};
-
-	goPrevPage = () => {
-		this.setState((prevState) => ({
-			...prevState,
-			hasLoaded: false,
-			hasError: false,
-			page: --prevState.page,
-		}));
-	};
 
 	loadEpisodes = async () => {
 		try {
 			const data = await getEpisodes({
-				page: this.state.page,
+				page: this.props.page,
 			});
 
 			this.setState((prevState) => ({
@@ -61,6 +44,7 @@ class Home extends Component {
 		} catch (error) {
 			this.setState((prevState) => ({
 				...prevState,
+				hasLoaded: true,
 				hasError: true,
 				errorMessage: error,
 			}));
@@ -68,16 +52,15 @@ class Home extends Component {
 	};
 
 	render() {
+		const { page } = this.props;
 		const { hasLoaded, hasError, episodes, paginationInfo } = this.state;
 
 		return (
 			<Layout>
 				<section className="row">
-					{!hasLoaded ? (
-						<SpinnerLoader />
-					) : hasError ? (
-						<ErrorMessage />
-					) : (
+					{!hasLoaded && <SpinnerLoader />}
+					{hasLoaded && hasError && <ErrorMessage />}
+					{hasLoaded && !hasError && (
 						<>
 							<div className="col col-12">
 								<h1>Episodes loaded!</h1>
@@ -91,12 +74,12 @@ class Home extends Component {
 							<div className="col col-12">
 								<hr />
 								<div className="d-flex justify-content-center">
-									<button onClick={this.goPrevPage} className="btn btn-primary mx-3" disabled={!Boolean(paginationInfo.prev)}>
+									<NavLink to={`/${Number(page) - 1}`} className={`btn btn-primary mx-3 ${Boolean(paginationInfo.prev) ? null : "disabled"}`} isActive={() => Boolean(paginationInfo.prev)}>
 										Load prev
-									</button>
-									<button onClick={this.goNextPage} className="btn btn-primary mx-3" disabled={!Boolean(paginationInfo.next)}>
+									</NavLink>
+									<NavLink to={`/${Number(page) + 1}`} className={`btn btn-primary mx-3 ${Boolean(paginationInfo.next) ? null : "disabled"}`} isActive={() => Boolean(paginationInfo.next)}>
 										Load next
-									</button>
+									</NavLink>
 								</div>
 							</div>
 						</>

@@ -1,8 +1,11 @@
 import { Component } from "react";
 import { getCharacter } from "../../api/requests";
+
 import CharacterProfile from "../../components/CharacterProfile";
 import EpisodeCard from "../../components/EpisodeCard";
 import Layout from "../../components/Layout";
+import SpinnerLoader from "../../components/SpinnerLoader";
+import ErrorMessage from "../../components/ErrorMessage";
 
 export default class Character extends Component {
 	constructor(props) {
@@ -40,6 +43,7 @@ export default class Character extends Component {
 		} catch (error) {
 			this.setState((prevState) => ({
 				...prevState,
+				hasLoaded: true,
 				hasError: true,
 				errorMessage: error,
 			}));
@@ -52,6 +56,8 @@ export default class Character extends Component {
 		return (
 			<Layout>
 				<section className="row">
+					{!hasLoaded && <SpinnerLoader />}
+					{hasLoaded && hasError && <ErrorMessage />}
 					{hasLoaded && !hasError && (
 						<>
 							<div className="col-12">{<CharacterProfile {...character} />}</div>

@@ -3,6 +3,8 @@ import { getLocation } from "../../api/requests";
 
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
+import SpinnerLoader from "../../components/SpinnerLoader";
+import ErrorMessage from "../../components/ErrorMessage";
 
 export default class Location extends Component {
 	constructor(props) {
@@ -40,6 +42,7 @@ export default class Location extends Component {
 		} catch (error) {
 			this.setState((prevState) => ({
 				...prevState,
+				hasLoaded: true,
 				hasError: true,
 				errorMessage: error,
 			}));
@@ -52,6 +55,8 @@ export default class Location extends Component {
 		return (
 			<Layout>
 				<section className="row">
+					{!hasLoaded && <SpinnerLoader />}
+					{hasLoaded && hasError && <ErrorMessage />}
 					{hasLoaded && !hasError && (
 						<>
 							<div className="col col-12">

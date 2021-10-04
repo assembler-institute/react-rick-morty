@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router";
 
 import Home from "./pages/Home";
 import Episode from "./pages/Episode";
@@ -9,7 +9,17 @@ import Location from "./pages/Location";
 function App() {
 	return (
 		<Switch>
-			<Route exact path="/" render={() => <Home />} />
+			<Route exact path="/">
+				<Redirect to="/1" />
+			</Route>
+			<Route
+				exact
+				path="/:page"
+				render={(renderProps) => {
+					const page = renderProps.match.params.page;
+					return <Home page={page} />;
+				}}
+			/>
 			<Route
 				exact
 				path="/episode/:id"
