@@ -29,7 +29,7 @@ class Episode extends Component {
       const json = await response.json();
 
       this.setState({
-        episode: json
+        episode: json,
       });
 
       let characters = await Promise.all(
@@ -38,8 +38,6 @@ class Episode extends Component {
           return response.json();
         }),
       );
-
-      console.log(characters);
 
       this.setState({
         characters: characters,
@@ -52,33 +50,31 @@ class Episode extends Component {
 
   render() {
     const { characters, episode } = this.state;
-    console.log(episode);
     return (
       <Layout>
         <section className="row">
           <div className="col col-12">
-             <h1>{episode && episode.name}</h1> 
+            <h1>{episode && episode.name}</h1>
             <hr />
           </div>
           <div className="col col-12">
             <h6>
-              { episode && episode.episode } | { episode && episode.air_date }
+              {episode && episode.episode} | {episode && episode.air_date}
             </h6>
             <hr />
           </div>
-            {characters.map((character) => (
-              <CharacterCard
-                key={character.id}
-                id={character.id}
-                name={character.name}
-                image={character.image}
-                species={character.species}
-                status={character.status}
-                origin={character.origin}
-                location={character.location}
-              />
-            ))}
-          
+          {characters.map((character) => (
+            <CharacterCard
+              key={character.id}
+              id={character.id}
+              name={character.name}
+              image={character.image}
+              species={character.species}
+              status={character.status}
+              origin={character.origin}
+              location={character.location}
+            />
+          ))}
         </section>
       </Layout>
     );
