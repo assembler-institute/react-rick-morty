@@ -36,8 +36,15 @@ class Episode extends Component {
       .get(`https://rickandmortyapi.com/api/episode/${episodeId}`)
       .then((apiEpisode) => {
         this.setState({
-          episode: apiEpisode.data.episode,
+          episode: {
+            id: apiEpisode.data.id,
+            name: apiEpisode.data.name,
+            episode: apiEpisode.data.episode,
+            air_date: apiEpisode.data.air_date,
+          },
         });
+        const { episode } = this.state;
+        console.log(episode);
 
         const characterUris = apiEpisode.data.characters;
 
@@ -58,18 +65,19 @@ class Episode extends Component {
 
   render() {
     const { episode, characters, hasLoaded } = this.state;
-    setTimeout(console.log(characters), 500);
-    // console.log(characters);
-    console.log(hasLoaded);
-    if (!hasLoaded) {
-      return <div />;
-    }
+
     return (
       <>
         <Layout>
           <section className="row">
             <div className="col col-12">
-              {characters.map((character) => (
+              <h3>{hasLoaded && episode.name}</h3>
+              <p>
+                {hasLoaded && episode.episode} | {hasLoaded && episode.air_date}
+              </p>
+            </div>
+            {hasLoaded &&
+              characters.map((character) => (
                 <CharacterCard
                   key={character.id}
                   id={character.id}
@@ -81,7 +89,6 @@ class Episode extends Component {
                   location={character.location}
                 />
               ))}
-            </div>
           </section>
         </Layout>
       </>
