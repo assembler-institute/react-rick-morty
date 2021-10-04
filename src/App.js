@@ -13,6 +13,11 @@ function App() {
           path="/episode/:episodeId"
           render={(routeProps) => <Episode {...routeProps} />}
         />
+        <Route
+          exact
+          path="/episode/:characterId"
+          render={(routeProps) => <Episode {...routeProps} />}
+        />
 
         <Route path="/">
           <Home />

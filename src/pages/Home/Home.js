@@ -18,18 +18,29 @@ class Home extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.loadEpisodes();
   }
 
-  async loadEpisodes() {
-    axios.get("https://rickandmortyapi.com/api/episode?page=1").then((data) => {
-      // this.setState({ episodes: data.data.results });
-      const newInfo = data.data.results;
-      this.setState((prevState) => ({
-        episodes: [...prevState.episodes, newInfo].flat(),
-      }));
-    });
+  loadEpisodes() {
+    const { page } = this.state;
+    axios
+      .get(`https://rickandmortyapi.com/ap/episode?page=${page}`)
+      .then((data) => {
+        const newInfo = data.data.results;
+        this.setState({
+          episodes: newInfo,
+          hasLoaded: true,
+          hasError: false,
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          hasLoaded: false,
+          hasError: true,
+          errorMessage: error,
+        });
+      });
   }
 
   render() {
