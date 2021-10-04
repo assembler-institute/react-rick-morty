@@ -3,9 +3,8 @@ import React, { Component } from "react";
 
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
+import * as api from "../../constants/api";
 
-// eslint-disable-next-line compat/compat
-const url = "https://rickandmortyapi.com/api/episode?page=1";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +24,7 @@ class Home extends Component {
 
   async loadEpisodes() {
     try {
-      await axios.get(url).then((res) => {
+      await axios.get(`${api.BASE_URL}`).then((res) => {
         const episodes = res.data.results;
         this.setState({
           episodes: episodes,

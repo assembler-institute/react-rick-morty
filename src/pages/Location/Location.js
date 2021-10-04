@@ -3,8 +3,7 @@ import React, { Component } from "react";
 
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
-
-const url = "https://rickandmortyapi.com/api/location";
+import * as api from "../../constants/api";
 
 class Location extends Component {
   constructor(props) {
@@ -26,7 +25,7 @@ class Location extends Component {
   }
 
   async loadLocation(id) {
-    const response = await axios.get(`${url}/${id}`);
+    const response = await axios.get(`${api.LOCATION_URL}/${id}`);
     const locationResponse = response.data;
     const residentUrls = response.data.residents;
     const requests = residentUrls.map((residentUrl) =>

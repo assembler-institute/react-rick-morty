@@ -1,5 +1,4 @@
-export const HOME = "/";
-export const EPISODES = "/episodes";
-export const EPISODE = "/episode";
-export const LOCATION = "/location";
-export const CHARACTER = "/character";
+export const BASE_URL = "https://rickandmortyapi.com/api/episode?page=1";
+export const EPISODE_URL = "https://rickandmortyapi.com/api/episode";
+export const CHARACTER_URL = "https://rickandmortyapi.com/api/character";
+export const LOCATION_URL = "https://rickandmortyapi.com/api/location";
