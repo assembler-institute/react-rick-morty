@@ -2,6 +2,9 @@ import React, { Component } from "react";
 
 import { EpisodeCard, Layout } from "components";
 
+import charactersApi from "api/characters";
+import episodesApi from "api/episodes";
+
 class Character extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +16,6 @@ class Character extends Component {
       hasError: false,
       errorMessage: null,
     };
-    this.loadCharacter = this.loadCharacter.bind(this);
   }
 
   componentDidMount() {
@@ -23,18 +25,11 @@ class Character extends Component {
     this.loadCharacter(characterId);
   }
 
-  async loadCharacter(characterId) {
+  loadCharacter = async (characterId) => {
     try {
-      const url = `https://rickandmortyapi.com/api/character/${characterId}`;
-      const data = await fetch(url)
-      const character = await data.json();
+      const character = await charactersApi.getCharacter(characterId);
 
-      const episodes = await Promise.all(
-        character.episode.map(async (episode) => {
-          const response = await fetch(episode);
-          return response.json()
-        })
-      );
+      const episodes = await episodesApi.getEpisodes(character);
 
       this.setState({
         hasLoaded: true,

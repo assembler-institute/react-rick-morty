@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { EpisodeCard, Layout } from "components";
 
+import episodesApi from "api/episodes";
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -33,9 +35,7 @@ class Home extends Component {
     try {
       const { page } = this.state;
 
-      const url = `https://rickandmortyapi.com/api/episode?page=${page}`;
-      const data = await fetch(url)
-      const { results, info } = await data.json();
+      const { results, info } = await episodesApi.getAllEpisodes(page);
 
       this.setState((prevState) => ({
         episodes: [...prevState.episodes, ...results],

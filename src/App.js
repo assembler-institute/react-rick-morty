@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { CHARACTER, EPISODE, HOME, LOCATION, } from "constants/routes";
-import { Character, Episode, Home, Location, } from "pages";
+import { CHARACTER, EPISODE, HOME, LOCATION } from "constants/routes";
+import { Character, Episode, Home, Location } from "pages";
 
 function App() {
   return (

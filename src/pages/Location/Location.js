@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { Layout } from "components";
 
+import locationsApi from "api/locations";
+
 class Location extends Component {
   constructor(props) {
     super(props);
@@ -23,16 +25,9 @@ class Location extends Component {
 
   loadLocation = async (locationId) => {
     try {
-      const url = `https://rickandmortyapi.com/api/location/${locationId}`;
-      const data = await fetch(url)
-      const location = await data.json();
+      const location = await locationsApi.getLocation(locationId);
 
-      const residents = await Promise.all(
-        location.residents.map(async (resident) => {
-          const response = await fetch(resident);
-          return response.json()
-        })
-      );
+      const residents = await locationsApi.getResidents(location);
 
       this.setState({
         hasLoaded: true,
