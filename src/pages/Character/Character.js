@@ -22,7 +22,6 @@ class Character extends Component {
       .then((data) => {
         this.setState({ character: data.data });
         const episodeUrls = data.data.episode;
-        console.log(episodeUrls);
         axios
           .all(episodeUrls.map((episodeUrl) => axios.get(episodeUrl)))
           .then((dataCollection) => {
@@ -36,7 +35,6 @@ class Character extends Component {
 
   render() {
     const { character, isLoaded, episodes } = this.state;
-    console.log(episodes);
 
     return (
       <>
@@ -65,7 +63,7 @@ class Character extends Component {
                       <h4 className="CharacterCard__name h6">ORIGIN</h4>
                       <div className="CharacterCard__meta">
                         <p className="CharacterCard__meta-item">
-                          {character.origin.name} | {character.status}
+                          {character.origin.name}
                         </p>
                       </div>
                     </div>
@@ -73,7 +71,7 @@ class Character extends Component {
                       <h4 className="CharacterCard__name h6">LOCATION</h4>
                       <div className="CharacterCard__meta">
                         <p className="CharacterCard__meta-item">
-                          {character.location.name} | {character.status}
+                          {character.location.name}
                         </p>
                       </div>
                     </div>

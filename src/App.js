@@ -4,6 +4,7 @@ import Character from "./pages/Character";
 import Episode from "./pages/Episode";
 
 import Home from "./pages/Home";
+import Location from "./pages/Location";
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <Switch>
         <Route exact path="/episode/:episodeId" component={Episode} />
         <Route exact path="/character/:characterId" component={Character} />
-        {/* <Route exact path="/location/:locationId" component={Location} /> */}
+        <Route exact path="/location/:locationId" component={Location} />
 
         <Route path="/">
           <Home />
