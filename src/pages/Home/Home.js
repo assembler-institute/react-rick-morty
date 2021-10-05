@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-// import * as Routes from "../../constants/routes";
+import * as Routes from "../../constants/routes";
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 
@@ -24,7 +24,7 @@ class Home extends Component {
 
   async loadEpisodes() {
     try {
-      const res = await axios.get("https://rickandmortyapi.com/api/episode");
+      const res = await axios.get(Routes.API + Routes.EPISODE);
 
       this.setState({
         episodes: res.data.results,

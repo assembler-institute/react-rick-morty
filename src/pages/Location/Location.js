@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import * as Routes from "../../constants/routes";
 import Layout from "../../components/Layout";
 
 class Location extends Component {
@@ -23,12 +23,8 @@ class Location extends Component {
   async loadLocation() {
     const { match } = this.props;
     const num = match.params.locationId;
-    // eslint-disable-next-line no-console
-    console.log(this.props);
     try {
-      const res = await axios.get(
-        `https://rickandmortyapi.com/api/location/${num}`,
-      );
+      const res = await axios.get(`${Routes.API}${Routes.LOCATION}/${num}`);
       this.setState({
         location: res.data,
         hasLoaded: true,

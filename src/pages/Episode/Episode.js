@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import * as Routes from "../../constants/routes";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
@@ -16,7 +16,6 @@ class Episode extends Component {
       errorMessage: null,
       episodeName: "",
     };
-    this.loadCharacters = this.loadCharacters.bind(this);
   }
 
   async componentDidMount() {
@@ -27,9 +26,7 @@ class Episode extends Component {
     const { match } = this.props;
     const num = match.params.episodeId;
     try {
-      const res = await axios.get(
-        `https://rickandmortyapi.com/api/episode/${num}`,
-      );
+      const res = await axios.get(`${Routes.API}${Routes.EPISODE}/${num}`);
       const arr = await axios.all(res.data.characters.map((e) => axios.get(e)));
       const arr2 = arr.map((e) => e.data);
       this.setState({
@@ -53,11 +50,6 @@ class Episode extends Component {
       errorMessage,
       episodeName,
     } = this.state;
-    // eslint-disable-next-line no-console
-    console.log({ characters });
-    // const adios = hola.location.name;
-    // eslint-disable-next-line no-console
-    // console.log(adios);
     return (
       <Layout>
         <section className="row">

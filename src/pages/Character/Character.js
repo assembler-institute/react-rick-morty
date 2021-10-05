@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import * as Routes from "../../constants/routes";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard2";
 import EpisodeCard from "../../components/EpisodeCard";
@@ -28,9 +28,7 @@ class Character extends Component {
     const num = match.params.characterId;
 
     try {
-      const res = await axios.get(
-        `https://rickandmortyapi.com/api/character/${num}`,
-      );
+      const res = await axios.get(`${Routes.API}${Routes.CHARACTER}/${num}`);
       const arr = await axios.all(res.data.episode.map((e) => axios.get(e)));
       const arr2 = arr.map((e) => e.data);
       this.setState({

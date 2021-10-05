@@ -17,8 +17,7 @@ function CharacterCard({
 }) {
   const splitLocation = locationUrl.split("/");
   const num = splitLocation[splitLocation.length - 1];
-  // eslint-disable-next-line no-console
-  console.log(num);
+
   return (
     <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
       <img className="CharacterCard__img" src={image} alt="" />
