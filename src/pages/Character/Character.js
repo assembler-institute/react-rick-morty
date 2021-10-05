@@ -43,18 +43,41 @@ class Character extends Component {
         <Layout>
           {isLoaded && (
             <div>
-              <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
-                <img
-                  className="CharacterCard__img"
-                  src={character.image}
-                  alt=""
-                />
-                <h3 className="CharacterCard__name h4">{character.name}</h3>
-                <div className="CharacterCard__meta">
-                  {character.origin.name}
-
-                  <p className="CharacterCard__meta-item">|</p>
-                  <p className="CharacterCard__meta-item">{character.status}</p>
+              <div className="row">
+                <div className="col col-6 col-sm-6 col-xl-3 CharacterCard">
+                  <img
+                    className="CharacterCard__img"
+                    src={character.image}
+                    alt=""
+                  />
+                </div>
+                <div className="pl-5 col col-6 ">
+                  <h3 className="CharacterCard__name h4">{character.name}</h3>
+                  <hr />
+                  <h4 className="CharacterCard__name h6">CHARACTER</h4>
+                  <div className="CharacterCard__meta">
+                    <p className="CharacterCard__meta-item">
+                      {character.origin.name} | {character.status}
+                    </p>
+                  </div>
+                  <div className="row m-0">
+                    <div>
+                      <h4 className="CharacterCard__name h6">ORIGIN</h4>
+                      <div className="CharacterCard__meta">
+                        <p className="CharacterCard__meta-item">
+                          {character.origin.name} | {character.status}
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="CharacterCard__name h6">LOCATION</h4>
+                      <div className="CharacterCard__meta">
+                        <p className="CharacterCard__meta-item">
+                          {character.location.name} | {character.status}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
