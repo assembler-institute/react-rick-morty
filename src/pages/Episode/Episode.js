@@ -88,17 +88,18 @@ class Episode extends Component {
           <section className="row">
             {hasError && <div>{errorMessage}</div>}
             {hasLoaded && (
-                <div className="col col-12 p-0">
-                  <div className="col col-12 col-sm-6 col-xl-4 EpisodeCard">
-                    <h3 className="Episode__name h5">{episode.name}</h3>
-                    <div className="Episode__meta">
-                      <p className="Episode__meta-item">{episode.episode}</p>
-                      <p className="Episode__meta-item">|</p>
-                      <p className="Episode__meta-item">{episode.air_date}</p>
-                    </div>
+              <div className="col col-12 p-0">
+                <div className="col col-12 col-sm-6 col-xl-4 EpisodeCard">
+                  <h3 className="Episode__name h5">{episode.name}</h3>
+                  <div className="Episode__meta">
+                    <p className="Episode__meta-item">{episode.episode}</p>
+                    <p className="Episode__meta-item">|</p>
+                    <p className="Episode__meta-item">{episode.air_date}</p>
                   </div>
                 </div>
-              ) &&
+              </div>
+            )}
+            {hasLoaded &&
               characters.map((character) => (
                 <CharacterCard
                   key={character.id}

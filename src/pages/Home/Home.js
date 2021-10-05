@@ -10,7 +10,7 @@ class Home extends Component {
 
     this.state = {
       page: 1,
-      paginationInfo: null,
+      paginationInfo: { prev: null, next: null },
       episodes: [],
       hasLoaded: false,
       hasError: false,
@@ -19,6 +19,10 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this.loadEpisodes();
+  }
+
+  componentDidUpdate() {
     this.loadEpisodes();
   }
 
@@ -32,6 +36,10 @@ class Home extends Component {
           episodes: newInfo,
           hasLoaded: true,
           hasError: false,
+          paginationInfo: {
+            next: data.data.info.next,
+            prev: data.data.info.prev,
+          },
         });
       })
       .catch((error) => {
@@ -52,6 +60,8 @@ class Home extends Component {
       hasError,
       errorMessage,
     } = this.state;
+
+    console.log(paginationInfo);
 
     return (
       <>
@@ -76,6 +86,24 @@ class Home extends Component {
             ))}
             <div className="col col-12">
               <hr />
+            </div>
+            <div className="d-flex justify-content-between w-100">
+              <button
+                type="button"
+                className="btn btn-primary"
+                disabled={!paginationInfo.prev}
+                onClick={() => this.setState({ page: page - 1 })}
+              >
+                Load previous page
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                disabled={!paginationInfo.next}
+                onClick={() => this.setState({ page: page + 1 })}
+              >
+                Load next page
+              </button>
             </div>
           </section>
         </Layout>
