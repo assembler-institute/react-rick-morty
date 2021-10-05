@@ -21,6 +21,13 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
         </Link>
         <p className="CharacterCard__meta-item">|</p>
         <p className="CharacterCard__meta-item">{status}</p>
+        <p className="CharacterCard__meta-item">{species}</p>
+        <Link
+          className="CharacterCard__meta-item"
+          to={`${routes.LOCATION}/${id}`}
+        >
+          {origin.name}
+        </Link>
       </div>
     </div>
   );

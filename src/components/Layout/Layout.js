@@ -6,11 +6,11 @@ import Footer from "../Footer";
 
 function Layout({ children }) {
   return (
-    <>
+    <React.Fragment>
       <AppHeader />
       <Main>{children}</Main>
       <Footer />
-    </>
+    </React.Fragment>
   );
 }
 
