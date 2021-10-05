@@ -10,7 +10,6 @@ class Character extends Component {
     super(props);
 
     this.state = {
-      // episode: null,
       character: [],
       episodes: [],
       hasLoaded: false,

@@ -9,12 +9,12 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      // page: 1,
-      // paginationInfo: null,
       episodes: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
+      next: "",
+      prev: null,
     };
   }
 
@@ -22,13 +22,15 @@ class Home extends Component {
     await this.loadEpisodes();
   }
 
-  async loadEpisodes() {
+  async loadEpisodes(param = Routes.API + Routes.EPISODE) {
     try {
-      const res = await axios.get(Routes.API + Routes.EPISODE);
+      const res = await axios.get(param);
 
       this.setState({
         episodes: res.data.results,
         hasLoaded: true,
+        next: res.data.info.next,
+        prev: res.data.info.prev,
       });
     } catch (e) {
       this.setState({
@@ -39,7 +41,14 @@ class Home extends Component {
   }
 
   render() {
-    const { hasLoaded, hasError, episodes, errorMessage } = this.state;
+    const {
+      hasLoaded,
+      hasError,
+      episodes,
+      errorMessage,
+      prev,
+      next,
+    } = this.state;
     return (
       <Layout>
         <section className="row">
@@ -69,25 +78,25 @@ class Home extends Component {
           <div className="col col-12">
             <hr />
           </div>
-          {hasLoaded && !hasError && (
+          {hasLoaded && !hasError && prev && (
             <div>
               <button
                 type="button"
-                // eslint-disable-next-line no-console
-                onClick={() => console.log("previous")}
+                onClick={() => this.loadEpisodes(prev)}
                 className="btn btn-primary m-1"
               >
                 Previous page
               </button>
-              <button
-                type="button"
-                // eslint-disable-next-line no-console
-                onClick={() => console.log("previous")}
-                className="btn btn-primary m-1"
-              >
-                Next page
-              </button>
             </div>
+          )}
+          {hasLoaded && !hasError && next && (
+            <button
+              type="button"
+              onClick={() => this.loadEpisodes(next)}
+              className="btn btn-primary m-1"
+            >
+              Next page
+            </button>
           )}
         </section>
       </Layout>

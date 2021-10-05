@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import axios from "axios";
 import * as Routes from "../../constants/routes";
 import Layout from "../../components/Layout";
-import CharacterCard from "../../components/CharacterCard2";
+import CharacterCard from "../../components/CharacterCard";
 
 class Location extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // episode: null,
       location: [],
       residents: [],
       hasLoaded: false,
@@ -29,6 +28,7 @@ class Location extends Component {
       const res = await axios.get(`${Routes.API}${Routes.LOCATION}/${num}`);
       const arr = await axios.all(res.data.residents.map((e) => axios.get(e)));
       const arr2 = arr.map((e) => e.data);
+
       this.setState({
         location: res.data,
         hasLoaded: true,

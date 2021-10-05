@@ -9,7 +9,6 @@ class Episode extends Component {
     super(props);
 
     this.state = {
-      // episode: null,
       characters: [],
       hasLoaded: false,
       hasError: false,
