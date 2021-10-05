@@ -59,34 +59,43 @@ class Location extends Component {
     } = this.state;
     return (
       <Layout>
-        <section className="row">
-          {hasLoaded && !hasError && (
+        {hasLoaded && !hasError && (
+          <section className="row">
             <div className="col col-12">
               <h3>{location.name}</h3>
-              <h5>{location.type}</h5>
-              <h5>{location.dimension}</h5>
             </div>
-          )}
-          {hasError && (
             <div className="col col-12">
-              <h1>{errorMessage}</h1>
+              <hr />
             </div>
-          )}
+            <div className="col col-12">
+              <h4>{location.type}</h4>
+            </div>
+            <div className="col col-12">
+              <h4>{location.dimension}</h4>
+            </div>
+            <div className="col col-12">
+              <hr />
+            </div>
+            {residents.length > 0 &&
+              residents.map((resident) => (
+                <CharacterCard
+                  key={resident.data.id}
+                  id={resident.data.id}
+                  name={resident.data.name}
+                  image={resident.data.image}
+                  species={resident.data.species}
+                  status={resident.data.status}
+                  origin={resident.data.origin}
+                  location={resident.data.location}
+                />
+              ))}
+          </section>
+        )}
+        {hasError && (
           <div className="col col-12">
-            {residents.map((resident) => (
-              <CharacterCard
-                key={resident.data.id}
-                id={resident.data.id}
-                name={resident.data.name}
-                image={resident.data.image}
-                species={resident.data.species}
-                status={resident.data.status}
-                origin={resident.data.origin}
-                location={resident.data.location}
-              />
-            ))}
+            <h1>{errorMessage}</h1>
           </div>
-        </section>
+        )}
       </Layout>
     );
   }

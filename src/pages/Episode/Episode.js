@@ -59,34 +59,44 @@ class Episode extends Component {
     } = this.state;
     return (
       <Layout>
-        <section className="row">
-          {hasLoaded && !hasError && (
+        {hasLoaded && !hasError && (
+          <section className="row">
             <div className="col col-12">
               <h3>{episode.name}</h3>
-              <h5>{episode.air_date}</h5>
-              <h5>{episode.episode}</h5>
             </div>
-          )}
-          {hasError && (
             <div className="col col-12">
-              <h1>{errorMessage}</h1>
+              <hr />
             </div>
-          )}
+            <div className="CharacterCard__meta">
+              <p className="CharacterCard__meta-item">
+                <h5>{episode.air_date}</h5>
+              </p>
+              <p className="CharacterCard__meta-item">|</p>
+              <p className="CharacterCard__meta-item">{episode.episode}</p>
+            </div>
+            <div className="col col-12">
+              <hr />
+            </div>
+            {characters.length > 0 &&
+              characters.map((character) => (
+                <CharacterCard
+                  key={character.data.id}
+                  id={character.data.id}
+                  name={character.data.name}
+                  image={character.data.image}
+                  species={character.data.species}
+                  status={character.data.status}
+                  origin={character.data.origin}
+                  location={character.data.location}
+                />
+              ))}
+          </section>
+        )}
+        {hasError && (
           <div className="col col-12">
-            {characters.map((character) => (
-              <CharacterCard
-                key={character.data.id}
-                id={character.data.id}
-                name={character.data.name}
-                image={character.data.image}
-                species={character.data.species}
-                status={character.data.status}
-                origin={character.data.origin}
-                location={character.data.location}
-              />
-            ))}
+            <h1>{errorMessage}</h1>
           </div>
-        </section>
+        )}
       </Layout>
     );
   }

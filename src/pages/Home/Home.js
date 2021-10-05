@@ -59,15 +59,16 @@ class Home extends Component {
           <div className="col col-12">
             <hr />
           </div>
-          {episodes.map((episode) => (
-            <EpisodeCard
-              key={episode.id}
-              id={episode.id}
-              name={episode.name}
-              airDate={episode.air_date}
-              episode={episode.episode}
-            />
-          ))}
+          {episodes.length > 0 &&
+            episodes.map((episode) => (
+              <EpisodeCard
+                key={episode.id}
+                id={episode.id}
+                name={episode.name}
+                airDate={episode.air_date}
+                episode={episode.episode}
+              />
+            ))}
           <div className="col col-12">
             <hr />
           </div>

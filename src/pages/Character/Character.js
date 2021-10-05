@@ -58,37 +58,73 @@ class Character extends Component {
     } = this.state;
     return (
       <Layout>
-        <p>Character page</p>
-        <section className="row">
-          {hasLoaded && !hasError && (
-            <div className="col col-12">
-              <h1>Character loaded!</h1>
-              <h2>{character.name}</h2>
-              <h4>{character.status}</h4>
-              <h4>{character.species}</h4>
+        {hasLoaded && !hasError && (
+          <section className="row">
+            <div className="col col-4">
+              <img
+                className="CharacterCard__img"
+                src={character.image}
+                alt=""
+              />
             </div>
-          )}
-          {hasError && (
-            <div className="col col-12">
-              <h1>{errorMessage}</h1>
+            <div className="col col-8">
+              <div className="row">
+                <div className="col col-12">
+                  <h3>{character.name}</h3>
+                </div>
+                <div className="col col-12">
+                  <hr />
+                </div>
+                <div className="col col-12">
+                  <div>
+                    <p>CHARACTER</p>
+                    <div>
+                      <p>{character.species}</p>
+                      <p>|</p>
+                      <p>{character.status}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col col-12">
+                  <div>
+                    <div>
+                      <p>ORIGINAL</p>
+                      <p>{character.origin.name}</p>
+                    </div>
+                    <div>
+                      <p>LOCATION</p>
+                      <p>{character.location.name}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          )}
+            <div className="col col-12">
+              <hr />
+            </div>
+            <div className="col col-12">
+              <h4>Episodes</h4>
+            </div>
+            <div className="col col-12">
+              <hr />
+            </div>
+            {episode.length > 0 &&
+              episode.map((ele) => (
+                <EpisodeCard
+                  key={ele.data.id}
+                  id={ele.data.id}
+                  name={ele.data.name}
+                  airDate={ele.data.air_date}
+                  episode={ele.data.episode}
+                />
+              ))}
+          </section>
+        )}
+        {hasError && (
           <div className="col col-12">
-            <hr />
+            <h1>{errorMessage}</h1>
           </div>
-          {episode.map((ele) => (
-            <EpisodeCard
-              key={ele.data.id}
-              id={ele.data.id}
-              name={ele.data.name}
-              airDate={ele.data.air_date}
-              episode={ele.data.episode}
-            />
-          ))}
-          <div className="col col-12">
-            <hr />
-          </div>
-        </section>
+        )}
       </Layout>
     );
   }
