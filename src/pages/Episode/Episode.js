@@ -67,7 +67,7 @@ class Episode extends Component {
             <div className="col col-12">
               <hr />
             </div>
-            <div className="CharacterCard__meta">
+            <div className="CharacterCard__meta col col-12">
               <p className="CharacterCard__meta-item">
                 <h5>{episode.air_date}</h5>
               </p>
