@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import * as Routes from "../../constants/routes";
 import Layout from "../../components/Layout";
+import CharacterCard from "../../components/CharacterCard2";
 
 class Location extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class Location extends Component {
     this.state = {
       // episode: null,
       location: [],
+      residents: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
@@ -25,9 +27,12 @@ class Location extends Component {
     const num = match.params.locationId;
     try {
       const res = await axios.get(`${Routes.API}${Routes.LOCATION}/${num}`);
+      const arr = await axios.all(res.data.residents.map((e) => axios.get(e)));
+      const arr2 = arr.map((e) => e.data);
       this.setState({
         location: res.data,
         hasLoaded: true,
+        residents: arr2,
       });
     } catch (e) {
       this.setState({
@@ -38,15 +43,34 @@ class Location extends Component {
   }
 
   render() {
-    const { location, hasLoaded, hasError, errorMessage } = this.state;
-    const json = JSON.stringify({ location });
+    const {
+      location,
+      hasLoaded,
+      hasError,
+      errorMessage,
+      residents,
+    } = this.state;
     return (
       <Layout>
         {hasLoaded && !hasError && (
           <section className="row">
-            <h1>LOCATION: {location.name}</h1>
+            <h1>{location.name}</h1>
             <hr />
-            <div className="container">{json}</div>
+            <div className="row">
+              {residents.map((character) => (
+                <CharacterCard
+                  key={character.id}
+                  id={character.id}
+                  name={character.name}
+                  image={character.image}
+                  species={character.species}
+                  status={character.status}
+                  origin={character.origin}
+                  location={character.location.name}
+                  locationUrl={character.location.url}
+                />
+              ))}
+            </div>
           </section>
         )}
         {hasError && (
