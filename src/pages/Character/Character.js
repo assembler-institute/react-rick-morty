@@ -63,7 +63,10 @@ class Character extends Component {
             <div className="d-flex justify-content-start">
               <img src={this.state.image} alt={`${this.state.name} image`}/>
               <div className="ml-5">
-                <h2>{this.state.name}</h2>
+                <div className="d-flex justify-content-between w-100">
+                  <h2>{this.state.name}</h2>
+                  <button className="col col-3 align-self-end mb-3 btn btn-primary" onClick={this.props.history.goBack}>Go back</button>
+                </div>
                 <div className="mt-4">
                   <h6>CHARACTER</h6>
                   <span className="mr-1">{this.state.species}</span>

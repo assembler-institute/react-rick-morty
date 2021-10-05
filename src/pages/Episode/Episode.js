@@ -23,6 +23,7 @@ class Episode extends Component {
   componentDidMount() {
     this.loadEpisode()
     this.loadCharacters()
+    console.log(this.props);
   }
 
   async loadEpisode() {
@@ -66,15 +67,18 @@ class Episode extends Component {
     } catch(error) {
       console.error(error)
     }
-}
+  }
 
   render() {
     return (
       <Layout>
         <section className="row">
-          <div className="col col-12">
-            <h1 className="col col-12">{this.state.name}</h1>
-            <p className="col col-12">{this.state.episode} | {this.state.air_date}</p>
+          <div className="d-flex justify-content-between w-75">
+            <div className="col col-12">
+              <h1 className="col col-12">{this.state.name}</h1>
+              <p className="col col-12">{this.state.episode} | {this.state.air_date}</p>
+            </div>
+            <button className="col col-2 align-self-end mb-3 btn btn-primary" onClick={this.props.history.goBack}>Go back</button>
           </div>
           <div className="col col-12 d-flex flex-wrap">
             {this.state.characters.map((character) => (

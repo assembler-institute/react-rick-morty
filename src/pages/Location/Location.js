@@ -54,9 +54,12 @@ class Location extends Component {
         <section className="row">
           { this.state.name !== undefined &&
             <>
-            <div className="col col-12">
-              <h1 className="col col-12 col-sm-6 col-xl-3">{this.state.name}</h1>
-              <p className="col col-12 col-sm-6 col-xl-3">{this.state.type} | {this.state.dimension}</p>
+            <div className="d-flex justify-content-between w-75">
+              <div className="col col-12">
+                <h1 className="col col-12">{this.state.name}</h1>
+                <p className="col col-12">{this.state.type} | {this.state.dimension}</p>
+              </div>
+              <button className="col col-2 align-self-end mb-3 btn btn-primary" onClick={this.props.history.goBack}>Go back</button>
             </div>
             <div className="col col-12 d-flex flex-wrap">
             {this.state.residents.map((character) => (

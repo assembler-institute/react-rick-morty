@@ -6,6 +6,7 @@ import Character from "./pages/Character"
 import Location from "./pages/Location"
 
 function App({ page }) {
+
   if (page === "home") return <Home />
   if (page === "episode") return <Episode />
   if (page === "character") return <Character />
