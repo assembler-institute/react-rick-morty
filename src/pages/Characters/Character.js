@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-//import CharacterCard from "../../components/CharacterCard";
+import CharacterCard from "../../components/CharacterCard";
 import Layout from "../../components/Layout";
-//import axiosGet, { urlArr } from "../../utils/axiosRequest";
+import { axiosId, urlArr } from "../../utils/axiosRequest";
 
 export default class Character extends Component {
   constructor(props) {
@@ -14,22 +14,29 @@ export default class Character extends Component {
     };
     this.loadCharacter = this.loadCharacter.bind(this);
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.loadCharacter();
   }
 
-  loadCharacter() {
-    console.log(this.props);
+  async loadCharacter() {
+    let charId = this.props.match.params.id;
+    await axiosId(urlArr[2], charId).then((res) =>
+      this.setState({
+        character: res.data,
+        hasLoaded: true,
+        hasError: false,
+      }),
+    );
   }
 
   render() {
-    const { character } = this.state;
+    const { character, hasLoaded, hasError } = this.state;
     return (
       <Layout>
-        <section className="row">
-          <div className="col col-12">
-            <h1>Hello!!! {character}</h1>
-            {/*{characters.map((character) => (
+        {hasLoaded && !hasError && (
+          <section className="row">
+            <div className="col col-12">
+              <h1>Hello!!! {character.name}</h1>
               <CharacterCard
                 characterId={character.id}
                 image={character.image}
@@ -39,9 +46,9 @@ export default class Character extends Component {
                 origin={character.origin.name}
                 location={character.location.name}
               />
-            ))}*/}
-          </div>
-        </section>
+            </div>
+          </section>
+        )}
       </Layout>
     );
   }

@@ -24,6 +24,10 @@ export default function axiosGet(url) {
   return axios.get(`https://rickandmortyapi.com/api/${url}`);
 }
 
+export function axiosId(url, ids) {
+  return axios.get(`https://rickandmortyapi.com/api/${url}/${ids}`);
+}
+
 export const episodeArrLength = arrLength(ListLength(urlArr[0]));
 export const locationArrLength = arrLength(ListLength(urlArr[1]));
 export const charactersArrLength = arrLength(ListLength(urlArr[2]));
