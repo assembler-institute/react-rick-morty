@@ -69,6 +69,7 @@ class Character extends Component {
                 status={character.status}
                 origin={character.origin}
                 location={character.location.name}
+                locationUrl={character.location.url}
               />
             </div>
             {episodes.map((episode) => (

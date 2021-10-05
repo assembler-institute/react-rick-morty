@@ -53,6 +53,11 @@ class Episode extends Component {
       errorMessage,
       episodeName,
     } = this.state;
+    // eslint-disable-next-line no-console
+    console.log({ characters });
+    // const adios = hola.location.name;
+    // eslint-disable-next-line no-console
+    // console.log(adios);
     return (
       <Layout>
         <section className="row">
@@ -70,6 +75,7 @@ class Episode extends Component {
                     status={character.status}
                     origin={character.origin}
                     location={character.location.name}
+                    locationUrl={character.location.url}
                   />
                 ))}
               </div>
