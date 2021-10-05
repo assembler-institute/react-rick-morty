@@ -19,20 +19,26 @@ function CharacterCard({
   const num = splitLocation[splitLocation.length - 1];
 
   return (
-    <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
-      <img className="CharacterCard__img" src={image} alt="" />
-      <Link to={`${routes.CHARACTER}/${id}`}>
-        <h3 className="CharacterCard__name h4">{name}</h3>
-      </Link>
-      <div className="CharacterCard__meta">
-        <Link
-          className="CharacterCard__meta-item"
-          to={`${routes.LOCATION}/${num}`}
-        >
-          {location}
-        </Link>
-        <p className="CharacterCard__meta-item">|</p>
-        <p className="CharacterCard__meta-item">{status}</p>
+    <div className="card mb-3">
+      <div className="row g-0">
+        <div className="col-md-4">
+          <img src={image} className="img-fluid rounded-start" alt="..." />
+        </div>
+        <div className="col-md-8">
+          <div className="card-body">
+            <h5 className="card-title">{name}</h5>
+            <Link
+              className="CharacterCard__meta-item"
+              to={`${routes.LOCATION}/${num}`}
+            >
+              {location}
+            </Link>
+            <p className="card-text">{status}</p>
+            <p className="card-text">
+              <small className="text-muted">{species}</small>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
