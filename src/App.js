@@ -13,9 +13,9 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/episode/:id" component={Episode} />
-        <Route exact path="/character/:id" component={Character} />
-        <Route exact path="/location/:id" component={Location} />
+        <Route exact path="/episode/:episodeId" component={Episode} />
+        <Route exact path="/character/:characterId" component={Character} />
+        <Route exact path="/location/:locationId" component={Location} />
         <Route exact path="/" component={Home} />
       </Switch>
     </Router>

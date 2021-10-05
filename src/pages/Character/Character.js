@@ -25,9 +25,8 @@ class Character extends Component {
 
   async loadCharacter() {
     const { match } = this.props;
-    const num = match.params.id;
-    // eslint-disable-next-line no-console
-    console.log(match.params.id);
+    const num = match.params.characterId;
+
     try {
       const res = await axios.get(
         `https://rickandmortyapi.com/api/character/${num}`,
@@ -75,7 +74,7 @@ class Character extends Component {
             {episodes.map((episode) => (
               <EpisodeCard
                 key={episode.id}
-                id={episode.id}
+                episodeId={episode.id}
                 name={episode.name}
                 airDate={episode.air_date}
                 episode={episode.episode}

@@ -14,6 +14,7 @@ class Episode extends Component {
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
+      episodeName: "",
     };
     this.loadCharacters = this.loadCharacters.bind(this);
   }
@@ -24,7 +25,7 @@ class Episode extends Component {
 
   async loadCharacters() {
     const { match } = this.props;
-    const num = match.params.id;
+    const num = match.params.episodeId;
     try {
       const res = await axios.get(
         `https://rickandmortyapi.com/api/episode/${num}`,
@@ -34,6 +35,7 @@ class Episode extends Component {
       this.setState({
         characters: arr2,
         hasLoaded: true,
+        episodeName: res.data.name,
       });
     } catch (e) {
       this.setState({
@@ -44,24 +46,33 @@ class Episode extends Component {
   }
 
   render() {
-    const { characters, hasLoaded, hasError, errorMessage } = this.state;
+    const {
+      characters,
+      hasLoaded,
+      hasError,
+      errorMessage,
+      episodeName,
+    } = this.state;
     return (
       <Layout>
         <section className="row">
           {hasLoaded && !hasError && (
-            <div className="row">
-              {characters.map((character) => (
-                <CharacterCard
-                  key={character.id}
-                  id={character.id}
-                  name={character.name}
-                  image={character.image}
-                  species={character.species}
-                  status={character.status}
-                  origin={character.origin}
-                  location={character.location.name}
-                />
-              ))}
+            <div>
+              <p className="h1 block text-center mb-4">{episodeName}</p>
+              <div className="row">
+                {characters.map((character) => (
+                  <CharacterCard
+                    key={character.id}
+                    id={character.id}
+                    name={character.name}
+                    image={character.image}
+                    species={character.species}
+                    status={character.status}
+                    origin={character.origin}
+                    location={character.location.name}
+                  />
+                ))}
+              </div>
             </div>
           )}
           {hasError && (

@@ -22,7 +22,7 @@ class Location extends Component {
 
   async loadLocation() {
     const { match } = this.props;
-    const num = match.params.id;
+    const num = match.params.locationId;
     // eslint-disable-next-line no-console
     console.log(this.props);
     try {
