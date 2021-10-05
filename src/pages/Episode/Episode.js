@@ -3,7 +3,8 @@ import React, { Component } from "react";
 
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
-import { fetchApi } from "../../utils/fetchApi";
+import { API, EPISODE } from "../../constants/routes";
+import EpisodeCard from "../../components/EpisodeCard";
 
 class Episode extends Component {
   constructor(props) {
@@ -25,8 +26,9 @@ class Episode extends Component {
   getCharacters() {
     const { match } = this.props;
     const { episodeId } = match.params;
+    const charactersUrl = `${API}${EPISODE}/${episodeId}`;
     axios
-      .get(`https://rickandmortyapi.com/api/episode/${episodeId}`)
+      .get(charactersUrl)
       .then((apiEpisode) => {
         this.setState({
           episode: {
@@ -38,12 +40,11 @@ class Episode extends Component {
         });
 
         const characterUris = apiEpisode.data.characters;
-        console.log(characterUris);
 
         axios
           .all(
             characterUris.map((char) => {
-              return fetchApi(char);
+              return axios.get(char);
             }),
           )
           .then((data) => {
@@ -57,13 +58,19 @@ class Episode extends Component {
             });
           })
           .catch((error) => {
-            console.log(error);
             this.setState({
               hasLoaded: false,
               hasError: true,
-              errorMessage: "Error loading characters",
+              errorMessage: error,
             });
           });
+      })
+      .catch((error) => {
+        this.setState({
+          hasLoaded: false,
+          hasError: true,
+          errorMessage: error,
+        });
       });
   }
 
@@ -76,18 +83,21 @@ class Episode extends Component {
       errorMessage,
     } = this.state;
 
+    // console.log(characters);
+
     return (
       <>
         <Layout>
-          {hasError && <div>ERROR</div>}
+          {hasError && <div>{errorMessage}</div>}
           <section className="row">
             <div className="col col-12">
-              {hasLoaded && <h3>{episode.name}</h3>}
-
               {hasLoaded && (
-                <p>
-                  {episode.episode} | {episode.air_date}
-                </p>
+                <EpisodeCard
+                  id={episode.id}
+                  name={episode.name}
+                  episode={episode.episode}
+                  airDate={episode.air_date}
+                />
               )}
             </div>
             {hasLoaded &&

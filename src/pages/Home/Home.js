@@ -25,7 +25,7 @@ class Home extends Component {
   loadEpisodes() {
     const { page } = this.state;
     axios
-      .get(`https://rickandmortyapi.com/ap/episode?page=${page}`)
+      .get(`https://rickandmortyapi.com/api/episode?page=${page}`)
       .then((data) => {
         const newInfo = data.data.results;
         this.setState({
