@@ -1,8 +1,8 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
-import { CHARACTER, EPISODE, HOME, LOCATION } from "constants/routes";
-import { Character, Episode, Home, Location } from "pages";
+import { CHARACTER, EPISODES, EPISODE, HOME, LOCATION } from "constants/routes";
+import { Character, Episode, Home, Location, NotFound } from "pages";
 
 function App() {
   return (
@@ -20,9 +20,12 @@ function App() {
         render={(routeProps) => <Location {...routeProps} />}
       />
       <Route
-        path={HOME}
+        path={EPISODES}
         render={(routeProps) => <Home {...routeProps} />}
       />
+      <Route path="/not-found" component={NotFound} />
+      <Redirect from={HOME} exact to={EPISODES} />
+      <Redirect to="/not-found" />
     </Switch>
   );
 }
