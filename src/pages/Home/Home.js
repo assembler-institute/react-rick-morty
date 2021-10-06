@@ -18,23 +18,27 @@ class Home extends Component {
     };
   }
 
-  async componentDidMount() {
-    this.loadEpisodes();
+  componentDidMount() {
+    const { page } = this.state;
+    this.loadEpisodes(page);
+  }
+
+  componentDidUpdate(_prevProps, prevState) {
+    const { page: prevPage } = prevState;
+    const { page } = this.state;
+    if (prevPage !== page) {
+      this.loadEpisodes(page);
+    }
   }
 
   loadNextPage = () => {
     this.setState((prevState) => ({
-      ...prevState,
       page: prevState.page + 1,
-    }))
-
-    this.loadEpisodes()
+    }));
   }
 
-  loadEpisodes = async () => {
+  loadEpisodes = async (page) => {
     try {
-      const { page } = this.state;
-
       const { data: { results, info } } = await episodesApi.getAllEpisodes(page);
 
       this.setState((prevState) => ({
@@ -53,7 +57,7 @@ class Home extends Component {
   }
 
   render() {
-    const { episodes, errorMessage, hasLoaded, hasError, page, paginationInfo } = this.state;
+    const { episodes, errorMessage, hasLoaded, hasError, paginationInfo } = this.state;
 
     return (
       <Layout>
@@ -80,18 +84,14 @@ class Home extends Component {
           }
           <div className="col col-12 text-center">
             <hr />
-            {
-              paginationInfo &&
-              paginationInfo.pages &&
-              (paginationInfo.pages !== page - 1) &&
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={this.loadNextPage}
-              >
-                Load more
-              </button>
-            }
+            <button
+              type="button"
+              className="btn btn-primary"
+              disabled={paginationInfo && !paginationInfo.next}
+              onClick={this.loadNextPage}
+            >
+              Load more
+            </button>
           </div>
         </section>
       </Layout>
