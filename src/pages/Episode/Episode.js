@@ -21,24 +21,24 @@ class Episode extends Component {
     } = this.props;
     this.getEpisode(params.episodeId)
   }
-    async getEpisode(episodeId) {
-      const url = `https://rickandmortyapi.com/api/episode/${episodeId}`;
-      const res = await axios.get(url);
-          this.setState({
-        episode:res.data
-      })
-    const {episode} = this.state;
-      console.log(episode.characters);
+  async getEpisode(episodeId) {
+    const url = `https://rickandmortyapi.com/api/episode/${episodeId}`;
+    const res = await axios.get(url);
+    this.setState({
+      episode: res.data
+    })
+    const { episode } = this.state;
+    console.log(episode.characters);
     const episodeRes = await axios.all(
-      episode.characters.map(async (urlList)=>{
+      episode.characters.map(async (urlList) => {
         const urlListResponse = await axios(urlList)
         return urlListResponse.data
       }))
-      this.setState({
-        characters:episodeRes
-      })
-    }
-  
+    this.setState({
+      characters: episodeRes
+    })
+  }
+
 
   render() {
     const { characters } = this.state;

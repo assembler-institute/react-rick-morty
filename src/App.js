@@ -16,6 +16,9 @@ function App() {
         <Route path="/character/:characterId"
         render={(routeProps)=> <Character {...routeProps} />}
         />
+        <Route path="/location/:locationId"
+        render={(routeProps)=> <Location {...routeProps} />}
+        />
       </Switch>
     </>
   )
