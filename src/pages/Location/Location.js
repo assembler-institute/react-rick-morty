@@ -1,24 +1,35 @@
 import React, { Component } from "react";
-
+import Layout from "../../components/Layout";
+import { getLocation } from "../../utils/axios";
+import axios from "axios";
+import CharacterCard from "../../components/CharacterCard";
 class Location extends Component {
     constructor(props) {
         super(props);
         this.state = {
             location: null,
             hasLoaded: false,
+            residents: {},
             hasError: false,
             errorMessage: null,
-        }
+        };
     }
-
     async componentDidMount() {
         try {
-            // const { match } = this.props;
-            // const { locationId } = match.params;
-            const response = await getLocation(locationId);
+            const { match } = this.props;
+            const { locationId } = match.params;
+            const responseLocation = await getLocation(locationId);
+            const res = await axios.all(
+                responseLocation.data.residents.map(async (cUrl) => {
+                    const response = await axios(cUrl);
+                    return response.data;
+                }),
+            );
+            const item = res.forEach(el => console.log(el.name))
             this.setState({
-                location: response.data,
+                location: responseLocation.data,
                 hasLoaded: true,
+                residents: res,
             });
         } catch (error) {
             this.setState({
@@ -29,7 +40,13 @@ class Location extends Component {
         }
     }
     render() {
-        const { location, hasLoaded, hasError, errorMessage } = this.state;
+        const {
+            location,
+            hasLoaded,
+            hasError,
+            errorMessage,
+            residents,
+        } = this.state;
         return (
             <>
                 <Layout>
@@ -45,13 +62,27 @@ class Location extends Component {
                                 <hr />
                             </div>
                             <div className="col col-12">
-                                <pre>
-                                    <code>{JSON.stringify(location, null, 2)}</code>
-                                </pre>
+                                <h3>{location.dimension}</h3>
+                                {residents.length > 0 &&
+                                    residents.map((character) => (
+                                        <CharacterCard
+                                            key={character.id}
+                                            id={character.id}
+                                            name={character.name}
+                                            image={character.image}
+                                            species={character.species}
+                                            status={character.status}
+                                            origin={character.origin}
+                                            location={character.location}
+                                        />
+                                    ))}
                             </div>
+                            <div className="col col-12">
+                                <hr />
+                            </div>
+                            <div className="col col-12"></div>
                         </section>
                     )}
-
                     {!hasLoaded && (
                         <section className="row">
                             <div className="col col-12">
@@ -69,6 +100,7 @@ class Location extends Component {
                     )}
                 </Layout>
             </>
-        )
+        );
     }
 }
+export default Location;

@@ -26,11 +26,11 @@ export async function getCharacter(characterId){
     return []}
 }
 
-// export async function getLocation(locationId){
-//     try{
-//         const result=await axios.get(`https://rickandmortyapi.com/api/character/${locationId}`)
-//         return result
-//     }
-//     catch{(error)
-//     return []}
-// }
+export async function getLocation(locationId){
+    try{
+        const result=await axios.get(`https://rickandmortyapi.com/api/location/${locationId}`)
+        return result
+    }
+    catch{(error)
+    return []}
+}

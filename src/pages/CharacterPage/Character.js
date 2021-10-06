@@ -24,7 +24,6 @@ class Character extends Component {
     async loadCharacter(characterId) {
         try {
             const response = await getCharacter(characterId);
-            console.log(response);
             const res = await axios.all(
                 response.data.episode.map(async (cUrl) => {
                     const response = await axios(cUrl);
