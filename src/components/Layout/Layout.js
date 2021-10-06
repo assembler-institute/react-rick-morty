@@ -1,20 +1,21 @@
 import React from "react";
 
-import AppHeader from "../AppHeader";
+import Header from "../Header";
 import Main from "../Main";
 import Footer from "../Footer";
+import styled from "styled-components";
 
-import "./Layout.scss";
+const LayoutStyled = styled.div`
+	min-height: 100vh;
+`;
 
 function Layout({ children }) {
 	return (
-		<div className="Layout d-flex flex-column justify-content-between">
-			<div>
-				<AppHeader />
-				<Main>{children}</Main>
-			</div>
+		<LayoutStyled>
+			<Header />
+			<Main>{children}</Main>
 			<Footer />
-		</div>
+		</LayoutStyled>
 	);
 }
 

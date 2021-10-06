@@ -5,13 +5,49 @@ import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 import SpinnerLoader from "../../components/SpinnerLoader";
 import ErrorMessage from "../../components/ErrorMessage";
-import { NavLink } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import Button from "../../components/Button";
+import styled from "styled-components";
+
+const Title = styled.h1`
+	font-size: 2.5rem;
+	text-align: center;
+`;
+
+const Grid = styled.div`
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	grid-template-rows: auto;
+	justify-items: center;
+
+	padding: 1rem;
+	gap: 0 2rem;
+
+	@media screen and (min-width: ${(props) => props.theme.breakpoints.sm}) {
+		grid-template-columns: repeat(2, 1fr);
+		justify-items: flex-start;
+	}
+
+	@media screen and (min-width: ${(props) => props.theme.breakpoints.lg}) {
+		grid-template-columns: repeat(3, 1fr);
+		justify-items: flex-start;
+	}
+`;
+
+const Divider = styled.hr`
+	height: 2px;
+
+	border-radius: 2px;
+	background-color: ${(props) => props.theme.palette.dark.contrast};
+`;
 
 class Home extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			redirectPrevPage: false,
+			redirectNextPage: false,
 			paginationInfo: null,
 			episodes: [],
 			hasLoaded: false,
@@ -26,8 +62,29 @@ class Home extends Component {
 
 	componentDidUpdate(prevProps) {
 		prevProps.page !== this.props.page && this.loadEpisodes();
-		console.log(this.state);
 	}
+
+	goPrevPage = () => {
+		const { page } = this.props;
+
+		page !== "1" &&
+			this.setState((prevState) => ({
+				...prevState,
+				redirectPrevPage: true,
+			}));
+	};
+
+	goNextPage = () => {
+		const { paginationInfo } = this.state;
+		const { page } = this.props;
+
+		Boolean(paginationInfo.next) &&
+			page !== "1" &&
+			this.setState((prevState) => ({
+				...prevState,
+				redirectNextPage: true,
+			}));
+	};
 
 	loadEpisodes = async () => {
 		try {
@@ -53,39 +110,44 @@ class Home extends Component {
 
 	render() {
 		const { page } = this.props;
-		const { hasLoaded, hasError, episodes, paginationInfo } = this.state;
+		const { hasLoaded, hasError, episodes, paginationInfo, redirectPrevPage, redirectNextPage } = this.state;
 
 		return (
-			<Layout>
-				<section className="row">
+			<>
+				{redirectPrevPage && <Redirect to={`/${Number(page) - 1}`} />}
+				{redirectNextPage && <Redirect to={`/${Number(page) + 1}`} />}
+
+				<Layout>
+					<Title>Episodes</Title>
 					{!hasLoaded && <SpinnerLoader />}
 					{hasLoaded && hasError && <ErrorMessage />}
 					{hasLoaded && !hasError && (
 						<>
-							<div className="col col-12">
-								<h1>Episodes loaded!</h1>
-							</div>
-							<div className="col col-12">
-								<hr />
-							</div>
-							{episodes.map((episode) => (
-								<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
-							))}
-							<div className="col col-12">
-								<hr />
-								<div className="d-flex justify-content-center">
-									<NavLink to={`/${Number(page) - 1}`} className={`btn btn-primary mx-3 ${Boolean(paginationInfo.prev) ? null : "disabled"}`} isActive={() => Boolean(paginationInfo.prev)}>
-										Load prev
-									</NavLink>
-									<NavLink to={`/${Number(page) + 1}`} className={`btn btn-primary mx-3 ${Boolean(paginationInfo.next) ? null : "disabled"}`} isActive={() => Boolean(paginationInfo.next)}>
-										Load next
-									</NavLink>
-								</div>
+							<Divider />
+							<Grid>
+								{episodes.map((episode) => (
+									<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
+								))}
+							</Grid>
+							<Divider />
+							<div className="d-flex justify-content-center">
+								{/* <Link to={Boolean(paginationInfo.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`}>
+								<Button disabled={!Boolean(paginationInfo.prev)}>Previous</Button>
+							</Link>
+							<Link to={Boolean(paginationInfo.next) ? `/${Number(page) + 1}` : `/${Number(page)}`}>
+								<Button disabled={!Boolean(paginationInfo.next)}>Next</Button>
+							</Link> */}
+								<Button onClick={this.goPrevPage} disabled={page === "1"}>
+									Previous
+								</Button>
+								<Button onClick={this.goNextPage} disabled={!Boolean(paginationInfo.next)}>
+									Next
+								</Button>
 							</div>
 						</>
 					)}
-				</section>
-			</Layout>
+				</Layout>
+			</>
 		);
 	}
 }

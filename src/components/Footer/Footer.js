@@ -1,14 +1,23 @@
 import React from "react";
+import styled from "styled-components";
+
+const StyledFooter = styled.footer`
+	padding: 1.5rem;
+
+	background: ${(props) => props.theme.palette.dark.main};
+	color: ${(props) => props.theme.palette.dark.contrast};
+`;
+
+const Copy = styled.p`
+	margin: 0;
+	text-align: center;
+`;
 
 function Footer() {
 	return (
-		<footer className="py-5 mt-5 bg-dark text-white container-fluid">
-			<div className="row">
-				<div className="col col-12 text-center">
-					<p className="m-0">Assembler School &copy; {new Date().getFullYear()}</p>
-				</div>
-			</div>
-		</footer>
+		<StyledFooter>
+			<Copy>Pill done by Sanadriu, with &#9825;</Copy>
+		</StyledFooter>
 	);
 }
 
