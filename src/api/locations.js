@@ -1,17 +1,13 @@
+import http from "services/httpService";
 import client from "./client";
 
 const getLocation = async (locationId, baseUrl = client.baseUrl) => {
-  return (await fetch(`${baseUrl}/location/${locationId}`)).json()
+  return http.get(`${baseUrl}/location/${locationId}`);
 }
 
-const getResidents = async (location) => {
-  return Promise.all(
-    location.residents.map(async (resident) => {
-      const response = await fetch(resident);
-      return response.json()
-    })
-  )
-};
+const getResidents = async (location) => Promise.all(
+  location.residents.map(async residentsUrl => http.get(residentsUrl))
+)
 
 const locationsApi = {
   getLocation,

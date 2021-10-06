@@ -25,7 +25,7 @@ class Location extends Component {
 
   loadLocation = async (locationId) => {
     try {
-      const location = await locationsApi.getLocation(locationId);
+      const { data: location } = await locationsApi.getLocation(locationId);
 
       const residents = await locationsApi.getResidents(location);
 
@@ -69,7 +69,7 @@ class Location extends Component {
               </h5>
               <hr />
               {residents.length > 0 &&
-                residents.map((resident) => (
+                residents.map(({ data: resident }) => (
                   <ResidentCard
                     key={resident.id}
                     id={resident.id}

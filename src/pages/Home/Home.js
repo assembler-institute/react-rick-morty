@@ -35,7 +35,7 @@ class Home extends Component {
     try {
       const { page } = this.state;
 
-      const { results, info } = await episodesApi.getAllEpisodes(page);
+      const { data: { results, info } } = await episodesApi.getAllEpisodes(page);
 
       this.setState((prevState) => ({
         episodes: [...prevState.episodes, ...results],

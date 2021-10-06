@@ -27,7 +27,7 @@ class Character extends Component {
 
   loadCharacter = async (characterId) => {
     try {
-      const character = await charactersApi.getCharacter(characterId);
+      const { data: character } = await charactersApi.getCharacter(characterId);
 
       const episodes = await episodesApi.getEpisodes(character);
 
@@ -95,7 +95,7 @@ class Character extends Component {
             </div>
           )}
           {episodes.length > 0 &&
-            episodes.map((episode) => (
+            episodes.map(({ data: episode }) => (
               <EpisodeCard
                 key={episode.id}
                 id={episode.id}
