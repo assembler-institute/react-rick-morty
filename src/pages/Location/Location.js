@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import * as Routes from "../../constants/routes";
 import Layout from "../../components/Layout";
-import CharacterCard from "../../components/CharacterCard";
+import CharacterCard from "../../components/CharacterCard2";
 
 class Location extends Component {
   constructor(props) {
@@ -54,8 +54,14 @@ class Location extends Component {
       <Layout>
         {hasLoaded && !hasError && (
           <section className="row">
-            <h1>{location.name}</h1>
-            <hr />
+            <div className="column ">
+              <h1>{location.name}</h1>
+              <hr className="my-4" />
+              <p className="lead">
+                Type - {location.type} | Dimension - {location.dimension}
+              </p>
+              <hr className="my-4" />
+            </div>
             <div className="row">
               {residents.map((character) => (
                 <CharacterCard

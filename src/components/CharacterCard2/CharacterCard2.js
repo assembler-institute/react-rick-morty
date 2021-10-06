@@ -31,11 +31,12 @@ function CharacterCard({
               className="CharacterCard__meta-item"
               to={`${routes.LOCATION}/${num}`}
             >
-              {location}
+              Location - {location}
             </Link>
-            <p className="card-text">{status}</p>
+            <p className="card-text">Status - {status}</p>
+            <p className="card-text">Origin - {origin.name}</p>
             <p className="card-text">
-              <small className="text-muted">{species}</small>
+              <small className="text-muted">Specie - {species}</small>
             </p>
           </div>
         </div>
