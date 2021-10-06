@@ -7,42 +7,14 @@ import SpinnerLoader from "../../components/SpinnerLoader";
 import ErrorMessage from "../../components/ErrorMessage";
 import ButtonLink from "../../components/ButtonLink";
 import Flex from "../../components/Flex";
+import EpisodeGrid from "../../components/EpisodeGrid";
+import Divider from "../../components/Divider";
 
 import styled from "styled-components";
 
 const Title = styled.h1`
 	font-size: 2.5rem;
 	text-align: center;
-`;
-
-const Grid = styled.div`
-	display: grid;
-	grid-template-columns: repeat(1, 1fr);
-	grid-template-rows: auto;
-
-	padding: 1rem;
-	gap: 1rem 2rem;
-
-	@media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-		grid-template-columns: repeat(2, 1fr);
-		justify-items: flex-start;
-	}
-
-	@media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
-		grid-template-columns: repeat(4, 1fr);
-		justify-items: flex-start;
-	}
-
-	& > * {
-		align-self: start;
-	}
-`;
-
-const Divider = styled.hr`
-	height: 2px;
-
-	border-radius: 2px;
-	background-color: ${({ theme }) => theme.palette.dark.contrast};
 `;
 
 class Home extends Component {
@@ -101,11 +73,11 @@ class Home extends Component {
 					{hasLoaded && !hasError && (
 						<>
 							<Divider />
-							<Grid>
+							<EpisodeGrid>
 								{episodes.map((episode) => (
 									<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
 								))}
-							</Grid>
+							</EpisodeGrid>
 							<Divider />
 							<Flex gap="1rem">
 								<ButtonLink light to={Boolean(paginationInfo.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.prev)}>

@@ -1,14 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "./EpisodeCard.scss";
-import styled from "styled-components";
-
 import * as routes from "../../constants/routes";
 import Flex from "../Flex";
 
+import styled from "styled-components";
+
 const Article = styled.article`
-	width: 100%;
 	border: 1px solid ${({ theme }) => theme.palette.dark.main};
 	border-radius: 4px;
 	background-color: rgba(64, 64, 64, 0.5);
