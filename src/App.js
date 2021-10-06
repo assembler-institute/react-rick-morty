@@ -5,6 +5,7 @@ import {
   Route,
 
 } from "react-router-dom";
+// import NewComponent from "./components/NewComponent";
 import Episode from "./pages/Episode/Episode";
 import Home from "./pages/Home";
 
@@ -12,8 +13,12 @@ function App() {
   return (
     <Router>
       <Switch>
+        {/* <Route
+          path="/character/:characterId"
+          component={NewComponent}
+        /> */}
+        <Route path="/episode/:episodeId" component={Episode} />
         <Route exact path="/" component={Home} />
-        <Route path="/:episodeId" component={Episode} />
       </Switch>
     </Router>
   )

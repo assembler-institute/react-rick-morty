@@ -19,8 +19,13 @@ class Home extends Component {
     };
   }
 
-  async componentDidMount() {
-    // this.loadEpisodes();
+  componentDidMount() {
+    this.loadEpisodes();
+  }
+
+
+
+  async loadEpisodes() {
     const { page } = this.state
     const url = `https://rickandmortyapi.com/api/episode?page=${page}`
     try {
@@ -38,12 +43,6 @@ class Home extends Component {
         errorMessage: "Looks like this shit is not working"
       })
     }
-  }
-
-
-
-  async loadEpisodes() {
-    console.log(this);
 
   }
 
@@ -63,7 +62,7 @@ class Home extends Component {
           {episodes.map((episode) => (
             <EpisodeCard
               key={episode.id}
-              id={episode.id}
+              episodeId={episode.id}
               name={episode.name}
               airDate={episode.air_date}
               episode={episode.episode}
