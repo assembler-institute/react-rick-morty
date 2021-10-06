@@ -9,16 +9,19 @@ import {
 } from "./constants/routes";
 import Home from "./pages/Home";
 import Episode from "./pages/Episode/Episode";
+import Character from "./pages/CharacterPage/Character";
 
 function App() {
   return (
     <>
       <Switch>
         <Route path={HOME} exact component={Home} />
-        {/* <Route path={EPISODES} component={}/> */}
-        <Route path={EPISODE} component={Episode} />
-        {/* <Route path={LOCATION} component={}/>
-        <Route path={CHARACTER} component={}/> */}
+        <Route path={`${EPISODE}/:episodeId`}
+        render={(routeProps)=><Episode {...routeProps} />}
+        />
+        <Route path={`${CHARACTER}/:characterId`}
+          render={(routeProps)=><Character {...routeProps} />}
+          />
       </Switch>
     </>
   );

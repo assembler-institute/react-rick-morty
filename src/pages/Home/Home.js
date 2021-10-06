@@ -15,7 +15,7 @@ class Home extends Component {
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
-      currentPagesLoader:1
+      currentPagesLoader: 1,
     };
     this.loadNextPage = this.loadNextPage.bind(this);
     this.loadEpisodes = this.loadEpisodes.bind(this);
@@ -26,15 +26,16 @@ class Home extends Component {
     this.loadEpisodes(page);
   }
 
-  async loadEpisodes(page){
+  async loadEpisodes(page) {
+   
     try {
-      const response  = await getEpisodes(page);
-      this.setState({
-        paginationInfo: response.info,
+      const response = await getEpisodes(page);
+    this.setState({
+        paginationInfo: response.data.info,
         episodes: response.data.results,
         hasLoaded: true,
-        page:page,
-        currentPagesLoader:page
+        page: page,
+        currentPagesLoader: page,
       });
     } catch (error) {
       this.setState({
@@ -44,15 +45,15 @@ class Home extends Component {
       });
     }
   }
-  componentDidUpdate(){
-    if(this.state.page!==this.state.currentPagesLoader){
-    this.loadEpisodes(this.state.page)
+  componentDidUpdate() {
+    if (this.state.page !== this.state.currentPagesLoader) {
+      this.loadEpisodes(this.state.page);
     }
   }
   async loadNextPage() {
-      const { page}=this.state
+    const { page } = this.state;
     this.setState({
-      page: this.state.page+1
+      page: this.state.page + 1,
     });
   }
 
@@ -82,7 +83,6 @@ class Home extends Component {
           <div className="col col-12">
             <hr />
             <button className="btn btn-primary" onClick={this.loadNextPage}>
-              {" "}
               Load next page
             </button>
           </div>
