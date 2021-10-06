@@ -1,7 +1,9 @@
-import axios from "axios";
 import React, { Component } from "react";
+import axios from "axios";
+import * as routes from "../../constants/routes";
 
 import Layout from "../../components/Layout";
+import EpisodeCard from "../../components/EpisodeCard";
 import CharacterCard from "../../components/CharacterCard";
 
 class Episode extends Component {
@@ -9,7 +11,7 @@ class Episode extends Component {
     super(props);
 
     this.state = {
-      episode: null,
+      episode: [],
       characters: [],
       hasLoaded: false,
       hasError: false,
@@ -18,18 +20,18 @@ class Episode extends Component {
   }
 
   async componentDidMount() {
-    await this.loadCharacters();
+    this.loadCharacters();
   }
 
   async loadCharacters() {
     let episodeId = this.props.match.params.id;
-    const EPISODE_URL = `https://rickandmortyapi.com/api/episode/${episodeId}`;
+    const EPISODE_URL = `https://rickandmortyapi.com/api${routes.EPISODE}/${episodeId}`;
 
     axios
       .get(EPISODE_URL)
       .then((result) => {
         const newCharacters = result.data.characters;
-        const newEpisode = result.data.name;
+        const newEpisode = result.data;
 
         axios.all(newCharacters.map((url) => axios.get(url))).then((data) => {
           const res = data.map((i) => i.data);
@@ -45,26 +47,29 @@ class Episode extends Component {
   }
 
   render() {
-    const { episode, characters, hasLoaded } = this.state;
+    const { characters, episode, hasLoaded } = this.state;
     return (
       <Layout>
+        <EpisodeCard
+          id={episode.id}
+          name={episode.name}
+          airDate={episode.air_date}
+          episode={episode.episode}
+        />
         <section className="row">
-          <div className="col col-12">
-            <h1>{episode}</h1>
-            {hasLoaded &&
-              characters.map((character) => (
-                <CharacterCard
-                  key={character.id}
-                  id={character.id}
-                  name={character.name}
-                  image={character.image}
-                  species={character.species}
-                  status={character.status}
-                  origin={character.origin}
-                  location={character.location}
-                />
-              ))}
-          </div>
+          {hasLoaded &&
+            characters.map((character) => (
+              <CharacterCard
+                key={character.id}
+                id={character.id}
+                name={character.name}
+                image={character.image}
+                species={character.species}
+                status={character.status}
+                origin={character.origin}
+                location={character.location}
+              />
+            ))}
         </section>
       </Layout>
     );
