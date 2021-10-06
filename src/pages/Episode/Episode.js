@@ -69,7 +69,7 @@ class Episode extends Component {
             {hasLoaded && characters.map((character) => (
               <CharacterCard
                 key={character.id}
-                id={character.id}
+                characterId={character.id}
                 name={character.name}
                 image={character.image}
                 species={character.species}

@@ -5,18 +5,18 @@ import {
   Route,
 
 } from "react-router-dom";
-// import NewComponent from "./components/NewComponent";
-import Episode from "./pages/Episode/Episode";
+import Character from "./pages/Character";
+import Episode from "./pages/Episode";
 import Home from "./pages/Home";
 
 function App() {
   return (
     <Router>
       <Switch>
-        {/* <Route
+        <Route
           path="/character/:characterId"
-          component={NewComponent}
-        /> */}
+          component={Character}
+        />
         <Route path="/episode/:episodeId" component={Episode} />
         <Route exact path="/" component={Home} />
       </Switch>
