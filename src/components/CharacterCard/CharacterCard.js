@@ -15,12 +15,12 @@ function CharacterCard({ characterId, name, image, species, status, origin, loca
         <h3 className="CharacterCard__name h4">{name}</h3>
       </Link>
       <div className="CharacterCard__meta">
-        {/* <Link
+        <Link
           className="CharacterCard__meta-item"
           to={`${routes.LOCATION}/${characterId}`}
         >
           {origin.name}
-        </Link> */}
+        </Link>
         <p className="CharacterCard__meta-item">|</p>
         <p className="CharacterCard__meta-item">{status}</p>
       </div>

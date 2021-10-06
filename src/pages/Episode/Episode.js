@@ -32,7 +32,7 @@ class Episode extends Component {
 
 
   async loadCharacters() {
-    console.log(this.props)
+    // console.log(this.props)
     const episodeId = this.props.match.params.episodeId
 
     const url = `https://rickandmortyapi.com/api/episode/${episodeId}`
