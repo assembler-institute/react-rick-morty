@@ -10,25 +10,32 @@ class Home extends Component {
     super(props);
     this.state = {
       // page: 1,
-      // paginationInfo: null,
+      paginationInfo: null,
       episodes: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
     };
+
+    this.loadEpisodes = this.loadEpisodes.bind(this);
+    this.nextPage = this.nextPage.bind(this);
+    this.prevPage = this.prevPage.bind(this);
   }
 
   async componentDidMount() {
-    this.loadEpisodes();
+    const url = api.BASE_URL;
+    this.loadEpisodes(url);
   }
 
-  async loadEpisodes() {
+  async loadEpisodes(url) {
     try {
-      await axios.get(`${api.BASE_URL}`).then((res) => {
+      await axios.get(url).then((res) => {
         const episodes = res.data.results;
+        const pageInfo = res.data.info;
         this.setState({
           episodes: episodes,
           hasLoaded: true,
+          paginationInfo: pageInfo,
         });
       });
     } catch (err) {
@@ -41,8 +48,22 @@ class Home extends Component {
     // console.log(this);
   }
 
+  nextPage(nextUrl) {
+    this.loadEpisodes(nextUrl);
+  }
+
+  prevPage(prevUrl) {
+    this.loadEpisodes(prevUrl);
+  }
+
   render() {
-    const { episodes, hasLoaded, hasError, errorMessage } = this.state;
+    const {
+      episodes,
+      hasLoaded,
+      hasError,
+      errorMessage,
+      paginationInfo,
+    } = this.state;
     return (
       <Layout>
         <section className="row">
@@ -69,8 +90,32 @@ class Home extends Component {
                 episode={episode.episode}
               />
             ))}
-          <div className="col col-12">
+          <div className="col col-12 justify-content-center">
             <hr />
+          </div>
+          <div className="col col-12">
+            <nav>
+              <ul className="pagination justify-content-center">
+                <li className="page-item">
+                  <button
+                    type="button"
+                    className="page-link"
+                    onClick={() => this.prevPage(paginationInfo.prev)}
+                  >
+                    Previous
+                  </button>
+                </li>
+                <li className="page-item">
+                  <button
+                    type="button"
+                    className="page-link"
+                    onClick={() => this.nextPage(paginationInfo.next)}
+                  >
+                    Next
+                  </button>
+                </li>
+              </ul>
+            </nav>
           </div>
         </section>
       </Layout>
