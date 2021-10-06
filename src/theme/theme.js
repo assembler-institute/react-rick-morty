@@ -13,9 +13,10 @@ const theme = {
 	palette: {
 		dark: {
 			main: "rgb(16,16,16)",
+			secondary: "rgb(48,48,48)",
 			contrast: "#e0e0e0",
 			hover: "rgb(64, 64, 64)",
-			hoverContrast: "rgb(224, 224, 224)",
+			contrastHover: "rgb(224, 224, 224)",
 		},
 	},
 };

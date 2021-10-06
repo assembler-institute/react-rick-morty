@@ -2,10 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledFooter = styled.footer`
-	padding: 1.5rem;
+	height: 4rem;
 
-	background: ${(props) => props.theme.palette.dark.main};
-	color: ${(props) => props.theme.palette.dark.contrast};
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	background: ${({ theme }) => theme.palette.dark.main};
+	color: ${({ theme }) => theme.palette.dark.contrast};
 `;
 
 const Copy = styled.p`

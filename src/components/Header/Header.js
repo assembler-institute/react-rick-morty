@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink as RouterNavLink } from "react-router-dom";
+
+import ButtonLink from "../ButtonLink";
 import styled from "styled-components";
 
 import * as routes from "../../constants/routes";
@@ -12,8 +13,8 @@ const HeaderStyled = styled.header`
 	flex-direction: column;
 	justify-content: center;
 
-	background: ${(props) => props.theme.palette.dark.main};
-	color: ${(props) => props.theme.palette.dark.contrast};
+	background: ${({ theme }) => theme.palette.dark.main};
+	color: ${({ theme }) => theme.palette.dark.contrast};
 `;
 
 const List = styled.ul`
@@ -27,41 +28,17 @@ const List = styled.ul`
 	list-style: none;
 `;
 
-const Nav = styled.nav``;
-
-const NavLink = styled(RouterNavLink)`
-	display: block;
-	padding: 0.25rem 0.5rem;
-
-	font-size: 1.25rem;
-	border-radius: 4px;
-
-	box-shadow: none;
-	background: none;
-	color: inherit;
-
-	transition: all 0.125s ease-in-out;
-
-	&:hover {
-		text-decoration: none;
-
-		box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.125);
-		background: ${(props) => props.theme.palette.dark.hover};
-		color: ${(props) => props.theme.palette.dark.hoverContrast};
-	}
-`;
-
 export default function Header({ ...props }) {
 	return (
 		<HeaderStyled {...props}>
 			<Container xs sm md lg xl>
-				<Nav>
+				<nav>
 					<List>
 						<li>
-							<NavLink to={routes.HOME}>Home</NavLink>
+							<ButtonLink to={routes.HOME}>Home</ButtonLink>
 						</li>
 					</List>
-				</Nav>
+				</nav>
 			</Container>
 		</HeaderStyled>
 	);

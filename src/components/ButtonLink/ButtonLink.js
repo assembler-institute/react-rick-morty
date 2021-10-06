@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
-const Button = styled.button`
+const ButtonLink = styled(Link)`
 	outline: none;
 	border: none;
 
@@ -33,4 +34,4 @@ const Button = styled.button`
 		`}
 `;
 
-export default Button;
+export default ButtonLink;

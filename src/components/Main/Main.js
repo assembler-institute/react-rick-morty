@@ -4,7 +4,7 @@ import wallpaper from "../../images/wallpaper.jpg";
 import Container from "../Container";
 
 const MainStyled = styled.main`
-	min-height: calc(100vh - 4rem);
+	min-height: calc(100vh - 8rem);
 	background-color: purple;
 	background-image: url(${wallpaper});
 	background-size: cover;
@@ -12,7 +12,7 @@ const MainStyled = styled.main`
 	background-blend-mode: multiply;
 	background-attachment: fixed;
 
-	color: ${(props) => props.theme.palette.dark.contrast};
+	color: ${({ theme }) => theme.palette.dark.contrast};
 `;
 
 const ContainerStyles = css`

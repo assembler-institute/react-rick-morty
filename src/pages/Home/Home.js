@@ -5,8 +5,9 @@ import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 import SpinnerLoader from "../../components/SpinnerLoader";
 import ErrorMessage from "../../components/ErrorMessage";
-import { Redirect } from "react-router-dom";
-import Button from "../../components/Button";
+import ButtonLink from "../../components/ButtonLink";
+import Flex from "../../components/Flex";
+
 import styled from "styled-components";
 
 const Title = styled.h1`
@@ -18,19 +19,22 @@ const Grid = styled.div`
 	display: grid;
 	grid-template-columns: repeat(1, 1fr);
 	grid-template-rows: auto;
-	justify-items: center;
 
 	padding: 1rem;
-	gap: 0 2rem;
+	gap: 1rem 2rem;
 
-	@media screen and (min-width: ${(props) => props.theme.breakpoints.sm}) {
+	@media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
 		grid-template-columns: repeat(2, 1fr);
 		justify-items: flex-start;
 	}
 
-	@media screen and (min-width: ${(props) => props.theme.breakpoints.lg}) {
-		grid-template-columns: repeat(3, 1fr);
+	@media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+		grid-template-columns: repeat(4, 1fr);
 		justify-items: flex-start;
+	}
+
+	& > * {
+		align-self: start;
 	}
 `;
 
@@ -38,7 +42,7 @@ const Divider = styled.hr`
 	height: 2px;
 
 	border-radius: 2px;
-	background-color: ${(props) => props.theme.palette.dark.contrast};
+	background-color: ${({ theme }) => theme.palette.dark.contrast};
 `;
 
 class Home extends Component {
@@ -46,8 +50,6 @@ class Home extends Component {
 		super(props);
 
 		this.state = {
-			redirectPrevPage: false,
-			redirectNextPage: false,
 			paginationInfo: null,
 			episodes: [],
 			hasLoaded: false,
@@ -63,28 +65,6 @@ class Home extends Component {
 	componentDidUpdate(prevProps) {
 		prevProps.page !== this.props.page && this.loadEpisodes();
 	}
-
-	goPrevPage = () => {
-		const { page } = this.props;
-
-		page !== "1" &&
-			this.setState((prevState) => ({
-				...prevState,
-				redirectPrevPage: true,
-			}));
-	};
-
-	goNextPage = () => {
-		const { paginationInfo } = this.state;
-		const { page } = this.props;
-
-		Boolean(paginationInfo.next) &&
-			page !== "1" &&
-			this.setState((prevState) => ({
-				...prevState,
-				redirectNextPage: true,
-			}));
-	};
 
 	loadEpisodes = async () => {
 		try {
@@ -110,13 +90,10 @@ class Home extends Component {
 
 	render() {
 		const { page } = this.props;
-		const { hasLoaded, hasError, episodes, paginationInfo, redirectPrevPage, redirectNextPage } = this.state;
+		const { hasLoaded, hasError, episodes, paginationInfo } = this.state;
 
 		return (
 			<>
-				{redirectPrevPage && <Redirect to={`/${Number(page) - 1}`} />}
-				{redirectNextPage && <Redirect to={`/${Number(page) + 1}`} />}
-
 				<Layout>
 					<Title>Episodes</Title>
 					{!hasLoaded && <SpinnerLoader />}
@@ -130,20 +107,14 @@ class Home extends Component {
 								))}
 							</Grid>
 							<Divider />
-							<div className="d-flex justify-content-center">
-								{/* <Link to={Boolean(paginationInfo.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`}>
-								<Button disabled={!Boolean(paginationInfo.prev)}>Previous</Button>
-							</Link>
-							<Link to={Boolean(paginationInfo.next) ? `/${Number(page) + 1}` : `/${Number(page)}`}>
-								<Button disabled={!Boolean(paginationInfo.next)}>Next</Button>
-							</Link> */}
-								<Button onClick={this.goPrevPage} disabled={page === "1"}>
+							<Flex gap="1rem">
+								<ButtonLink light to={Boolean(paginationInfo.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.prev)}>
 									Previous
-								</Button>
-								<Button onClick={this.goNextPage} disabled={!Boolean(paginationInfo.next)}>
+								</ButtonLink>
+								<ButtonLink light to={Boolean(paginationInfo.next) ? `/${Number(page) + 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.next)}>
 									Next
-								</Button>
-							</div>
+								</ButtonLink>
+							</Flex>
 						</>
 					)}
 				</Layout>

@@ -2,21 +2,42 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./EpisodeCard.scss";
+import styled from "styled-components";
 
 import * as routes from "../../constants/routes";
+import Flex from "../Flex";
+
+const Article = styled.article`
+	width: 100%;
+	border: 1px solid ${({ theme }) => theme.palette.dark.main};
+	border-radius: 4px;
+	background-color: rgba(64, 64, 64, 0.5);
+`;
+
+const Name = styled.h3`
+	padding: 0.4rem;
+	margin: 0;
+
+	font-size: 1.25rem;
+	background-color: ${({ theme }) => theme.palette.dark.main};
+`;
+
+const Info = styled.p`
+	padding: 0.4rem;
+	margin: 0;
+`;
 
 function EpisodeCard({ id, name, airDate, episode }) {
 	return (
-		<article>
+		<Article>
 			<Link to={`${routes.EPISODE}/${id}`}>
-				<h3 className="Episode__name h5">{name}</h3>
+				<Name>{name}</Name>
 			</Link>
-			<div className="Episode__meta">
-				<p className="Episode__meta-item">{airDate}</p>
-				<p className="Episode__meta-item">|</p>
-				<p className="Episode__meta-item">{episode}</p>
-			</div>
-		</article>
+			<Flex justifyContent="space-between">
+				<Info>{airDate}</Info>
+				<Info>{episode}</Info>
+			</Flex>
+		</Article>
 	);
 }
 
