@@ -9,7 +9,7 @@ export default class Character extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      character: null,
+      character: [],
       episodes: [],
       hasLoaded: false,
       hasError: false,
@@ -22,6 +22,7 @@ export default class Character extends Component {
 
   async loadCharacter() {
     let charId = this.props.match.params.id;
+    console.log(this.props);
     await axiosId(urlArr[2], charId).then((res) => {
       const currentCharacter = res.data;
       this.setState({

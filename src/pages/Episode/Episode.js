@@ -26,7 +26,6 @@ class Episode extends Component {
   }
 
   loadCharacters() {
-    console.log(this.props);
     const episodeId = this.props.match.params.id;
     axios
       .get(`https://rickandmortyapi.com/api/episode/${episodeId}`)
