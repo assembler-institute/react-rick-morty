@@ -26,6 +26,10 @@ class Episode extends Component {
     const { match } = this.props;
     const { episodeId } = match.params;
     const charactersUrl = `${API}${EPISODE}/${episodeId}`;
+    this.fetchEpisodeCharacters(charactersUrl);
+  }
+
+  fetchEpisodeCharacters(charactersUrl) {
     axios
       .get(charactersUrl)
       .then((apiEpisode) => {
@@ -38,31 +42,34 @@ class Episode extends Component {
           },
         });
 
-        const characterUris = apiEpisode.data.characters;
+        const characterUrls = apiEpisode.data.characters;
+        this.fetchCharacters(characterUrls);
+      })
+      .catch((error) => {
+        this.setState({
+          hasLoaded: false,
+          hasError: true,
+          errorMessage: error,
+        });
+      });
+  }
 
-        axios
-          .all(
-            characterUris.map((char) => {
-              return axios.get(char);
-            }),
-          )
-          .then((data) => {
-            const charactersArr = data.map((characterData) => {
-              return characterData.data;
-            });
-            this.setState({
-              characters: charactersArr,
-              hasLoaded: true,
-              hasError: false,
-            });
-          })
-          .catch((error) => {
-            this.setState({
-              hasLoaded: false,
-              hasError: true,
-              errorMessage: error,
-            });
-          });
+  fetchCharacters(characterUrls) {
+    axios
+      .all(
+        characterUrls.map((char) => {
+          return axios.get(char);
+        }),
+      )
+      .then((data) => {
+        const charactersArr = data.map((characterData) => {
+          return characterData.data;
+        });
+        this.setState({
+          characters: charactersArr,
+          hasLoaded: true,
+          hasError: false,
+        });
       })
       .catch((error) => {
         this.setState({

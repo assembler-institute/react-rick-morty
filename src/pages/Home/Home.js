@@ -66,6 +66,7 @@ class Home extends Component {
       <>
         <Layout>
           <section className="row">
+            {hasError && !hasLoaded && <div>{errorMessage}</div>}
             {hasLoaded && !hasError && (
               <div className="col col-12">
                 <h1>Episodes loaded!</h1>
