@@ -10,12 +10,14 @@
 
   &__name {
     margin: 0.75rem 0;
+    color: rgb(223, 223, 223);
   }
 
   &__meta {
     display: flex;
     &-item {
       margin-right: 0.5rem;
+      color: rgb(167, 167, 167);
     }
   }
 }
