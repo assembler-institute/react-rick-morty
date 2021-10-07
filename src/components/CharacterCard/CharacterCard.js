@@ -7,6 +7,8 @@ import "./CharacterCard.scss";
 import * as routes from "../../constants/routes";
 
 function CharacterCard({ characterId, name, image, species, status, origin, location }) {
+  const locationId = location.split("/").slice(-1)
+  console.log(locationId)
 
   return (
     <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
@@ -17,7 +19,7 @@ function CharacterCard({ characterId, name, image, species, status, origin, loca
       <div className="CharacterCard__meta">
         <Link
           className="CharacterCard__meta-item"
-          to={`${routes.LOCATION}/${characterId}`}
+          to={`${routes.LOCATION}/${locationId}`}
         >
           {origin.name}
         </Link>

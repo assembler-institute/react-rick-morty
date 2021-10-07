@@ -42,7 +42,7 @@ class Episode extends Component {
       const arr = await axios.all(res.data.characters.map((e) => axios.get(e)))
       // console.log(arr)
       const arr2 = arr.map((e) => e.data)
-      // console.log(arr2)
+      console.log(arr2)
       this.setState({
         characters: arr2,
         hasLoaded: true
@@ -75,7 +75,7 @@ class Episode extends Component {
                 species={character.species}
                 status={character.status}
                 origin={character.origin}
-                location={character.location}
+                location={character.location.url}
               />
             ))}
           </div>

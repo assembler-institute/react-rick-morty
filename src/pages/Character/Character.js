@@ -104,7 +104,8 @@ class Character extends Component {
                   episodeId={episode.data.id}
                   name={episode.data.name}
                   airDate={episode.data.air_date}
-                  episode={episode.data.episode} />
+                  episode={episode.data.episode}
+                />
               )}
             </div>
           </div>
