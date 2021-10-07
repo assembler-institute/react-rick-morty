@@ -9,6 +9,7 @@ function Layout({ children }) {
     <>
       <AppHeader />
       <Main>{children}</Main>
+      
       <Footer />
     </>
   );

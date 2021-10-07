@@ -1,4 +1,4 @@
-import React from "react";
+import React, {} from "react";
 import { Link } from "react-router-dom";
 
 import "./EpisodeCard.scss";
@@ -6,6 +6,8 @@ import "./EpisodeCard.scss";
 import * as routes from "../../constants/routes";
 
 function EpisodeCard({ id, name, airDate, episode }) {
+
+
   return (
     <div className="col col-12 col-sm-6 col-xl-4 EpisodeCard">
       <Link to={`${routes.EPISODE}/${id}`}>
