@@ -4,7 +4,7 @@ import { getEpisodes } from "../../api/requests";
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 import SpinnerLoader from "../../components/SpinnerLoader";
-import ErrorMessage from "../../components/ErrorMessage";
+import { ErrorMessageCard } from "../../components/MessageCard";
 import ButtonLink from "../../components/ButtonLink";
 import Flex from "../../components/Flex";
 import EpisodeGrid from "../../components/EpisodeGrid";
@@ -69,7 +69,7 @@ class Home extends Component {
 				<Layout>
 					<Title>Episodes</Title>
 					{!hasLoaded && <SpinnerLoader />}
-					{hasLoaded && hasError && <ErrorMessage />}
+					{hasLoaded && hasError && <ErrorMessageCard />}
 					{hasLoaded && !hasError && (
 						<>
 							<Divider />

@@ -7,7 +7,9 @@ const Flex = styled.div`
 	align-items: ${(props) => props.alignItems || "center"};
 	align-content: ${(props) => props.alignContent || "center"};
 	justify-content: ${(props) => props.justifyContent || "center"};
-	gap: ${(props) => props.gap || "1rem"};
+	gap: ${(props) => props.gap || "0"};
+	margin: ${(props) => props.m || "0"};
+	padding: ${(props) => props.p || "0"};
 `;
 
 export default Flex;

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import * as routes from "../../constants/routes";
 
@@ -30,6 +29,7 @@ const Icon = styled.img`
 
 const Name = styled.h3`
 	padding: 0.75rem;
+	margin: 0;
 
 	font-size: 1.25rem;
 	text-align: center;
@@ -41,9 +41,7 @@ const Name = styled.h3`
 const PropertyField = styled.span`
 	display: block;
 
-	margin: 0 0.5rem;
-	margin-bottom: 0.15rem;
-
+	text-align: center;
 	font-family: "Gemunu Libre";
 	font-weight: 700;
 `;
@@ -51,9 +49,7 @@ const PropertyField = styled.span`
 const DataField = styled.span`
 	display: block;
 
-	margin: 0 0.5rem;
-	margin-bottom: 0.5rem;
-
+	text-align: center;
 	font-family: "Gemunu Libre";
 	font-weight: 300;
 `;
@@ -65,29 +61,31 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
 				<Image src={image} alt={`${name} picture`} />
 			</Link>
 			<Name>{name}</Name>
-			<Flex justifyContent="space-evenly" alignItems="start" gap="0">
-				<Flex direction="column" gap="0">
-					<PropertyField>Species</PropertyField>
-					<DataField>{species}</DataField>
+			<Flex direction="column" alignItems="stretch" gap="0.5rem" p="0.5rem">
+				<Flex justifyContent="space-evenly" alignItems="start">
+					<Flex direction="column">
+						<PropertyField>Character type</PropertyField>
+						<DataField>{species}</DataField>
+					</Flex>
+					<Flex direction="column">
+						<PropertyField>Status</PropertyField>
+						<DataField>
+							<Icon src={status === "Alive" ? aliveImg : deadImg} />
+						</DataField>
+					</Flex>
 				</Flex>
-				<Flex direction="column" gap="0">
-					<PropertyField>Status</PropertyField>
+				<Flex direction="column">
+					<PropertyField>Last known location</PropertyField>
 					<DataField>
-						<Icon src={status === "Alive" ? aliveImg : deadImg} />
+						{location.name} {location.url && <Link to={`${routes.LOCATION}/${location.url.split("/").pop()}`}>&#128279;</Link>}
 					</DataField>
 				</Flex>
-			</Flex>
-			<Flex direction="column" gap="0">
-				<PropertyField>Last known location</PropertyField>
-				<DataField>
-					{location.name} {location.url && <Link to={`${routes.LOCATION}/${location.url.split("/").pop()}`}>&#128279;</Link>}
-				</DataField>
-			</Flex>
-			<Flex direction="column" gap="0">
-				<PropertyField>Origin location</PropertyField>
-				<DataField>
-					{origin.name} {origin.url && <Link to={`${routes.LOCATION}/${origin.url.split("/").pop()}`}>&#128279;</Link>}
-				</DataField>
+				<Flex direction="column">
+					<PropertyField>Origin location</PropertyField>
+					<DataField>
+						{origin.name} {origin.url && <Link to={`${routes.LOCATION}/${origin.url.split("/").pop()}`}>&#128279;</Link>}
+					</DataField>
+				</Flex>
 			</Flex>
 		</Article>
 	);

@@ -4,7 +4,7 @@ import { getEpisode } from "../../api/requests";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 import SpinnerLoader from "../../components/SpinnerLoader";
-import ErrorMessage from "../../components/ErrorMessage";
+import { ErrorMessageCard } from "../../components/MessageCard";
 import Flex from "../../components/Flex";
 import CharacterGrid from "../../components/CharacterGrid";
 import Divider from "../../components/Divider";
@@ -58,7 +58,7 @@ export default class Episode extends Component {
 		return (
 			<Layout>
 				{!hasLoaded && <SpinnerLoader />}
-				{hasLoaded && hasError && <ErrorMessage />}
+				{hasLoaded && hasError && <ErrorMessageCard />}
 				{hasLoaded && !hasError && (
 					<>
 						<Flex justifyContent="space-between" alignItems="baseline">
@@ -68,6 +68,8 @@ export default class Episode extends Component {
 							</h6>
 						</Flex>
 						<Divider />
+						<h5>Characters that appeared</h5>
+						<Divider thickness="1px" />
 						<CharacterGrid>
 							{characters.map((character) => (
 								<CharacterCard key={character.id} id={character.id} name={character.name} image={character.image} species={character.species} status={character.status} origin={character.origin} location={character.location} />

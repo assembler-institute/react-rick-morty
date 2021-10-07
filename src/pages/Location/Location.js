@@ -4,7 +4,10 @@ import { getLocation } from "../../api/requests";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 import SpinnerLoader from "../../components/SpinnerLoader";
-import ErrorMessage from "../../components/ErrorMessage";
+import { ErrorMessageCard, NoResidentsCard } from "../../components/MessageCard";
+import Flex from "../../components/Flex";
+import CharacterGrid from "../../components/CharacterGrid";
+import Divider from "../../components/Divider";
 
 export default class Location extends Component {
 	constructor(props) {
@@ -54,33 +57,29 @@ export default class Location extends Component {
 
 		return (
 			<Layout>
-				<section className="row">
-					{!hasLoaded && <SpinnerLoader />}
-					{hasLoaded && hasError && <ErrorMessage />}
-					{hasLoaded && !hasError && (
-						<>
-							<div className="col col-12">
-								<h3>{location.name}</h3>
-							</div>
-							<div className="col col-12">
-								<hr />
-							</div>
-							<div className="col col-12">
-								<h6>
-									{location.type} | {location.dimension}
-								</h6>
-							</div>
-							<div className="col col-12">
-								<hr />
-							</div>
-							<div className="col col-12 row">
+				{!hasLoaded && <SpinnerLoader />}
+				{hasLoaded && hasError && <ErrorMessageCard />}
+				{hasLoaded && !hasError && (
+					<>
+						<Flex justifyContent="space-between" alignItems="baseline">
+							<h3>{location.name}</h3>
+							<h6>
+								{location.type} at {location.dimension}
+							</h6>
+						</Flex>
+						<Divider />
+						<h5>Resident characters</h5>
+						<Divider thickness="1px" />
+						{Boolean(characters.length) && (
+							<CharacterGrid>
 								{characters.map((character) => (
 									<CharacterCard key={character.id} id={character.id} name={character.name} image={character.image} species={character.species} status={character.status} origin={character.origin} location={character.location} />
 								))}
-							</div>
-						</>
-					)}
-				</section>
+							</CharacterGrid>
+						)}
+						{Boolean(!characters.length) && <NoResidentsCard />}
+					</>
+				)}
 			</Layout>
 		);
 	}

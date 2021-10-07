@@ -5,7 +5,9 @@ import CharacterProfile from "../../components/CharacterProfile";
 import EpisodeCard from "../../components/EpisodeCard";
 import Layout from "../../components/Layout";
 import SpinnerLoader from "../../components/SpinnerLoader";
-import ErrorMessage from "../../components/ErrorMessage";
+import { ErrorMessageCard } from "../../components/MessageCard";
+import EpisodeGrid from "../../components/EpisodeGrid";
+import Divider from "../../components/Divider";
 
 export default class Character extends Component {
 	constructor(props) {
@@ -55,29 +57,22 @@ export default class Character extends Component {
 
 		return (
 			<Layout>
-				<section className="row">
-					{!hasLoaded && <SpinnerLoader />}
-					{hasLoaded && hasError && <ErrorMessage />}
-					{hasLoaded && !hasError && (
-						<>
-							<div className="col-12">{<CharacterProfile {...character} />}</div>
-							<div className="col-12">
-								<hr />
-							</div>
-							<div className="col-12">
-								<h4>Episodes</h4>
-							</div>
-							<div className="col-12">
-								<hr />
-							</div>
-							<div className="col-12 row">
-								{episodes.map((episode) => (
-									<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
-								))}
-							</div>
-						</>
-					)}
-				</section>
+				{!hasLoaded && <SpinnerLoader />}
+				{hasLoaded && hasError && <ErrorMessageCard />}
+				{hasLoaded && !hasError && (
+					<>
+						{<CharacterProfile {...character} />}
+
+						<Divider />
+						<h5>Episodes</h5>
+						<Divider thickness="1px" />
+						<EpisodeGrid>
+							{episodes.map((episode) => (
+								<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
+							))}
+						</EpisodeGrid>
+					</>
+				)}
 			</Layout>
 		);
 	}
