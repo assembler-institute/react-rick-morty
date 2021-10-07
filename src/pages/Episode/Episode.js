@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
-import { LOCATION } from "../../constants/routes";
 
 class Episode extends Component {
   constructor(props) {
@@ -32,7 +31,7 @@ class Episode extends Component {
       const promises = data.map((eachChar) => axios.get(eachChar));
 
       const res = await Promise.all(promises);
-      const characters = res.map((character) => character.data);
+      const   characters = res.map((character) => character.data);
 
       this.setState({
         episode: episode,
