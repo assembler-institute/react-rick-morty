@@ -82,31 +82,25 @@ the requirements document.**
 
 Path: `/`
 
-<img src="src/images/01-home-start.png" >
-
-### Home page disabled pagination
-
-Path: `/`
-
-<img src="src/images/02-home-disabled-next-page.png" >
+<img src="src/images/home-start.png" >
 
 ### Episode page
 
 Path: `/episode/:episodeId`
 
-<img src="src/images/03-episode-page.png" >
+<img src="src/images/episode-page.png" >
 
 ### Character page
 
 Path: `/character/:characterId`
 
-<img src="src/images/04-character-page.png" >
+<img src="src/images/character-page.png" >
 
 ### Location page
 
 Path: `/location/:locationId`
 
-<img src="src/images/05-location-page.png" >
+<img src="src/images/location-page.png" >
 
 ## Project delivery
 
