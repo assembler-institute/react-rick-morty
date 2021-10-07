@@ -15,6 +15,8 @@ class Character extends Component {
       hasError: false,
       errorMessage: null,
     };
+
+    this.loadCharacter = this.loadCharacter.bind(this);
   }
 
   async componentDidMount() {

@@ -16,6 +16,8 @@ class Episode extends Component {
       hasError: false,
       errorMessage: null,
     };
+
+    this.loadCharacters = this.loadCharacters.bind(this);
   }
 
   async componentDidMount() {

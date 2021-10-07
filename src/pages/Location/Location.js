@@ -16,6 +16,8 @@ class Location extends Component {
       hasError: false,
       errorMessage: null,
     };
+
+    this.loadLocation = this.loadLocation.bind(this);
   }
 
   async componentDidMount() {
