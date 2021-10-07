@@ -1,5 +1,10 @@
+.contents {
+  display: contents;
+}
+
 .CharacterCard {
   margin-bottom: 1.5rem;
+
 
   &__img {
     display: block;
@@ -12,12 +17,14 @@
 
   &__name {
     margin: 0.75rem 0;
+    color: rgb(223, 223, 223);
   }
 
   &__meta {
     display: flex;
     &-item {
       margin-right: 0.5rem;
+      color: rgb(167, 167, 167);
     }
   }
 }
