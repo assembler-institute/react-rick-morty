@@ -18,8 +18,6 @@ class Home extends Component {
     };
 
     this.loadEpisodes = this.loadEpisodes.bind(this);
-    this.nextPage = this.nextPage.bind(this);
-    this.prevPage = this.prevPage.bind(this);
   }
 
   async componentDidMount() {
@@ -96,24 +94,28 @@ class Home extends Component {
           <div className="col col-12">
             <nav>
               <ul className="pagination justify-content-center">
-                <li className="page-item">
-                  <button
-                    type="button"
-                    className="page-link"
-                    onClick={() => this.prevPage(paginationInfo.prev)}
-                  >
-                    Previous
-                  </button>
-                </li>
-                <li className="page-item">
-                  <button
-                    type="button"
-                    className="page-link"
-                    onClick={() => this.nextPage(paginationInfo.next)}
-                  >
-                    Next
-                  </button>
-                </li>
+                {paginationInfo && paginationInfo.prev !== null ? (
+                  <li className="page-item">
+                    <button
+                      type="button"
+                      className="page-link"
+                      onClick={() => this.prevPage(paginationInfo.prev)}
+                    >
+                      Previous
+                    </button>
+                  </li>
+                ) : null}
+                {paginationInfo && paginationInfo.next !== null ? (
+                  <li className="page-item">
+                    <button
+                      type="button"
+                      className="page-link"
+                      onClick={() => this.nextPage(paginationInfo.next)}
+                    >
+                      Next
+                    </button>
+                  </li>
+                ) : null}{" "}
               </ul>
             </nav>
           </div>

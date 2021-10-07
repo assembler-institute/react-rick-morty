@@ -1,31 +1,31 @@
 import React from "react";
 
-const Pagination = ({ onPrevious, onNext, paginationInfo }) => {
-  const handlePrev = () => {
-    console.log("click");
-  };
-
-  const handleNext = () => {
-    console.log("click");
-  };
-
+const Pagination = ({ paginationInfo, nextPage, prevPage }) => {
   return (
     <nav>
       <ul className="pagination justify-content-center">
-        {paginationInfo.prev ? (
+        {paginationInfo && paginationInfo.prev !== null ? (
           <li className="page-item">
-            <button type="button" className="page-link" onClick={handlePrev}>
+            <button
+              type="button"
+              className="page-link"
+              onClick={() => prevPage(paginationInfo.prev)}
+            >
               Previous
             </button>
           </li>
         ) : null}
-        {paginationInfo.next ? (
+        {paginationInfo && paginationInfo.next !== null ? (
           <li className="page-item">
-            <button type="button" className="page-link" onClick={handleNext}>
+            <button
+              type="button"
+              className="page-link"
+              onClick={() => nextPage(paginationInfo.next)}
+            >
               Next
             </button>
           </li>
-        ) : null}
+        ) : null}{" "}
       </ul>
     </nav>
   );
