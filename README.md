@@ -102,11 +102,11 @@ Path: `/location/:locationId`
 
 <img src="src/images/location-page.png" >
 
-## Project delivery
+## Postman Docs
 
-To deliver this project you must follow the steps indicated in the document:
+The documentation for the Rick & Morty request collection can be found in the next resource:
 
-- [Submitting a solution](https://www.notion.so/Submitting-a-solution-524dab1a71dd4b96903f26385e24cdb6)
+https://documenter.getpostman.com/view/16968133/UUy68RF5
 
 ## Resources
 
