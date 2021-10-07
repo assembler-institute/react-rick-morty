@@ -19,10 +19,10 @@ class Episode extends Component {
   }
 
   componentDidMount() {
-    this.getCharacters();
+    this.loadCharacters();
   }
 
-  getCharacters() {
+  loadCharacters() {
     const { match } = this.props;
     const { episodeId } = match.params;
     const charactersUrl = `${API}${EPISODE}/${episodeId}`;

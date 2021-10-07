@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
+import { API, EPISODE } from "../../constants/routes";
 
 class Home extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class Home extends Component {
   loadEpisodes() {
     const { page } = this.state;
     axios
-      .get(`https://rickandmortyapi.com/api/episode?page=${page}`)
+      .get(`${API}${EPISODE}?page=${page}`)
       .then((data) => {
         const newInfo = data.data.results;
         this.setState({
@@ -60,8 +61,6 @@ class Home extends Component {
       hasError,
       errorMessage,
     } = this.state;
-
-    console.log(paginationInfo);
 
     return (
       <>

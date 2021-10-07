@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import EpisodeCard from "../../components/EpisodeCard";
 import Layout from "../../components/Layout";
+import { API, CHARACTER } from "../../constants/routes";
 
 class Character extends Component {
   constructor(props) {
@@ -14,23 +15,24 @@ class Character extends Component {
   }
 
   componentDidMount() {
-    // this.getCharacterById();
+    this.loadCharacterEpisodes();
+  }
+
+  loadCharacterEpisodes() {
     const { match } = this.props;
     const characterId = match.params.characterId;
-    axios
-      .get(`https://rickandmortyapi.com/api/character/${characterId}`)
-      .then((data) => {
-        this.setState({ character: data.data });
-        const episodeUrls = data.data.episode;
-        axios
-          .all(episodeUrls.map((episodeUrl) => axios.get(episodeUrl)))
-          .then((dataCollection) => {
-            const episodes = dataCollection.map(
-              (collectionData) => collectionData.data,
-            );
-            this.setState({ episodes: episodes, isLoaded: true });
-          });
-      });
+    axios.get(`${API}${CHARACTER}/${characterId}`).then((data) => {
+      this.setState({ character: data.data });
+      const episodeUrls = data.data.episode;
+      axios
+        .all(episodeUrls.map((episodeUrl) => axios.get(episodeUrl)))
+        .then((dataCollection) => {
+          const episodes = dataCollection.map(
+            (collectionData) => collectionData.data,
+          );
+          this.setState({ episodes: episodes, isLoaded: true });
+        });
+    });
   }
 
   render() {
@@ -92,14 +94,6 @@ class Character extends Component {
               </div>
             </div>
           )}
-
-          {/* <CharacterCard
-            name={character.name}
-            race
-            status
-            origin
-            location
-          /> */}
         </Layout>
       </>
     );
