@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 import { getCharacter, getDataList } from "../../api/api";
+import SingleCharacter from "../../components/SingleCharacter";
 
 class Character extends Component {
   constructor(props) {
@@ -47,28 +48,41 @@ class Character extends Component {
 
     return (
       <Layout>
-        
-          <section className="row">
+        <section className="row">
+            {hasError && (
               <div className="col col-12">
-          {
-            hasLoaded && !hasError &&
-            <div className="Episode__meta">
-              <p className="Episode__meta-item font-weight-bold h3">{character.name}</p>
-              <p className="Episode__meta-item h3">{character.image}</p>
-              <p className="Episode__meta-item h3">{character.id}</p>
-            </div>
-          }
-          </div>
+                <h1>Character could not be loaded...</h1>
+                <p>{errorMessage}</p>
+              </div>
+            )}
+            {!hasLoaded && (
+              <div className="col col-12">
+                <h1>Loading character...</h1>
+              </div>
+            )}
+            {character && (
+              <SingleCharacter
+                key={character.id}
+                image={character.image}
+                name={character.name}
+                species={character.species}
+                status={character.status}
+                origin={character.origin.name}
+                location={character.location.name}
+              />
+            )}
+            </section>
+            <section className="row">
             <div className="col col-12">
               <hr />
             </div>
             <div className="col col-12">
-              <h2 className="h5">Episodes</h2>
+              <h4>📺Episodes:</h4>
             </div>
             <div className="col col-12">
               <hr />
             </div>
-            {episodes.length > 0 &&
+              {episodes.length > 0 &&
               episodes.map((episode) => (
                 <EpisodeCard
                   key={episode.id}
@@ -78,23 +92,8 @@ class Character extends Component {
                   episodes={episode.episode}
                 />
               ))}
-          </section>
-        
-        {!hasLoaded && (
-          <section className="row">
-            <div className="col col-12">
-              <h1 className="h3">Loading data...</h1>
-            </div>
-          </section>
-        )}
-        {hasError && (
-          <section className="row">
-            <div className="col col-12">
-              <h1>Something went wrong...</h1>
-              <p>{errorMessage}</p>
-            </div>
-          </section>
-        )}
+            </section>
+
       </Layout>
     );
   }

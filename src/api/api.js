@@ -27,3 +27,9 @@ export async function getCharacter (characterId = 1) {
     return request.data;
 }
 
+export async function getLocation (locationId = 1) {
+    const request = await axios.get(`https://rickandmortyapi.com/api/location/${locationId}`);
+
+    return request.data;
+}
+
