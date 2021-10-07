@@ -1,20 +1,19 @@
 /* eslint-disable no-console */
-
 import axios from "axios";
 import React, { Component } from "react";
 
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
-class Episode extends Component {
+class Location extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      episode: null,
+      residents: [],
+      dimension: "",
       name: "",
-      airDate: "",
-      characters: [],
+      type: "",
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
@@ -22,32 +21,35 @@ class Episode extends Component {
   }
 
   async componentDidMount() {
-    this.loadEpisode();
+    this.loadLocation();
   }
 
-  async loadEpisode() {
-    console.log(this);
+  async loadLocation() {
+    console.log(this.props);
     // eslint-disable-next-line react/destructuring-assignment
-    const id = this.props.match.params.id;
-    const baseURL = `https://rickandmortyapi.com/api/episode/ ${id}`;
+    const id = this.props.match.params.locationId;
+
+    const baseURL = `https://rickandmortyapi.com/api/location/${id}`;
+
     try {
       const APIcall = await axios.get(baseURL);
-      const charArray = APIcall.data.characters;
-      const chars = await axios.all(
-        charArray.map((charURL) => axios.get(charURL)),
+      console.log(APIcall);
+      const residentsArray = APIcall.data.residents;
+      const res = await axios.all(
+        residentsArray.map((resURL) => axios.get(resURL)),
       );
 
       this.setState({
-        episode: APIcall.data.episode,
-        characters: chars,
+        dimension: APIcall.data.dimension,
+        residents: res,
         name: APIcall.data.name,
-        airDate: APIcall.data.air_date,
+        type: APIcall.data.type,
         hasLoaded: true,
       });
     } catch (err) {
       this.setState({
         hasError: false,
-        errorMessage: "Episode not found!!",
+        errorMessage: "Location not found!!",
       });
     }
   }
@@ -57,12 +59,12 @@ class Episode extends Component {
       hasLoaded,
       hasError,
       errorMessage,
-      characters,
+      residents,
       name,
-      airDate,
-      episode,
+      dimension,
+      type,
     } = this.state;
-    console.log(characters.map((s) => s.data.location.name));
+
     return (
       <Layout>
         <section className="row">
@@ -71,9 +73,9 @@ class Episode extends Component {
               <>
                 <h3 className="Episode__name h5">{name}</h3>
                 <div className="Episode__meta">
-                  <p className="Episode__meta-item">{airDate}</p>
+                  <p className="Episode__meta-item">{dimension}</p>
                   <p className="Episode__meta-item">|</p>
-                  <p className="Episode__meta-item">{episode}</p>
+                  <p className="Episode__meta-item">{type}</p>
                 </div>
               </>
             ) : (
@@ -84,7 +86,7 @@ class Episode extends Component {
             <hr />
           </div>
 
-          {characters.map((character) => (
+          {residents.map((character) => (
             <CharacterCard
               key={character.data.id}
               id={character.data.id}
@@ -93,6 +95,7 @@ class Episode extends Component {
               species={character.data.species}
               status={character.data.status}
               origin={character.data.origin}
+              location={character.data.location}
             />
           ))}
 
@@ -104,5 +107,4 @@ class Episode extends Component {
     );
   }
 }
-
-export default Episode;
+export default Location;
