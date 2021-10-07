@@ -79,8 +79,10 @@ class Character extends Component {
                 </div>
                 <div className="col col-12">
                   <div>
-                    <p>CHARACTER</p>
-                    <div>
+                    <p>
+                      <strong>CHARACTER</strong>
+                    </p>
+                    <div className="d-flex flex-row">
                       <p>{character.species}</p>
                       <p>|</p>
                       <p>{character.status}</p>
@@ -88,16 +90,20 @@ class Character extends Component {
                   </div>
                 </div>
                 <div className="col col-12">
-                  <div>
+                  <di className="d-flex flex-row">
                     <div>
-                      <p>ORIGINAL</p>
+                      <p>
+                        <strong>ORIGIN</strong>
+                      </p>
                       <p>{character.origin.name}</p>
                     </div>
                     <div>
-                      <p>LOCATION</p>
+                      <p>
+                        <strong>LOCATION</strong>
+                      </p>
                       <p>{character.location.name}</p>
                     </div>
-                  </div>
+                  </di>
                 </div>
               </div>
             </div>
