@@ -19,8 +19,11 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
         >
           {origin.name}
         </Link>
+       {/* quan poso location peta wtf?? */}
+        <p className="CharacterCard__meta-item">{species}</p>
         <p className="CharacterCard__meta-item">|</p>
         <p className="CharacterCard__meta-item">{status}</p>
+        
       </div>
     </div>
   );
