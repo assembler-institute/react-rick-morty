@@ -25,17 +25,17 @@ class Home extends Component {
     this.loadEpisodes();
   }
 
-  nextHandler() {
+  async nextHandler() {
     const { next } = this.state;
-    this.setState({
+    await this.setState({
       baseURL: next,
     });
     this.loadEpisodes();
   }
 
-  prevHandler() {
+  async prevHandler() {
     const { prev } = this.state;
-    this.setState({
+    await this.setState({
       baseURL: prev,
     });
     this.loadEpisodes();
