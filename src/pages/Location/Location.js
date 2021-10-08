@@ -61,8 +61,9 @@ class Location extends Component {
                             <div className="col col-12">
                                 <hr />
                             </div>
-                            <div className="col col-12">
-                                <h3>{location.dimension}</h3>
+                            <div className="col col-12 m-lg-5" >
+                                <h3 className="h3">{location.dimension}</h3>
+                            </div>
                                 {residents.length > 0 &&
                                     residents.map((character) => (
                                         <CharacterCard
@@ -76,7 +77,7 @@ class Location extends Component {
                                             location={character.location}
                                         />
                                     ))}
-                            </div>
+                           
                             <div className="col col-12">
                                 <hr />
                             </div>

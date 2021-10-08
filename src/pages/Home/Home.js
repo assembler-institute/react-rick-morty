@@ -17,7 +17,9 @@ class Home extends Component {
       errorMessage: null,
       currentPagesLoader: 1,
     };
+
     this.loadNextPage = this.loadNextPage.bind(this);
+    this.loadPrevPage = this.loadPrevPage.bind(this);
     this.loadEpisodes = this.loadEpisodes.bind(this);
   }
 
@@ -27,10 +29,10 @@ class Home extends Component {
   }
 
   async loadEpisodes(page) {
-   
+
     try {
       const response = await getEpisodes(page);
-    this.setState({
+      this.setState({
         paginationInfo: response.data.info,
         episodes: response.data.results,
         hasLoaded: true,
@@ -50,15 +52,23 @@ class Home extends Component {
       this.loadEpisodes(this.state.page);
     }
   }
-  async loadNextPage() {
-    const { page } = this.state;
-    this.setState({
-      page: this.state.page + 1,
-    });
+
+  loadNextPage() {
+    this.setState(prevState => ({
+      ...prevState,
+      page: prevState.page + 1,
+    }));
+  }
+
+  loadPrevPage() {
+    this.setState(prevState => ({
+      ...prevState,
+      page: prevState.page - 1,
+    }));
   }
 
   render() {
-    const { hasLoaded, hasError, episodes } = this.state;
+    const { hasLoaded, hasError, episodes, page, paginationInfo } = this.state;
     return (
       <Layout>
         <section className="row">
@@ -73,6 +83,7 @@ class Home extends Component {
           {episodes &&
             episodes.map((episode) => (
               <EpisodeCard
+                img={episode.img}
                 key={episode.id}
                 id={episode.id}
                 name={episode.name}
@@ -82,9 +93,13 @@ class Home extends Component {
             ))}
           <div className="col col-12">
             <hr />
-            <button className="btn btn-primary" onClick={this.loadNextPage}>
-              Load next page
-            </button>
+            {hasLoaded && !hasError && (
+              <>
+                {paginationInfo.prev && <button className="btn btn-primary" onClick={this.loadPrevPage}>Back</button>}
+                {paginationInfo.next && <button className="btn btn-primary" onClick={this.loadNextPage}>Next</button>}
+              </>
+            )}
+
           </div>
         </section>
       </Layout>
