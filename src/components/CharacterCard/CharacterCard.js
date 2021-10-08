@@ -5,7 +5,19 @@ import "./CharacterCard.scss";
 
 import * as routes from "../../constants/routes";
 
-function CharacterCard({ id, name, image, species, status, origin, location }) {
+function CharacterCard({
+  id,
+  name,
+  image,
+  species,
+  status,
+  origin,
+  location,
+  locationUrl,
+}) {
+  const splitLocation = locationUrl.split("/");
+  const num = splitLocation[splitLocation.length - 1];
+
   return (
     <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
       <img className="CharacterCard__img" src={image} alt="" />
@@ -15,9 +27,9 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
       <div className="CharacterCard__meta">
         <Link
           className="CharacterCard__meta-item"
-          to={`${routes.LOCATION}/${id}`}
+          to={`${routes.LOCATION}/${num}`}
         >
-          {origin.name}
+          {location}
         </Link>
         <p className="CharacterCard__meta-item">|</p>
         <p className="CharacterCard__meta-item">{status}</p>
