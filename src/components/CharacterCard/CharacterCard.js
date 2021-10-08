@@ -9,13 +9,21 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
   return (
     <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
       <img className="CharacterCard__img" src={image} alt="" />
-      <Link to={`${routes.CHARACTER}/${id}`}>
+      <Link
+        to={{
+          pathname: `${routes.CHARACTER}/${id}`,
+          state: { name: id },
+        }}
+      >
         <h3 className="CharacterCard__name h4">{name}</h3>
       </Link>
       <div className="CharacterCard__meta">
         <Link
           className="CharacterCard__meta-item"
-          to={`${routes.LOCATION}/${id}`}
+          to={{
+            pathname: `${routes.LOCATION}/${id}`,
+            state: { id: id },
+          }}
         >
           {origin.name}
         </Link>
@@ -26,4 +34,4 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
   );
 }
 
-export default CharacterCard;
+export default React.memo(CharacterCard);
