@@ -61,7 +61,7 @@ export default class Character extends Component {
       species: arr.species,
       status: arr.status,
       origin: arr.origin,
-      location: arr.location,
+      location: arr.location.url,
     });
     console.log(arr.name);
   }

@@ -6,9 +6,20 @@ import "./CharacterCard.scss";
 
 import * as routes from "../../constants/routes";
 
-function CharacterCard({ characterId, name, image, species, status, origin, location }) {
-  const getLocation = location.split("/").slice(-1);
-  console.log(getLocation);
+function CharacterCard({
+  characterId,
+  name,
+  image,
+  species,
+  status,
+  origin,
+  location,
+}) {
+  console.log(location);
+  let locationId = location.split("/");
+  locationId = locationId[locationId.length -1];
+  console.log(locationId);
+
   return (
     <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
       <img className="CharacterCard__img" src={image} alt="" />
@@ -18,7 +29,7 @@ function CharacterCard({ characterId, name, image, species, status, origin, loca
       <div className="CharacterCard__meta">
         <Link
           className="CharacterCard__meta-item"
-          to={`${routes.LOCATION}/${getLocation}`}
+          to={`${routes.LOCATION}/${locationId}`} // locationId
         >
           {origin.name}
         </Link>
