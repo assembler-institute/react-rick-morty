@@ -10,12 +10,38 @@
 
   &__name {
     margin: 0.75rem 0;
+    color: #526E2D;
+  }
+
+  &__name:hover {
+    margin: 0.75rem 0;
+    color: #24325F;
   }
 
   &__meta {
     display: flex;
+
     &-item {
       margin-right: 0.5rem;
+      color: #82491D
+    }
+
+    &-item:hover {
+      margin-right: 0.5rem;
+      color: #24325F;
     }
   }
+}
+
+.EpisodeCard {
+  box-shadow: 1px 1px 1px grey;
+  margin: 1rem;
+  border-radius: 5px
+}
+
+.EpisodeCard:hover {
+  background-color: rgba(155, 146, 146, 0.062);
+  box-shadow: 1px 1px 1px grey;
+  margin: 1rem;
+  border-radius: 5px
 }

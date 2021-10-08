@@ -4,6 +4,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import EpisodeCard from '../../components/EpisodeCard';
+import NewCharacterCard from '../../components/NewCharacterCard/NewCharacterCard';
 
 class Character extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class Character extends Component {
     const characterId = this.props.match.params.characterId
     const character = await axios.get(`https://rickandmortyapi.com/api/character/${characterId}`)
     const characterInfo = character.data
-    // console.log(characterInfo)
+    console.log(characterInfo)
     this.setState({
       image: characterInfo.image,
       name: characterInfo.name,
@@ -96,7 +97,7 @@ class Character extends Component {
           <h3>Episodes</h3>
           <hr />
           <div className="row">
-            <div className="row">
+            <div className="row m-5">
               {episodesCharacter.map((episode) =>
                 <EpisodeCard
 

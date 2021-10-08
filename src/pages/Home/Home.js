@@ -13,28 +13,52 @@ class Home extends Component {
       episodes: [],
       hasLoaded: false,
       hasError: false,
-      page: 1,
+      // page: 1,
       // paginationInfo: null,
       errorMessage: null,
+      next: "",
+      prev: "",
+      baseURL: `https://rickandmortyapi.com/api/episode?page=1`
     };
+
+    this.nextPage = this.nextPage.bind(this)
+    this.prevPage = this.prevPage.bind(this)
   }
 
   componentDidMount() {
     this.loadEpisodes();
   }
 
+  async nextPage() {
+    const { next } = this.state
+    await this.setState({
+      baseURL: next
+    })
+    this.loadEpisodes()
+  }
 
+  async prevPage() {
+    const { prev } = this.state
+
+    await this.setState({
+      baseURL: prev
+    })
+    this.loadEpisodes()
+  }
 
   async loadEpisodes() {
-    const { page } = this.state
-    const url = `https://rickandmortyapi.com/api/episode?page=${page}`
+    const { baseURL } = this.state
+
     try {
-      await axios.get(url)
+      await axios.get(baseURL)
         .then(result => {
           this.setState({
             episodes: result.data.results,
-            hasLoaded: true
+            hasLoaded: true,
+            next: result.data.info.next,
+            prev: result.data.info.prev
           })
+          console.log(result)
         })
     }
     catch (error) {
@@ -44,10 +68,14 @@ class Home extends Component {
       })
     }
 
+
+
+
+
   }
 
   render() {
-    const { episodes, hasLoaded, hasError, errorMessage } = this.state
+    const { episodes, hasLoaded, hasError, errorMessage, } = this.state
     return (
       <Layout>
         <section className="row">
@@ -71,10 +99,13 @@ class Home extends Component {
           <div className="col col-12">
             <div className="container">{errorMessage}</div>
             <hr />
-            {/* <button className="btn btn-primary" type="button">More episodes</button> */}
           </div>
         </section>
-      </Layout>
+        <div>
+          <button className="btn btn-primary" type="button" onClick={this.prevPage}> Prev</button >
+          <button className="btn btn-primary" type="button" onClick={this.nextPage}>Next</button>
+        </div >
+      </Layout >
     );
   }
 }

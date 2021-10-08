@@ -7,7 +7,7 @@ import * as routes from "../../constants/routes";
 
 function EpisodeCard({ episodeId, name, airDate, episode }) {
   return (
-    <div className="col col-12 col-sm-6 col-xl-4 EpisodeCard">
+    <div className="col col-12 col-sm-4 col-xl-2 EpisodeCard">
       <Link to={`${routes.EPISODE}/${episodeId}`}>
         <h3 className="Episode__name h5">{name}</h3>
       </Link>

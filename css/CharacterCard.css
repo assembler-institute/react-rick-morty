@@ -1,0 +1,37 @@
+.CharacterCard {
+  margin-bottom: 1.5rem;
+  margin: 2rem;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px grey;
+  background-color: #FAE48B;
+}
+.CharacterCard__img {
+  display: block;
+  width: 100%;
+  border-radius: 3px;
+  height: auto;
+  max-height: 16rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px grey;
+}
+.CharacterCard__name {
+  margin: 0.75rem 0;
+  color: #526E2D;
+}
+.CharacterCard__name:hover {
+  color: #24325F;
+}
+.CharacterCard__meta {
+  display: flex;
+}
+.CharacterCard__meta-item {
+  margin-right: 0.5rem;
+  color: #82491D;
+}
+.CharacterCard__meta-item:hover {
+  margin-right: 0.5rem;
+  color: #24325F;
+}/*# sourceMappingURL=CharacterCard.css.map */

@@ -1,5 +1,12 @@
 .CharacterCard {
   margin-bottom: 1.5rem;
+  margin: 2rem;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px grey;
+  background-color: #FAE48B;
+
+
 
   &__img {
     display: block;
@@ -8,16 +15,31 @@
     height: auto;
     max-height: 16rem;
     object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px grey;
   }
 
   &__name {
     margin: 0.75rem 0;
+    color: #526E2D;
+
+  }
+
+  &__name:hover {
+    color: #24325F
   }
 
   &__meta {
     display: flex;
+
     &-item {
       margin-right: 0.5rem;
+      color: #82491D
+    }
+
+    &-item:hover {
+      margin-right: 0.5rem;
+      color: #24325F
     }
   }
 }

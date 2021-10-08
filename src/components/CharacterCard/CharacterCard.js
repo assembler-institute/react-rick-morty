@@ -11,7 +11,7 @@ function CharacterCard({ characterId, name, image, species, status, origin, loca
   console.log(locationId)
 
   return (
-    <div className="col col-12 col-sm-6 col-xl-3 CharacterCard">
+    <div className="CharacterCard">
       <img className="CharacterCard__img" src={image} alt="" />
       <Link to={`${routes.CHARACTER}/${characterId}`}>
         <h3 className="CharacterCard__name h4">{name}</h3>
