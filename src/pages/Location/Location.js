@@ -3,7 +3,9 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react'
 import axios from "axios"
+import "../../components/CharacterCard/CharacterCard.scss"
 import Layout from '../../components/Layout'
+
 import CharacterCard from '../../components/CharacterCard'
 
 export default class Location extends Component {
@@ -58,14 +60,15 @@ export default class Location extends Component {
     const { name, type, dimension, residents } = this.state
     return (
       <>
-        <Layout>
+        <Layout className="row  g-0">
           <h1>Location</h1>
           <p>{name}</p>
           <p>{type}</p>
           <p>{dimension}</p>
-          <div>
+          <div className="row">
             {residents.map((resi) =>
               <CharacterCard
+                className="CharacterCard"
                 key={resi.data.id}
                 characterId={resi.data.id}
                 name={resi.data.name}

@@ -4,7 +4,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import EpisodeCard from '../../components/EpisodeCard';
-import NewCharacterCard from '../../components/NewCharacterCard/NewCharacterCard';
+
 
 class Character extends Component {
   constructor(props) {
@@ -19,7 +19,6 @@ class Character extends Component {
       episodesCharacter: []
     }
 
-    this.loadCharacter = this.loadCharacter.bind(this)
 
   }
 
@@ -29,12 +28,10 @@ class Character extends Component {
   }
 
   async loadCharacter() {
-    // console.log(this.props)
-    // console.log(this.props.match.params.characterId)
+
     const characterId = this.props.match.params.characterId
     const character = await axios.get(`https://rickandmortyapi.com/api/character/${characterId}`)
     const characterInfo = character.data
-    console.log(characterInfo)
     this.setState({
       image: characterInfo.image,
       name: characterInfo.name,
@@ -46,14 +43,10 @@ class Character extends Component {
   }
 
   async loadEpisodesCharacter() {
-    console.log(this.props.match.params.characterId)
     const id = this.props.match.params.characterId
     const episodesList = await axios.get(`https://rickandmortyapi.com/api/character/${id}`)
-    console.log(episodesList)
     const arr = episodesList.data.episode
-    console.log(arr)
     const result = await axios.all(arr.map((episode) => axios.get(episode)))
-    console.log(result)
     this.setState({
       episodesCharacter: result
     })
