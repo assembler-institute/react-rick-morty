@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-
 import axios from "axios";
 import React, { Component } from "react";
 
@@ -62,7 +61,7 @@ class Episode extends Component {
       airDate,
       episode,
     } = this.state;
-    console.log(characters.map((s) => s.data.location.name));
+
     return (
       <Layout>
         <section className="row">
