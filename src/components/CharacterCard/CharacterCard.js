@@ -34,4 +34,4 @@ function CharacterCard({ id, name, image, species, status, origin, location }) {
   );
 }
 
-export default CharacterCard;
+export default React.memo(CharacterCard);

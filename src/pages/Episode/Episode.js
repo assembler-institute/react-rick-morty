@@ -51,7 +51,6 @@ class Episode extends Component {
   }
 
   render() {
-    // console.log(this.props);
     const {
       episode,
       characters,

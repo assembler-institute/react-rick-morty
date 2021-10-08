@@ -28,4 +28,4 @@ function EpisodeCard({ id, name, airDate, episode }) {
   );
 }
 
-export default EpisodeCard;
+export default React.memo(EpisodeCard);

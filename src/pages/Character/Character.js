@@ -50,7 +50,6 @@ class Character extends Component {
   }
 
   render() {
-    // console.log(this.props);
     const {
       episode,
       character,
