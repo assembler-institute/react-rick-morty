@@ -112,6 +112,7 @@ class Character extends Component {
                 episode={episode.episode}
               />
             ))}
+            
         </section>
       </Layout>
     );

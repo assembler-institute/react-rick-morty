@@ -24,7 +24,15 @@ class Home extends Component {
 }
   async componentDidMount() {
     const { page } = this.state;
-    this.loadEpisodes();
+    this.loadEpisodes(page);
+  }
+
+  componentDidUpdate(_prevProps, prevState) {
+    const { page: prevPage } = prevState;
+    const { page } = this.state;
+    if (prevPage !== page) {
+      this.loadEpisodes(page);
+    }
   }
 
   async loadEpisodes(page) {
@@ -95,6 +103,24 @@ class Home extends Component {
             ))}
           <div className="col col-12">
             <hr />
+          </div>
+          <div className="col col-12 btn-group btn-group-justified">
+            <button
+              className="btn btn-primary"
+              type="button"
+              disabled={paginationInfo && !paginationInfo.prev}
+              onClick={this.loadPrevPage}
+            >
+              Previous page
+            </button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              disabled={paginationInfo && !paginationInfo.next}
+              onClick={this.loadNextPage}
+            >
+              Next page
+            </button>
           </div>
         </section>
       </Layout>
