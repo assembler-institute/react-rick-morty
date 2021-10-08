@@ -16,7 +16,7 @@ const Article = styled.article`
 
 const Image = styled.img`
 	display: block;
-	width: 100%;
+	width: 15rem;
 	object-fit: cover;
 	border-radius: 4px 4px 0 0;
 `;
