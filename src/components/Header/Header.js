@@ -1,6 +1,6 @@
 import React from "react";
 
-import ButtonLink from "../ButtonLink";
+import { ButtonLink } from "../Button";
 import styled from "styled-components";
 
 import * as routes from "../../constants/routes";

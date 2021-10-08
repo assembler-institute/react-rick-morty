@@ -5,7 +5,7 @@ import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 import SpinnerLoader from "../../components/SpinnerLoader";
 import { ErrorMessageCard } from "../../components/MessageCard";
-import ButtonLink from "../../components/ButtonLink";
+import { ButtonLink } from "../../components/Button";
 import Flex from "../../components/Flex";
 import EpisodeGrid from "../../components/EpisodeGrid";
 import Divider from "../../components/Divider";
@@ -80,10 +80,10 @@ class Home extends Component {
 							</EpisodeGrid>
 							<Divider />
 							<Flex gap="1rem">
-								<ButtonLink light to={Boolean(paginationInfo.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.prev)}>
+								<ButtonLink $light to={Boolean(paginationInfo.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.prev)}>
 									Previous
 								</ButtonLink>
-								<ButtonLink light to={Boolean(paginationInfo.next) ? `/${Number(page) + 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.next)}>
+								<ButtonLink $light to={Boolean(paginationInfo.next) ? `/${Number(page) + 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.next)}>
 									Next
 								</ButtonLink>
 							</Flex>

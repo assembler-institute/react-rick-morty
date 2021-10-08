@@ -8,24 +8,21 @@ const Article = styled.article`
 	margin: 0 auto;
 	width: min-content;
 
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: auto;
+	display: flex;
+	flex-direction: column;
 
 	border: 1px solid ${({ theme }) => theme.palette.dark.main};
 	border-radius: 4px;
 	background-color: ${({ theme }) => theme.palette.dark.secondary};
 
 	@media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
-		grid-template-columns: 1fr 1fr;
+		flex-direction: row;
 	}
 `;
 
 const Image = styled.img`
 	display: block;
 	width: 15rem;
-	border-radius: 3px;
-	height: auto;
 	object-fit: contain;
 `;
 
@@ -73,7 +70,6 @@ export default function CharacterProfile(props) {
 	const { image, name, species, status, origin, location } = props;
 
 	return (
-		/* TODO -- Cambiar estilos */
 		<Article>
 			<Image src={image} alt="" />
 			<section>
