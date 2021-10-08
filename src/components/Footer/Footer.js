@@ -8,6 +8,7 @@ function Footer() {
           <p className="m-0">
             Assembler School &copy; {new Date().getFullYear()}
           </p>
+          
         </div>
       </div>
     </footer>
