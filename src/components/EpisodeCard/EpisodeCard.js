@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 import "./EpisodeCard.scss";
 
-import * as routes from "../../constants/routes";
+import * as routes from "constants/routes";
 
 function EpisodeCard({ id, name, airDate, episode }) {
   return (
@@ -18,6 +19,13 @@ function EpisodeCard({ id, name, airDate, episode }) {
       </div>
     </div>
   );
+}
+
+EpisodeCard.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  airDate: PropTypes.string.isRequired,
+  episode: PropTypes.string.isRequired,
 }
 
 export default EpisodeCard;

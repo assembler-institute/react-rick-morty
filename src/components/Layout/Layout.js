@@ -1,8 +1,6 @@
 import React from "react";
 
-import AppHeader from "../AppHeader";
-import Main from "../Main";
-import Footer from "../Footer";
+import { AppHeader, Footer, Main } from "components";
 
 function Layout({ children }) {
   return (

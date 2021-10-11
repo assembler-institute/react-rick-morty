@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import * as routes from "../../constants/routes";
+import * as routes from "constants/routes";
 
 function AppHeader({ ...props }) {
   return (

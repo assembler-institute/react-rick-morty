@@ -38,6 +38,12 @@ module.exports = {
     "import",
   ],
   settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.d.ts', '.ts', '.tsx'],
+        moduleDirectory: ['node_modules', 'src'],
+      },
+    },
     react: {
       version: "detect",
     },

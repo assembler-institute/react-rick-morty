@@ -1,42 +1,78 @@
 import React, { Component } from "react";
 
-import Layout from "../../components/Layout";
-// import EpisodeCard from "../../components/EpisodeCard";
+import { EpisodeCard, Layout } from "components";
+
+import episodesApi from "api/episodes";
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
-    // page: 1,
-    // paginationInfo: null,
-    // episodes: [],
-    // hasLoaded: false,
-    // hasError: false,
-    // errorMessage: null,
+    this.state = {
+      page: 1,
+      paginationInfo: null,
+      episodes: [],
+      hasLoaded: false,
+      hasError: false,
+      errorMessage: null,
+    };
   }
 
-  async componentDidMount() {
-    // this.loadEpisodes();
+  componentDidMount() {
+    const { page } = this.state;
+    this.loadEpisodes(page);
   }
 
-  async loadEpisodes() {
-    console.log(this);
+  componentDidUpdate(_prevProps, prevState) {
+    const { page: prevPage } = prevState;
+    const { page } = this.state;
+    if (prevPage !== page) {
+      this.loadEpisodes(page);
+    }
+  }
+
+  loadNextPage = () => {
+    this.setState((prevState) => ({
+      page: prevState.page + 1,
+    }));
+  }
+
+  loadEpisodes = async (page) => {
+    try {
+      const { data: { results, info } } = await episodesApi.getAllEpisodes(page);
+
+      this.setState((prevState) => ({
+        episodes: [...prevState.episodes, ...results],
+        hasLoaded: true,
+        paginationInfo: info
+      }))
+
+    } catch (error) {
+      this.setState(() => ({
+        hasLoaded: true,
+        hasError: true,
+        errorMessage: error.message
+      }))
+    }
   }
 
   render() {
+    const { episodes, errorMessage, hasLoaded, hasError, paginationInfo } = this.state;
+
     return (
       <Layout>
+        {errorMessage}
         <section className="row">
-          {/* {hasLoaded && !hasError && (
+          {hasLoaded && !hasError && (
             <div className="col col-12">
               <h1>Episodes loaded!</h1>
             </div>
-          )} */}
+          )}
           <div className="col col-12">
             <hr />
           </div>
-          {/* {episodes.map((episode) => (
+          {episodes.length > 0 &&
+            episodes.map((episode) => (
               <EpisodeCard
                 key={episode.id}
                 id={episode.id}
@@ -44,9 +80,18 @@ class Home extends Component {
                 airDate={episode.air_date}
                 episode={episode.episode}
               />
-            ))} */}
-          <div className="col col-12">
+            ))
+          }
+          <div className="col col-12 text-center">
             <hr />
+            <button
+              type="button"
+              className="btn btn-primary"
+              disabled={paginationInfo && !paginationInfo.next}
+              onClick={this.loadNextPage}
+            >
+              Load more
+            </button>
           </div>
         </section>
       </Layout>
