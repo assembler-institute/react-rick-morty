@@ -7,7 +7,7 @@ import axiosGet from "../../utils/axiosRequest";
 import { urlArr } from "../../utils/axiosRequest";
 // import { pages } from "../../utils/axiosRequest";
 
-// import { episodeArrLength } from "../../utils/axiosRequest";
+import { episodeArrLength } from "../../utils/axiosRequest";
 // import { locationArrLength } from "../../utils/axiosRequest";
 // import { charactersArrLength } from "../../utils/axiosRequest";
 
@@ -24,18 +24,35 @@ class Home extends Component {
       errorMessage: null,
     };
     this.loadEpisodes = this.loadEpisodes.bind(this);
+    // this.loadNextEpisodes = this.loadNextEpisodes.bind(this);
   }
 
   async componentDidMount() {
     this.loadEpisodes();
   }
 
+  // async componentDidUpdate() {
+  //   this.nextPage();
+  // }
+
   async loadEpisodes() {
+    return await axiosGet(urlArr[0], episodeArrLength[1+n]).then((res) =>
+      this.setState({
+        episodes: res.data.results,
+        hasLoaded: true,
+        hasError: false,
+        page: 1,
+      }),
+    );
+  }
+
+  async loadNextEpisodes() {
     return await axiosGet(urlArr[0]).then((res) =>
       this.setState({
         episodes: res.data.results,
         hasLoaded: true,
         hasError: false,
+        page: 2,
       }),
     );
   }
@@ -64,6 +81,14 @@ class Home extends Component {
           ))}
           <div className="col col-12">
             <hr />
+            <button
+              type="button"
+              onClick={() => {
+                console.log("Hallo");
+              }}
+            >
+              Click me!
+            </button>
           </div>
         </section>
       </Layout>

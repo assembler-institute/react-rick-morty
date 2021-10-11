@@ -20,8 +20,8 @@ async function arrLength(arrayType) {
   return test;
 }
 
-export default function axiosGet(url) {
-  return axios.get(`https://rickandmortyapi.com/api/${url}`);
+export default function axiosGet(url, page) {
+  return axios.get(`https://rickandmortyapi.com/api/${url}?page=${page}`);
 }
 
 export function axiosId(url, ids) {
