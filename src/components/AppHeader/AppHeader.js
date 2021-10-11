@@ -19,6 +19,24 @@ function AppHeader({ ...props }) {
                   Home
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  activeClassName="active"
+                  to={`${routes.CHARACTER}`}
+                >
+                  Characters
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  activeClassName="active"
+                  to={`${routes.LOCATION}`}
+                >
+                  Location
+                </NavLink>
+              </li>
             </ul>
           </nav>
         </div>
