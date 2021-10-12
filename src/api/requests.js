@@ -1,61 +1,48 @@
 import * as routes from "../constants/routes.js";
-
 const path = require("path");
+
+export async function fetchData(url) {
+	const request = await fetch(url);
+
+	if (!request.ok) {
+		const error = {
+			url,
+			code: request.status,
+			message: request.statusText,
+		};
+
+		return { data: null, error };
+	}
+
+	const data = await request.json();
+
+	return { data, error: null };
+}
+
+export async function fetchDataset(urls) {
+	const results = await Promise.all(urls.map((url) => fetchData(url)));
+	const dataset = results.map((result) => result.data);
+	const errors = results.map((result) => result.error);
+
+	return { dataset, errors };
+}
 
 export async function getEpisodes({ page = 1 }) {
 	const url = `${path.join(routes.BASE_URL, routes.EPISODE)}?page=${page}`;
-	const request = await fetch(url);
-	const data = await request.json();
-
-	if (!request.ok) throw Error(request.statusText);
-
-	return data;
+	return fetchData(url);
 }
 
-export async function getEpisode({ episode }) {
-	const url = path.join(routes.BASE_URL, routes.EPISODE, episode);
-	const episodeRequest = await fetch(url);
-	const episodeData = await episodeRequest.json();
-
-	if (!episodeRequest.ok) throw Error(episodeRequest.statusText);
-
-	const charactersRequest = await Promise.all(episodeData.characters.map((characterURL) => fetch(characterURL)));
-	const charactersData = await Promise.all(charactersRequest.map((characterRequest) => characterRequest.json()));
-
-	return {
-		episode: episodeData,
-		characters: charactersData,
-	};
+export async function getEpisode({ id }) {
+	const url = path.join(routes.BASE_URL, routes.EPISODE, id);
+	return fetchData(url);
 }
 
-export async function getCharacter({ character }) {
-	const url = path.join(routes.BASE_URL, routes.CHARACTER, character);
-	const characterRequest = await fetch(url);
-	const characterData = await characterRequest.json();
-
-	if (!characterRequest.ok) throw Error(characterRequest.statusText);
-
-	const episodesRequest = await Promise.all(characterData.episode.map((episodeURL) => fetch(episodeURL)));
-	const episodesData = await Promise.all(episodesRequest.map((episodeRequest) => episodeRequest.json()));
-
-	return {
-		character: characterData,
-		episodes: episodesData,
-	};
+export async function getCharacter({ id }) {
+	const url = path.join(routes.BASE_URL, routes.CHARACTER, id);
+	return fetchData(url);
 }
 
-export async function getLocation({ location }) {
-	const url = path.join(routes.BASE_URL, routes.LOCATION, location);
-	const locationRequest = await fetch(url);
-	const locationData = await locationRequest.json();
-
-	if (!locationRequest.ok) throw Error(locationRequest.statusText);
-
-	const charactersRequest = await Promise.all(locationData.residents.map((characterURL) => fetch(characterURL)));
-	const charactersData = await Promise.all(charactersRequest.map((characterRequest) => characterRequest.json()));
-
-	return {
-		location: locationData,
-		characters: charactersData,
-	};
+export async function getLocation({ id }) {
+	const url = path.join(routes.BASE_URL, routes.LOCATION, id);
+	return fetchData(url);
 }

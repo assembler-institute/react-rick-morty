@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { getEpisodes } from "../../api/requests";
 
-import Layout from "../../components/Layout";
-import EpisodeCard from "../../components/EpisodeCard";
-import SpinnerLoader from "../../components/SpinnerLoader";
-import { ErrorMessageCard } from "../../components/MessageCard";
 import { ButtonLink } from "../../components/Button";
-import Flex from "../../components/Flex";
-import EpisodeGrid from "../../components/EpisodeGrid";
+import { ErrorMessageCard } from "../../components/MessageCard";
 import Divider from "../../components/Divider";
+import EpisodeCard from "../../components/EpisodeCard";
+import EpisodeGrid from "../../components/EpisodeGrid";
+import Flex from "../../components/Flex";
+import Layout from "../../components/Layout";
+import SpinnerLoader from "../../components/SpinnerLoader";
 
 import styled from "styled-components";
 
@@ -40,9 +40,8 @@ class Home extends Component {
 
 	loadEpisodes = async () => {
 		try {
-			const data = await getEpisodes({
-				page: this.props.page,
-			});
+			const { page } = this.props;
+			const { data } = await getEpisodes({ page });
 
 			this.setState((prevState) => ({
 				...prevState,

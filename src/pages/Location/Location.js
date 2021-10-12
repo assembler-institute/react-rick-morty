@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { getLocation } from "../../api/requests";
+import { fetchDataset, getLocation } from "../../api/requests";
 
-import Layout from "../../components/Layout";
-import CharacterCard from "../../components/CharacterCard";
-import SpinnerLoader from "../../components/SpinnerLoader";
 import { ErrorMessageCard, NoResidentsCard } from "../../components/MessageCard";
-import Flex from "../../components/Flex";
+import CharacterCard from "../../components/CharacterCard";
 import CharacterGrid from "../../components/CharacterGrid";
 import Divider from "../../components/Divider";
+import Flex from "../../components/Flex";
+import Layout from "../../components/Layout";
+import SpinnerLoader from "../../components/SpinnerLoader";
 
 export default class Location extends Component {
 	constructor(props) {
@@ -32,22 +32,25 @@ export default class Location extends Component {
 
 	loadLocation = async () => {
 		try {
-			const data = await getLocation({
-				location: this.props.id,
-			});
+			const { id } = this.props;
+			const { data: location, error } = await getLocation({ id });
+
+			if (error) throw error;
+
+			const { dataset: characters } = await fetchDataset(location.residents);
 
 			this.setState((prevState) => ({
 				...prevState,
 				hasLoaded: true,
-				location: data.location,
-				characters: data.characters,
+				location: location,
+				characters: characters,
 			}));
 		} catch (error) {
 			this.setState((prevState) => ({
 				...prevState,
 				hasLoaded: true,
 				hasError: true,
-				errorMessage: error,
+				errorMessage: error.message,
 			}));
 		}
 	};

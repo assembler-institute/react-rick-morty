@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { getEpisode } from "../../api/requests";
+import { fetchDataset, getEpisode } from "../../api/requests";
 
-import Layout from "../../components/Layout";
-import CharacterCard from "../../components/CharacterCard";
-import SpinnerLoader from "../../components/SpinnerLoader";
 import { ErrorMessageCard } from "../../components/MessageCard";
-import Flex from "../../components/Flex";
+import CharacterCard from "../../components/CharacterCard";
 import CharacterGrid from "../../components/CharacterGrid";
 import Divider from "../../components/Divider";
+import Flex from "../../components/Flex";
+import Layout from "../../components/Layout";
+import SpinnerLoader from "../../components/SpinnerLoader";
 
 export default class Episode extends Component {
 	constructor(props) {
@@ -32,22 +32,25 @@ export default class Episode extends Component {
 
 	loadEpisode = async () => {
 		try {
-			const data = await getEpisode({
-				episode: this.props.id,
-			});
+			const { id } = this.props;
+			const { data: episode, error } = await getEpisode({ id });
+
+			if (error) throw error;
+
+			const { dataset: characters } = await fetchDataset(episode.characters);
 
 			this.setState((prevState) => ({
 				...prevState,
 				hasLoaded: true,
-				episode: data.episode,
-				characters: data.characters,
+				episode: episode,
+				characters: characters,
 			}));
 		} catch (error) {
 			this.setState((prevState) => ({
 				...prevState,
 				hasLoaded: true,
 				hasError: true,
-				errorMessage: error,
+				errorMessage: error.message,
 			}));
 		}
 	};
