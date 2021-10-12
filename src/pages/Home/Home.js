@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { getEpisodes } from "../../api/requests";
 
-import Layout from "../../components/Layout";
-import EpisodeCard from "../../components/EpisodeCard";
-import SpinnerLoader from "../../components/SpinnerLoader";
-import { ErrorMessageCard } from "../../components/MessageCard";
 import { ButtonLink } from "../../components/Button";
-import Flex from "../../components/Flex";
-import EpisodeGrid from "../../components/EpisodeGrid";
+import { ErrorMessageCard } from "../../components/MessageCard";
 import Divider from "../../components/Divider";
+import EpisodeCard from "../../components/EpisodeCard";
+import EpisodeGrid from "../../components/EpisodeGrid";
+import Flex from "../../components/Flex";
+import SpinnerLoader from "../../components/SpinnerLoader";
+import withLayout from "../../hocs/withLayout";
 
 import styled from "styled-components";
 
@@ -40,9 +40,8 @@ class Home extends Component {
 
 	loadEpisodes = async () => {
 		try {
-			const data = await getEpisodes({
-				page: this.props.page,
-			});
+			const { page } = this.props;
+			const { data } = await getEpisodes({ page });
 
 			this.setState((prevState) => ({
 				...prevState,
@@ -66,33 +65,31 @@ class Home extends Component {
 
 		return (
 			<>
-				<Layout>
-					<Title>Episodes</Title>
-					{!hasLoaded && <SpinnerLoader />}
-					{hasLoaded && hasError && <ErrorMessageCard />}
-					{hasLoaded && !hasError && (
-						<>
-							<Divider />
-							<EpisodeGrid>
-								{episodes.map((episode) => (
-									<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
-								))}
-							</EpisodeGrid>
-							<Divider />
-							<Flex gap="1rem">
-								<ButtonLink $light to={Boolean(paginationInfo.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.prev)}>
-									Previous
-								</ButtonLink>
-								<ButtonLink $light to={Boolean(paginationInfo.next) ? `/${Number(page) + 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.next)}>
-									Next
-								</ButtonLink>
-							</Flex>
-						</>
-					)}
-				</Layout>
+				<Title>Episodes</Title>
+				{!hasLoaded && <SpinnerLoader />}
+				{hasLoaded && hasError && <ErrorMessageCard />}
+				{hasLoaded && !hasError && (
+					<>
+						<Divider />
+						<EpisodeGrid>
+							{episodes.map((episode) => (
+								<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
+							))}
+						</EpisodeGrid>
+						<Divider />
+						<Flex gap="1rem">
+							<ButtonLink $light to={Boolean(paginationInfo.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.prev)}>
+								Previous
+							</ButtonLink>
+							<ButtonLink $light to={Boolean(paginationInfo.next) ? `/${Number(page) + 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.next)}>
+								Next
+							</ButtonLink>
+						</Flex>
+					</>
+				)}
 			</>
 		);
 	}
 }
 
-export default Home;
+export default withLayout(Home);

@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import { getEpisode } from "../../api/requests";
+import { fetchDataset, getEpisode } from "../../api/requests";
 
-import Layout from "../../components/Layout";
-import CharacterCard from "../../components/CharacterCard";
-import SpinnerLoader from "../../components/SpinnerLoader";
 import { ErrorMessageCard } from "../../components/MessageCard";
-import Flex from "../../components/Flex";
+import CharacterCard from "../../components/CharacterCard";
 import CharacterGrid from "../../components/CharacterGrid";
 import Divider from "../../components/Divider";
+import Flex from "../../components/Flex";
+import SpinnerLoader from "../../components/SpinnerLoader";
+import { withLayout } from "../../hocs";
 
-export default class Episode extends Component {
+class Episode extends Component {
 	constructor(props) {
 		super(props);
 
@@ -32,22 +32,25 @@ export default class Episode extends Component {
 
 	loadEpisode = async () => {
 		try {
-			const data = await getEpisode({
-				episode: this.props.id,
-			});
+			const { id } = this.props;
+			const { data: episode, error } = await getEpisode({ id });
+
+			if (error) throw error;
+
+			const { dataset: characters } = await fetchDataset(episode.characters);
 
 			this.setState((prevState) => ({
 				...prevState,
 				hasLoaded: true,
-				episode: data.episode,
-				characters: data.characters,
+				episode: episode,
+				characters: characters,
 			}));
 		} catch (error) {
 			this.setState((prevState) => ({
 				...prevState,
 				hasLoaded: true,
 				hasError: true,
-				errorMessage: error,
+				errorMessage: error.message,
 			}));
 		}
 	};
@@ -56,7 +59,7 @@ export default class Episode extends Component {
 		const { hasLoaded, hasError, episode, characters } = this.state;
 
 		return (
-			<Layout>
+			<>
 				{!hasLoaded && <SpinnerLoader />}
 				{hasLoaded && hasError && <ErrorMessageCard />}
 				{hasLoaded && !hasError && (
@@ -77,7 +80,9 @@ export default class Episode extends Component {
 						</CharacterGrid>
 					</>
 				)}
-			</Layout>
+			</>
 		);
 	}
 }
+
+export default withLayout(Episode);

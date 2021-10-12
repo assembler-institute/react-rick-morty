@@ -1,21 +1,21 @@
 import { Component } from "react";
-import { getCharacter } from "../../api/requests";
+import { fetchDataset, getCharacter } from "../../api/requests";
 
-import CharacterProfile from "../../components/CharacterProfile";
-import EpisodeCard from "../../components/EpisodeCard";
-import Layout from "../../components/Layout";
-import SpinnerLoader from "../../components/SpinnerLoader";
 import { ErrorMessageCard } from "../../components/MessageCard";
-import EpisodeGrid from "../../components/EpisodeGrid";
+import CharacterProfile from "../../components/CharacterProfile";
 import Divider from "../../components/Divider";
+import EpisodeCard from "../../components/EpisodeCard";
+import EpisodeGrid from "../../components/EpisodeGrid";
+import SpinnerLoader from "../../components/SpinnerLoader";
+import { withLayout } from "../../hocs";
 
-export default class Character extends Component {
+class Character extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			episodes: [],
 			character: null,
+			episodes: [],
 			hasLoaded: false,
 			hasError: false,
 			errorMessage: null,
@@ -32,22 +32,24 @@ export default class Character extends Component {
 
 	loadCharacter = async () => {
 		try {
-			const data = await getCharacter({
-				character: this.props.id,
-			});
+			const { id } = this.props;
+			const { data: character, error } = await getCharacter({ id });
+
+			if (error !== null) throw error;
+			const { dataset: episodes } = await fetchDataset(character.episode);
 
 			this.setState((prevState) => ({
 				...prevState,
 				hasLoaded: true,
-				character: data.character,
-				episodes: data.episodes,
+				character: character,
+				episodes: episodes,
 			}));
 		} catch (error) {
 			this.setState((prevState) => ({
 				...prevState,
 				hasLoaded: true,
 				hasError: true,
-				errorMessage: error,
+				errorMessage: error.message,
 			}));
 		}
 	};
@@ -56,7 +58,7 @@ export default class Character extends Component {
 		const { hasLoaded, hasError, character, episodes } = this.state;
 
 		return (
-			<Layout>
+			<>
 				{!hasLoaded && <SpinnerLoader />}
 				{hasLoaded && hasError && <ErrorMessageCard />}
 				{hasLoaded && !hasError && (
@@ -73,7 +75,9 @@ export default class Character extends Component {
 						</EpisodeGrid>
 					</>
 				)}
-			</Layout>
+			</>
 		);
 	}
 }
+
+export default withLayout(Character);
