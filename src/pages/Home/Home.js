@@ -7,8 +7,8 @@ import Divider from "../../components/Divider";
 import EpisodeCard from "../../components/EpisodeCard";
 import EpisodeGrid from "../../components/EpisodeGrid";
 import Flex from "../../components/Flex";
-import Layout from "../../components/Layout";
 import SpinnerLoader from "../../components/SpinnerLoader";
+import withLayout from "../../hocs/withLayout";
 
 import styled from "styled-components";
 
@@ -65,33 +65,31 @@ class Home extends Component {
 
 		return (
 			<>
-				<Layout>
-					<Title>Episodes</Title>
-					{!hasLoaded && <SpinnerLoader />}
-					{hasLoaded && hasError && <ErrorMessageCard />}
-					{hasLoaded && !hasError && (
-						<>
-							<Divider />
-							<EpisodeGrid>
-								{episodes.map((episode) => (
-									<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
-								))}
-							</EpisodeGrid>
-							<Divider />
-							<Flex gap="1rem">
-								<ButtonLink $light to={Boolean(paginationInfo.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.prev)}>
-									Previous
-								</ButtonLink>
-								<ButtonLink $light to={Boolean(paginationInfo.next) ? `/${Number(page) + 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.next)}>
-									Next
-								</ButtonLink>
-							</Flex>
-						</>
-					)}
-				</Layout>
+				<Title>Episodes</Title>
+				{!hasLoaded && <SpinnerLoader />}
+				{hasLoaded && hasError && <ErrorMessageCard />}
+				{hasLoaded && !hasError && (
+					<>
+						<Divider />
+						<EpisodeGrid>
+							{episodes.map((episode) => (
+								<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
+							))}
+						</EpisodeGrid>
+						<Divider />
+						<Flex gap="1rem">
+							<ButtonLink $light to={Boolean(paginationInfo.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.prev)}>
+								Previous
+							</ButtonLink>
+							<ButtonLink $light to={Boolean(paginationInfo.next) ? `/${Number(page) + 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.next)}>
+								Next
+							</ButtonLink>
+						</Flex>
+					</>
+				)}
 			</>
 		);
 	}
 }
 
-export default Home;
+export default withLayout(Home);

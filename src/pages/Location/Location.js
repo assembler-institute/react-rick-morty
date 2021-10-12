@@ -6,10 +6,10 @@ import CharacterCard from "../../components/CharacterCard";
 import CharacterGrid from "../../components/CharacterGrid";
 import Divider from "../../components/Divider";
 import Flex from "../../components/Flex";
-import Layout from "../../components/Layout";
 import SpinnerLoader from "../../components/SpinnerLoader";
+import { withLayout } from "../../hocs";
 
-export default class Location extends Component {
+class Location extends Component {
 	constructor(props) {
 		super(props);
 
@@ -59,7 +59,7 @@ export default class Location extends Component {
 		const { hasLoaded, hasError, location, characters } = this.state;
 
 		return (
-			<Layout>
+			<>
 				{!hasLoaded && <SpinnerLoader />}
 				{hasLoaded && hasError && <ErrorMessageCard />}
 				{hasLoaded && !hasError && (
@@ -83,7 +83,9 @@ export default class Location extends Component {
 						{Boolean(!characters.length) && <NoResidentsCard />}
 					</>
 				)}
-			</Layout>
+			</>
 		);
 	}
 }
+
+export default withLayout(Location);

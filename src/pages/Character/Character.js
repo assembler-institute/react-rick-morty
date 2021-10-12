@@ -6,10 +6,10 @@ import CharacterProfile from "../../components/CharacterProfile";
 import Divider from "../../components/Divider";
 import EpisodeCard from "../../components/EpisodeCard";
 import EpisodeGrid from "../../components/EpisodeGrid";
-import Layout from "../../components/Layout";
 import SpinnerLoader from "../../components/SpinnerLoader";
+import { withLayout } from "../../hocs";
 
-export default class Character extends Component {
+class Character extends Component {
 	constructor(props) {
 		super(props);
 
@@ -58,7 +58,7 @@ export default class Character extends Component {
 		const { hasLoaded, hasError, character, episodes } = this.state;
 
 		return (
-			<Layout>
+			<>
 				{!hasLoaded && <SpinnerLoader />}
 				{hasLoaded && hasError && <ErrorMessageCard />}
 				{hasLoaded && !hasError && (
@@ -75,7 +75,9 @@ export default class Character extends Component {
 						</EpisodeGrid>
 					</>
 				)}
-			</Layout>
+			</>
 		);
 	}
 }
+
+export default withLayout(Character);
