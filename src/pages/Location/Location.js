@@ -3,6 +3,7 @@ import Layout from "../../components/Layout";
 import { getLocation } from "../../utils/axios";
 import axios from "axios";
 import CharacterCard from "../../components/CharacterCard";
+
 class Location extends Component {
     constructor(props) {
         super(props);
