@@ -18,7 +18,7 @@ function Character(props) {
 		(async () => {
 			try {
 				const { data: character, error: errorCharacter } = await getCharacter({ id });
-				console.log(character);
+
 				if (errorCharacter) throw errorCharacter;
 
 				const { dataset: episodes } = await fetchDataset(character.episode);
