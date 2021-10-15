@@ -1,4 +1,5 @@
-import { Component } from "react";
+import React, { useEffect } from "react";
+import { useFetch } from "../../hooks";
 import { fetchDataset, getCharacter } from "../../api/requests";
 
 import { ErrorMessageCard } from "../../components/MessageCard";
@@ -9,75 +10,55 @@ import EpisodeGrid from "../../components/EpisodeGrid";
 import SpinnerLoader from "../../components/SpinnerLoader";
 import { withLayout } from "../../hocs";
 
-class Character extends Component {
-	constructor(props) {
-		super(props);
+function Character(props) {
+	const { id } = props;
+	const [{ hasLoaded, hasFailed, data, errorMsg }, fetchDispatch] = useFetch();
 
-		this.state = {
-			character: null,
-			episodes: [],
-			hasLoaded: false,
-			hasError: false,
-			errorMessage: null,
-		};
-	}
+	useEffect(() => {
+		(async () => {
+			try {
+				const { data: character, error: errorCharacter } = await getCharacter({ id });
+				console.log(character);
+				if (errorCharacter) throw errorCharacter;
 
-	componentDidMount() {
-		this.loadCharacter();
-	}
+				const { dataset: episodes } = await fetchDataset(character.episode);
 
-	componentDidUpdate(prevProps) {
-		prevProps.id !== this.props.id && this.loadCharacter();
-	}
+				fetchDispatch({
+					type: "successful",
+					data: {
+						character,
+						episodes,
+					},
+				});
+			} catch (error) {
+				fetchDispatch({
+					type: "failed",
+					errorMsg: "Something went wrong",
+				});
+			}
+		})();
+	}, [id, fetchDispatch]);
 
-	loadCharacter = async () => {
-		try {
-			const { id } = this.props;
-			const { data: character, error } = await getCharacter({ id });
+	return (
+		<>
+			{!hasLoaded && <SpinnerLoader />}
+			{hasLoaded && hasFailed && <ErrorMessageCard message={errorMsg} />}
+			{hasLoaded && !hasFailed && (
+				<>
+					{<CharacterProfile {...data.character} />}
 
-			if (error !== null) throw error;
-			const { dataset: episodes } = await fetchDataset(character.episode);
-
-			this.setState((prevState) => ({
-				...prevState,
-				hasLoaded: true,
-				character: character,
-				episodes: episodes,
-			}));
-		} catch (error) {
-			this.setState((prevState) => ({
-				...prevState,
-				hasLoaded: true,
-				hasError: true,
-				errorMessage: error.message,
-			}));
-		}
-	};
-
-	render() {
-		const { hasLoaded, hasError, character, episodes } = this.state;
-
-		return (
-			<>
-				{!hasLoaded && <SpinnerLoader />}
-				{hasLoaded && hasError && <ErrorMessageCard />}
-				{hasLoaded && !hasError && (
-					<>
-						{<CharacterProfile {...character} />}
-
-						<Divider />
-						<h5>Episodes</h5>
-						<Divider thickness="1px" />
-						<EpisodeGrid>
-							{episodes.map((episode) => (
-								<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
-							))}
-						</EpisodeGrid>
-					</>
-				)}
-			</>
-		);
-	}
+					<Divider />
+					<h5>Episodes</h5>
+					<Divider thickness="1px" />
+					<EpisodeGrid>
+						{data.episodes.map((episode) => (
+							<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
+						))}
+					</EpisodeGrid>
+				</>
+			)}
+		</>
+	);
 }
 
 export default withLayout(Character);

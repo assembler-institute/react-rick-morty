@@ -14,8 +14,10 @@ export default function MessageCard({ image, message }) {
 	);
 }
 
-export function ErrorMessageCard() {
-	return <MessageCard image={errorImage} message="OOPS! It seems that something went wrong :(" />;
+export function ErrorMessageCard(props) {
+	const { message = "OOPS! It seems that something went wrong." } = props;
+
+	return <MessageCard image={errorImage} message={message} />;
 }
 
 export function NoResidentsCard() {

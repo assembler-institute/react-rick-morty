@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
+import { useFetch } from "../../hooks";
 import { fetchDataset, getEpisode } from "../../api/requests";
 
 import { ErrorMessageCard } from "../../components/MessageCard";
@@ -9,80 +10,59 @@ import Flex from "../../components/Flex";
 import SpinnerLoader from "../../components/SpinnerLoader";
 import { withLayout } from "../../hocs";
 
-class Episode extends Component {
-	constructor(props) {
-		super(props);
+function Episode(props) {
+	const { id } = props;
+	const [{ hasLoaded, hasFailed, data, errorMsg }, fetchDispatch] = useFetch();
 
-		this.state = {
-			episode: null,
-			characters: [],
-			hasLoaded: false,
-			hasError: false,
-			errorMessage: null,
-		};
-	}
+	useEffect(() => {
+		(async () => {
+			try {
+				const { data: episode, error: errorEpisode } = await getEpisode({ id });
 
-	componentDidMount() {
-		this.loadEpisode();
-	}
+				if (errorEpisode) throw errorEpisode;
 
-	componentDidUpdate(prevProps) {
-		prevProps.id !== this.props.id && this.loadEpisode();
-	}
+				const { dataset: characters } = await fetchDataset(episode.characters);
 
-	loadEpisode = async () => {
-		try {
-			const { id } = this.props;
-			const { data: episode, error } = await getEpisode({ id });
+				fetchDispatch({
+					type: "successful",
+					data: {
+						episode,
+						characters,
+					},
+				});
+			} catch (error) {
+				fetchDispatch({
+					type: "failed",
+					errorMsg: "Something went wrong",
+				});
+			}
+		})();
+	}, [id, fetchDispatch]);
 
-			if (error) throw error;
-
-			const { dataset: characters } = await fetchDataset(episode.characters);
-
-			this.setState((prevState) => ({
-				...prevState,
-				hasLoaded: true,
-				episode: episode,
-				characters: characters,
-			}));
-		} catch (error) {
-			this.setState((prevState) => ({
-				...prevState,
-				hasLoaded: true,
-				hasError: true,
-				errorMessage: error.message,
-			}));
-		}
-	};
-
-	render() {
-		const { hasLoaded, hasError, episode, characters } = this.state;
-
-		return (
-			<>
-				{!hasLoaded && <SpinnerLoader />}
-				{hasLoaded && hasError && <ErrorMessageCard />}
-				{hasLoaded && !hasError && (
-					<>
-						<Flex justifyContent="space-between" alignItems="baseline">
-							<h3>{episode.name}</h3>
-							<h6>
-								{episode.episode} | {episode.air_date}
-							</h6>
-						</Flex>
-						<Divider />
-						<h5>Characters that appeared</h5>
-						<Divider thickness="1px" />
-						<CharacterGrid>
-							{characters.map((character) => (
-								<CharacterCard key={character.id} id={character.id} name={character.name} image={character.image} species={character.species} status={character.status} origin={character.origin} location={character.location} />
-							))}
-						</CharacterGrid>
-					</>
-				)}
-			</>
-		);
-	}
+	return (
+		<>
+			{!hasLoaded && <SpinnerLoader />}
+			{hasLoaded && hasFailed && <ErrorMessageCard message={errorMsg} />}
+			{hasLoaded && !hasFailed && (
+				<>
+					<Flex justifyContent="space-between" alignItems="baseline">
+						<h3>{data.episode.name}</h3>
+						<h6>
+							{data.episode.episode} | {data.episode.air_date}
+						</h6>
+					</Flex>
+					<Divider />
+					<h5>Characters that appeared</h5>
+					<Divider thickness="1px" />
+					<CharacterGrid>
+						{data.characters.map((character) => (
+							<CharacterCard key={character.id} id={character.id} name={character.name} image={character.image} species={character.species} status={character.status} origin={character.origin} location={character.location} />
+						))}
+					</CharacterGrid>
+				</>
+			)}
+		</>
+	);
 }
 
 export default withLayout(Episode);

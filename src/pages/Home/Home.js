@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
+import { useFetch } from "../../hooks";
 import { getEpisodes } from "../../api/requests";
 
 import { ButtonLink } from "../../components/Button";
@@ -17,79 +18,59 @@ const Title = styled.h1`
 	text-align: center;
 `;
 
-class Home extends Component {
-	constructor(props) {
-		super(props);
+function Home(props) {
+	const { page } = props;
+	const [{ hasLoaded, hasFailed, data, errorMsg }, fetchDispatch] = useFetch();
 
-		this.state = {
-			paginationInfo: null,
-			episodes: [],
-			hasLoaded: false,
-			hasError: false,
-			errorMessage: null,
-		};
-	}
+	useEffect(() => {
+		(async () => {
+			try {
+				const { data, error } = await getEpisodes({ page });
 
-	componentDidMount() {
-		this.loadEpisodes();
-	}
+				if (error) throw error;
 
-	componentDidUpdate(prevProps) {
-		prevProps.page !== this.props.page && this.loadEpisodes();
-	}
+				fetchDispatch({
+					type: "successful",
+					data: {
+						info: data.info,
+						episodes: data.results,
+					},
+				});
+			} catch (error) {
+				fetchDispatch({
+					type: "failed",
+					errorMsg: "Something went wrong",
+				});
+			}
+		})();
+	}, [page, fetchDispatch]);
 
-	loadEpisodes = async () => {
-		try {
-			const { page } = this.props;
-			const { data } = await getEpisodes({ page });
-
-			this.setState((prevState) => ({
-				...prevState,
-				hasLoaded: true,
-				episodes: data.results,
-				paginationInfo: data.info,
-			}));
-		} catch (error) {
-			this.setState((prevState) => ({
-				...prevState,
-				hasLoaded: true,
-				hasError: true,
-				errorMessage: error,
-			}));
-		}
-	};
-
-	render() {
-		const { page } = this.props;
-		const { hasLoaded, hasError, episodes, paginationInfo } = this.state;
-
-		return (
-			<>
-				<Title>Episodes</Title>
-				{!hasLoaded && <SpinnerLoader />}
-				{hasLoaded && hasError && <ErrorMessageCard />}
-				{hasLoaded && !hasError && (
-					<>
-						<Divider />
-						<EpisodeGrid>
-							{episodes.map((episode) => (
-								<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
-							))}
-						</EpisodeGrid>
-						<Divider />
-						<Flex gap="1rem">
-							<ButtonLink $light to={Boolean(paginationInfo.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.prev)}>
-								Previous
-							</ButtonLink>
-							<ButtonLink $light to={Boolean(paginationInfo.next) ? `/${Number(page) + 1}` : `/${Number(page)}`} disabled={!Boolean(paginationInfo.next)}>
-								Next
-							</ButtonLink>
-						</Flex>
-					</>
-				)}
-			</>
-		);
-	}
+	return (
+		<>
+			<Title>Episodes</Title>
+			{!hasLoaded && <SpinnerLoader />}
+			{hasLoaded && hasFailed && <ErrorMessageCard message={errorMsg} />}
+			{hasLoaded && !hasFailed && (
+				<>
+					<Divider />
+					<EpisodeGrid>
+						{data.episodes.map((episode) => (
+							<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
+						))}
+					</EpisodeGrid>
+					<Divider />
+					<Flex gap="1rem">
+						<ButtonLink $light to={Boolean(data.info.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`} disabled={!Boolean(data.info.prev)}>
+							Previous
+						</ButtonLink>
+						<ButtonLink $light to={Boolean(data.info.next) ? `/${Number(page) + 1}` : `/${Number(page)}`} disabled={!Boolean(data.info.next)}>
+							Next
+						</ButtonLink>
+					</Flex>
+				</>
+			)}
+		</>
+	);
 }
 
 export default withLayout(Home);
