@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "06b9bbf6-2238-43c9-9c73-dc296ff2b875",
+		"name": "Rick & Morty",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Episode",
+			"item": [
+				{
+					"name": "Get Episodes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/episode?page={{page}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"episode"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "{{page}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Episode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/episode/{{episode_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"episode",
+								"{{episode_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Character",
+			"item": [
+				{
+					"name": "Get Characters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/character?page={{page}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"character"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "{{page}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Character",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/character/{{character_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"character",
+								"{{character_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "Get Locations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/location?page={{page}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"location"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "{{page}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Location",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/location/{{location_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"location",
+								"{{location_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Resources",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "episode_id",
+			"value": "1"
+		},
+		{
+			"key": "character_id",
+			"value": "1"
+		},
+		{
+			"key": "location_id",
+			"value": "1"
+		},
+		{
+			"key": "page",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://rickandmortyapi.com/api"
+		}
+	]
+}

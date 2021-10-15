@@ -1,39 +1,33 @@
 import React, { useEffect } from "react";
 import { useFetch } from "../../hooks";
-import { getEpisodes } from "../../api/requests";
+import { fetchDataset, getCharacter } from "../../api/requests";
 
-import { ButtonLink } from "../../components/Button";
 import { ErrorMessageCard } from "../../components/MessageCard";
+import CharacterProfile from "../../components/CharacterProfile";
 import Divider from "../../components/Divider";
 import EpisodeCard from "../../components/EpisodeCard";
 import EpisodeGrid from "../../components/EpisodeGrid";
-import Flex from "../../components/Flex";
 import SpinnerLoader from "../../components/SpinnerLoader";
-import withLayout from "../../hocs/withLayout";
+import { withLayout } from "../../hocs";
 
-import styled from "styled-components";
-
-const Title = styled.h1`
-	font-size: 2.5rem;
-	text-align: center;
-`;
-
-function Home(props) {
-	const { page } = props;
+function Character(props) {
+	const { id } = props;
 	const [{ hasLoaded, hasFailed, data, errorMsg }, fetchDispatch] = useFetch();
 
 	useEffect(() => {
 		(async () => {
 			try {
-				const { data, error } = await getEpisodes({ page });
+				const { data: character, error: errorCharacter } = await getCharacter({ id });
 
-				if (error) throw error;
+				if (errorCharacter) throw errorCharacter;
+
+				const { dataset: episodes } = await fetchDataset(character.episode);
 
 				fetchDispatch({
 					type: "successful",
 					data: {
-						info: data.info,
-						episodes: data.results,
+						character,
+						episodes,
 					},
 				});
 			} catch (error) {
@@ -43,34 +37,28 @@ function Home(props) {
 				});
 			}
 		})();
-	}, [page, fetchDispatch]);
+	}, [id, fetchDispatch]);
 
 	return (
 		<>
-			<Title>Episodes</Title>
 			{!hasLoaded && <SpinnerLoader />}
 			{hasLoaded && hasFailed && <ErrorMessageCard message={errorMsg} />}
 			{hasLoaded && !hasFailed && (
 				<>
+					{<CharacterProfile {...data.character} />}
+
 					<Divider />
+					<h5>Episodes</h5>
+					<Divider thickness="1px" />
 					<EpisodeGrid>
 						{data.episodes.map((episode) => (
 							<EpisodeCard key={episode.id} id={episode.id} name={episode.name} airDate={episode.air_date} episode={episode.episode} />
 						))}
 					</EpisodeGrid>
-					<Divider />
-					<Flex gap="1rem">
-						<ButtonLink $light to={Boolean(data.info.prev) ? `/${Number(page) - 1}` : `/${Number(page)}`} disabled={!Boolean(data.info.prev)}>
-							Previous
-						</ButtonLink>
-						<ButtonLink $light to={Boolean(data.info.next) ? `/${Number(page) + 1}` : `/${Number(page)}`} disabled={!Boolean(data.info.next)}>
-							Next
-						</ButtonLink>
-					</Flex>
 				</>
 			)}
 		</>
 	);
 }
 
-export default withLayout(Home);
+export default withLayout(Character);
