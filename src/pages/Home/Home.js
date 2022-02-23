@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 
+import { array } from "prop-types";
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 
@@ -12,7 +13,7 @@ class Home extends Component {
       page: 1,
       paginationInfo: null,
       episodes: [],
-      hasLoaded: true,
+      hasLoaded: false,
       hasError: false,
       errorMessage: null,
     };
@@ -23,28 +24,29 @@ class Home extends Component {
     await this.loadEpisodes(page);
     this.setState(prevState => ({
       ...prevState,
-      isLoading: false
+      hasLoaded: true
     }))
 
   }
 
   async loadEpisodes(page) {
-    console.log(this);
-    await axios.get(`https://rickandmortyapi.com/api/episode?page=${page}`)
+    const dataRequest = await axios.get(`https://rickandmortyapi.com/api/episode?page=${page}`)
       .then(data => {
-        const dataRequest = data.data
-        return (
-          this.setState((prevState) => ({
-            ...prevState,
-            paginationInfo: dataRequest.info,
-            episodes: dataRequest.results,
-          }))
-        );
-      })
+        return data.data
+      });
+    return (
+      this.setState((prevState) => ({
+        ...prevState,
+        paginationInfo: dataRequest.info,
+        episodes: dataRequest.results,
+      }))
+    );
   }
+
 
   render() {
     const { paginationInfo, episodes, hasError, hasLoaded } = this.state
+    console.log(paginationInfo)
     return (
       <Layout>
         <section className="row">
@@ -69,6 +71,24 @@ class Home extends Component {
           }
           <div className="col col-12">
             <hr />
+            {hasLoaded && (
+              <nav aria-label="...">
+                <ul className="pagination">
+                  <li className="page-item disabled">
+                    <a className="page-link">Previous</a>
+                  </li>
+                  {Array.from(Array(paginationInfo.pages), (element, index) => (
+
+                    <li key={index + 1} className="page-item"><a className="page-link" href="#">{index + 1}</a></li>
+
+                  ))}
+                  <li className="page-item">
+                    <a className="page-link" href="#">Next</a>
+                  </li>
+
+                </ul>
+              </nav>
+            )}
           </div>
         </section>
       </Layout>
