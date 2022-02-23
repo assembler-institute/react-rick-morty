@@ -1,42 +1,99 @@
 import React, { Component } from "react";
-
+import { withRouter } from "react-router-dom";
+import axios from "axios";
 import Layout from "../../components/Layout";
-// import CharacterCard from "../../components/CharacterCard";
+import CharacterCard from "../../components/CharacterCard";
 
 class Episode extends Component {
   constructor(props) {
     super(props);
+    const { id } = props.match.params;
+    this.state = {
+      episode: id,
+      characters: [],
+      hasLoaded: false,
+      hasError: false,
+      errorMessage: null,
+    };
+  }
 
-    this.state = {};
-    // episode: null,
-    // characters: [],
-    // hasLoaded: false,
-    // hasError: false,
-    // errorMessage: null,
+  async componentDidMount() {
+    const { episode, characters } = this.state
+    const episodeInfo = await this.loadEpisode(episode)
+    this.setState(prevState => ({
+      ...prevState,
+      episode: episodeInfo,
+      characters: episodeInfo.characters,
+      hasLoaded: true,
+    }))
+
+  }
+
+  async getCharacter(character) {
+    // this error is because it's bad formulated??
+    console.log(this)
+    const response = await axios.get(character)
+      .then(data => (
+        data.data
+      ));
+    return response;
+  }
+
+  async loadEpisode(episode) {
+    const episodeInfo = await axios.get(`https://rickandmortyapi.com/api/episode/${episode}`)
+      .then(data => (
+        data.data
+      ))
+    episodeInfo.characters = await this.loadCharacters(episodeInfo.characters)
+    return episodeInfo;
+  }
+
+
+
+  async loadCharacters(chars) {
+    const characters = await axios.all(chars.map(element => (
+      this.getCharacter(element)
+    )))
+      .then(data => (
+        data
+      ))
+    return characters
+
   }
 
   render() {
+    const { characters, episode, hasLoaded } = this.state
     return (
       <Layout>
         <section className="row">
-          <div className="col col-12">
-            {/* {characters.map((character) => (
-              <CharacterCard
-                key={character.id}
-                id={character.id}
-                name={character.name}
-                image={character.image}
-                species={character.species}
-                status={character.status}
-                origin={character.origin}
-                location={character.location}
-              />
-            ))} */}
-          </div>
+          {hasLoaded &&
+            <div className="col col-12">
+              <h2 className="title">{episode.name}</h2>
+              <hr />
+              <h5>{`${episode.episode} | ${episode.air_date}`}</h5>
+              <hr />
+              <div className="row">
+                {characters.map((character) => (
+
+                  <CharacterCard
+                    key={character.id}
+                    id={character.id}
+                    name={character.name}
+                    image={character.image}
+                    species={character.species}
+                    status={character.status}
+                    origin={character.origin}
+                    location={character.location}
+                  />
+
+                ))}
+              </div>
+            </div>
+          }
         </section>
       </Layout>
     );
   }
 }
 
-export default Episode;
+export default withRouter(Episode);

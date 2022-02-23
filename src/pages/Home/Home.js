@@ -1,7 +1,5 @@
 import axios from "axios";
 import React, { Component } from "react";
-
-import { array } from "prop-types";
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 
@@ -33,7 +31,7 @@ class Home extends Component {
     const dataRequest = await axios.get(`https://rickandmortyapi.com/api/episode?page=${page}`)
       .then(data => {
         return data.data
-      });
+      })
     return (
       this.setState((prevState) => ({
         ...prevState,
@@ -46,7 +44,6 @@ class Home extends Component {
 
   render() {
     const { paginationInfo, episodes, hasError, hasLoaded } = this.state
-    console.log(paginationInfo)
     return (
       <Layout>
         <section className="row">
