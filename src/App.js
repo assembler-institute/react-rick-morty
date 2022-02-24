@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom"
 import * as routes from "./constants/routes";
 import Home from "./pages/Home";
 import Episode from "./pages/Episode/Episode";
+import Character from "./pages/Character";
 
 function App() {
   return (
@@ -12,6 +13,10 @@ function App() {
       </Route>
       <Route path={`${routes.EPISODE}/:id`}>
         <Episode />
+      </Route>
+
+      <Route path={`${routes.CHARACTER}/:id`}>
+        <Character />
       </Route>
 
     </Switch >
