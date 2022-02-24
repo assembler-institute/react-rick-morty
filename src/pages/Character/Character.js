@@ -73,58 +73,45 @@ class Character extends Component {
                         <span className="sr-only">Loading...</span>
                     </div>
                 }
-                {hasLoadedCharInfo &&
-                    <div className="row">
-                        <div className="col col-12">
-                            <div className="row align-items-center">
-                                <div className="col-3">
-                                    <img className="CharacterCard__img" src={character.image} alt="character" />
+                <div className="row">
+                    <div className="col col-12">
+                        {hasLoadedCharInfo &&
+                            <CharacterCard
+                                infoCard
+                                name={character.name}
+                                image={character.image}
+                                species={character.species}
+                                status={character.status}
+                                origin={character.origin.name}
+                                location={character.location.name}
+                            />}
+                        <hr />
+                        <h2>Episodes</h2>
+                        <hr />
+                        <div className="row">
+                            {!hasLoadedEpisodes &&
+                                <div className="spinner-border text-primary" role="status">
+                                    <span className="sr-only">Loading...</span>
                                 </div>
-                                <div className="col">
-                                    <h2>{character.name}</h2>
-                                    <hr />
-                                    <h6><strong>CHARACTER</strong></h6>
-                                    <p>{`${character.species} | ${character.status}`}</p>
-                                    <div className="row justify-items-start">
-                                        <div className="col-3 w-100">
-                                            <h6><strong>ORIGIN</strong></h6>
-                                            <p>{character.origin.name}</p>
-                                        </div>
-                                        <div className="col">
-                                            <h6><strong>LOCATION</strong></h6>
-                                            <p>{character.location.name}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <hr />
-                            <h2>Episodes</h2>
-                            <hr />
-                            <div className="row">
-                                {!hasLoadedEpisodes &&
-                                    <div className="spinner-border text-primary" role="status">
-                                        <span className="sr-only">Loading...</span>
-                                    </div>
-                                }
-                                {hasLoadedEpisodes &&
+                            }
+                            {hasLoadedEpisodes &&
 
 
-                                    episodes.map((element) => (
-                                        <EpisodeCard
-                                            key={element.id}
-                                            id={element.id}
-                                            name={element.name}
-                                            airDate={element.air_date}
-                                            episode={element.episode}
-                                        />
-                                    ))
-                                }
-                            </div>
+                                episodes.map((element) => (
+                                    <EpisodeCard
+                                        key={element.id}
+                                        id={element.id}
+                                        name={element.name}
+                                        airDate={element.air_date}
+                                        episode={element.episode}
+                                    />
+                                ))
+                            }
                         </div>
                     </div>
+                </div >
 
-                }
+
             </section>
         );
     }
