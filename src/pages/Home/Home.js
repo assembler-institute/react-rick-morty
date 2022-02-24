@@ -6,7 +6,6 @@ import EpisodeCard from "../../components/EpisodeCard";
 class Home extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       page: 1,
       paginationInfo: null,
@@ -15,6 +14,7 @@ class Home extends Component {
       hasError: false,
       errorMessage: null,
     };
+    this.setPage = this.setPage.bind(this)
   }
 
   async componentDidMount() {
@@ -27,12 +27,22 @@ class Home extends Component {
 
   }
 
+  // is this good???
+  async setPage(newPage) {
+    await this.loadEpisodes(newPage);
+    this.setState(prevState => ({
+      ...prevState,
+      page: newPage
+    }))
+  }
+
   async loadEpisodes(page) {
     const dataRequest = await axios.get(`https://rickandmortyapi.com/api/episode?page=${page}`)
       .then(data => {
         return data.data
       })
     return (
+
       this.setState((prevState) => ({
         ...prevState,
         paginationInfo: dataRequest.info,
@@ -42,8 +52,9 @@ class Home extends Component {
   }
 
 
+
   render() {
-    const { paginationInfo, episodes, hasError, hasLoaded } = this.state
+    const { paginationInfo, episodes, hasError, hasLoaded, page } = this.state
     return (
       <Layout>
         <section className="row">
@@ -76,17 +87,37 @@ class Home extends Component {
             {hasLoaded && (
               <nav aria-label="...">
                 <ul className="pagination">
-                  <li className="page-item disabled">
-                    <a className="page-link">Previous</a>
-                  </li>
+                  {paginationInfo.prev &&
+                    <li className="page-item">
+                      <button type="button" onClick={() => this.setPage(page - 1)} className="page-link">Prev</button>
+                    </li>
+                  }
+                  {!paginationInfo.prev &&
+                    <li className="page-item disabled">
+                      <button type="button" className="page-link">Prev</button>
+                    </li>
+                  }
                   {Array.from(Array(paginationInfo.pages), (element, index) => (
-
-                    <li key={index + 1} className="page-item"><a className="page-link" href="#">{index + 1}</a></li>
+                    // maneras de hacer esto!!???
+                    index + 1 === page ?
+                      <li key={index + 1} className="page-item active">
+                        <button type="button" className="page-link">{index + 1}</button>
+                      </li>
+                      : <li key={index + 1} className="page-item">
+                        <button type="button" onClick={() => this.setPage(index + 1)} className="page-link">{index + 1}</button>
+                      </li>
 
                   ))}
-                  <li className="page-item">
-                    <a className="page-link" href="#">Next</a>
-                  </li>
+                  {paginationInfo.next &&
+                    <li className="page-item">
+                      <button type="button" onClick={() => this.setPage(page + 1)} className="page-link">Next</button>
+                    </li>
+                  }
+                  {!paginationInfo.next &&
+                    <li className="page-item  disabled">
+                      <button type="button" className="page-link">Next</button>
+                    </li>
+                  }
 
                 </ul>
               </nav>

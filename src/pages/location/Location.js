@@ -58,7 +58,7 @@ class Location extends Component {
                         </div>
 
                     }
-                    {hasError && hasLoaded && <div>Failed to load</div>}
+                    {hasError && hasLoaded && <h3 className="pinkText">Failed to load</h3>}
                     {hasLoaded && !hasError &&
                         <>
                             <h3 >Location:<span className="pinkText">{location.name}</span></h3>
