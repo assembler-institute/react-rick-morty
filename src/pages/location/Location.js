@@ -12,12 +12,21 @@ class Location extends Component {
             id: id,
             location: null,
             hasLoaded: false,
+            hasError: false,
         }
     }
 
     async componentDidMount() {
         const { id } = this.state
         const location = await this.loadLocation(id)
+        if (!location) {
+            this.setState(prevState => ({
+                ...prevState,
+                hasError: true,
+                hasLoaded: true,
+            }))
+            return;
+        }
         this.setState(prevState => ({
             ...prevState,
             location: location,
@@ -31,15 +40,26 @@ class Location extends Component {
             .then(data => (
                 data.data
             ))
+            .catch(error => {
+                return false
+            })
         return response;
     }
 
     render() {
-        const { location, hasLoaded } = this.state
+        const { location, hasLoaded, hasError } = this.state
         return (
             <Layout>
                 <section className="container">
-                    {hasLoaded &&
+
+                    {!hasLoaded &&
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div>
+
+                    }
+                    {hasError && hasLoaded && <div>Failed to load</div>}
+                    {hasLoaded && !hasError &&
                         <>
                             <h3 >Location:<span className="pinkText">{location.name}</span></h3>
                             <hr />
