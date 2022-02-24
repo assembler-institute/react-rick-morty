@@ -10,7 +10,7 @@ function CharacterCard({ infoCard, id, name, image, species, status, origin, loc
     return (
 
       <div className="row align-items-center">
-        <div className="col-3">
+        <div className="col">
           <img src={image} alt="character" />
         </div>
         <div className="col">
@@ -19,7 +19,7 @@ function CharacterCard({ infoCard, id, name, image, species, status, origin, loc
           <h6><strong>CHARACTER</strong></h6>
           <p>{`${species} | ${status}`}</p>
           <div className="row justify-items-start">
-            <div className="col-3 w-100">
+            <div className="col w-100">
               <h6><strong>ORIGIN</strong></h6>
               <p>{origin}</p>
             </div>

@@ -4,7 +4,7 @@ import * as routes from "./constants/routes";
 import Home from "./pages/Home";
 import Episode from "./pages/Episode/Episode";
 import Character from "./pages/Character";
-import Location from "./pages/location/Location";
+import Location from "./pages/Location";
 
 function App() {
   return (

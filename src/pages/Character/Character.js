@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import EpisodeCard from "../../components/EpisodeCard";
 import CharacterCard from "../../components/CharacterCard";
+import Layout from "../../components/Layout";
 
 class Character extends Component {
     constructor(props) {
@@ -67,52 +68,54 @@ class Character extends Component {
     render() {
         const { hasLoadedEpisodes, hasLoadedCharInfo, character, episodes } = this.state
         return (
-            <section className="container mt-5">
-                {!hasLoadedCharInfo &&
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="sr-only">Loading...</span>
-                    </div>
-                }
-                <div className="row">
-                    <div className="col col-12">
-                        {hasLoadedCharInfo &&
-                            <CharacterCard
-                                infoCard
-                                name={character.name}
-                                image={character.image}
-                                species={character.species}
-                                status={character.status}
-                                origin={character.origin.name}
-                                location={character.location.name}
-                            />}
-                        <hr />
-                        <h2>Episodes</h2>
-                        <hr />
-                        <div className="row">
-                            {!hasLoadedEpisodes &&
-                                <div className="spinner-border text-primary" role="status">
-                                    <span className="sr-only">Loading...</span>
-                                </div>
-                            }
-                            {hasLoadedEpisodes &&
-
-
-                                episodes.map((element) => (
-                                    <EpisodeCard
-                                        key={element.id}
-                                        id={element.id}
-                                        name={element.name}
-                                        airDate={element.air_date}
-                                        episode={element.episode}
-                                    />
-                                ))
-                            }
+            <Layout>
+                <section className="container mt-5">
+                    {!hasLoadedCharInfo &&
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="sr-only">Loading...</span>
                         </div>
-                    </div>
-                </div >
+                    }
+                    <div className="row">
+                        <div className="col col-12">
+                            {hasLoadedCharInfo &&
+                                <CharacterCard
+                                    infoCard
+                                    name={character.name}
+                                    image={character.image}
+                                    species={character.species}
+                                    status={character.status}
+                                    origin={character.origin.name}
+                                    location={character.location.name}
+                                />}
+                            <hr />
+                            <h2>Episodes</h2>
+                            <hr />
+                            <div className="row">
+                                {!hasLoadedEpisodes &&
+                                    <div className="spinner-border text-primary" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                }
+                                {hasLoadedEpisodes &&
 
 
-            </section>
+                                    episodes.map((element) => (
+                                        <EpisodeCard
+                                            key={element.id}
+                                            id={element.id}
+                                            name={element.name}
+                                            airDate={element.air_date}
+                                            episode={element.episode}
+                                        />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div >
+
+
+                </section>
+            </Layout>
         );
     }
 }
