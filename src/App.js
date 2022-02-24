@@ -4,6 +4,7 @@ import * as routes from "./constants/routes";
 import Home from "./pages/Home";
 import Episode from "./pages/Episode/Episode";
 import Character from "./pages/Character";
+import Location from "./pages/location/Location";
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
       <Route path={`${routes.CHARACTER}/:id`}>
         <Character />
       </Route>
-
+      <Route path={`${routes.LOCATION}/:id`}>
+        <Location />
+      </Route>
     </Switch >
 
   );
