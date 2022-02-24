@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
+// import { Spinner } from "reactstrap";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
@@ -18,7 +19,7 @@ class Episode extends Component {
   }
 
   async componentDidMount() {
-    const { episode, characters } = this.state
+    const { episode } = this.state
     const episodeInfo = await this.loadEpisode(episode)
     this.setState(prevState => ({
       ...prevState,
@@ -66,6 +67,12 @@ class Episode extends Component {
     return (
       <Layout>
         <section className="row">
+          {!hasLoaded &&
+            <div className="spinner-border text-primary" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          }
+
           {hasLoaded &&
             <div className="col col-12">
               <h2 className="title">{episode.name}</h2>

@@ -47,12 +47,17 @@ class Home extends Component {
     return (
       <Layout>
         <section className="row">
+          {!hasLoaded &&
+            <div className="spinner-border text-primary" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          }
           {hasLoaded && !hasError && (
             <div className="col col-12">
               <h1>Episodes loaded!</h1>
-            </div>
-          )}
-          <div className="col col-12">
+            </div>)}
+
+          <div div className="col col-12">
             <hr />
           </div>
           {
@@ -88,7 +93,7 @@ class Home extends Component {
             )}
           </div>
         </section>
-      </Layout>
+      </Layout >
     );
   }
 }
