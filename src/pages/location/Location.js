@@ -4,12 +4,35 @@ import axios from "axios";
 import "./location.scss"
 import Layout from "../../components/Layout";
 
+async function getLocationURL(id) {
+    const URL = `https://rickandmortyapi.com/api/character/${id}`
+    const response =
+        await axios
+            .get(URL)
+            .then(data => {
+                const { url } = data.data.location
+                return url
+            })
+    return response
+}
+
+async function loadLocation(URL) {
+    const response = await axios.get(URL)
+        .then(data => (
+            data.data
+        ))
+        .catch(error => {
+            return false
+        })
+    return response;
+}
+
 class Location extends Component {
     constructor(props) {
         super(props)
         const { id } = props.match.params
         this.state = {
-            id: id,
+            idCharacter: id,
             location: null,
             hasLoaded: false,
             hasError: false,
@@ -17,8 +40,9 @@ class Location extends Component {
     }
 
     async componentDidMount() {
-        const { id } = this.state
-        const location = await this.loadLocation(id)
+        const { idCharacter } = this.state
+        const locationURL = await getLocationURL(idCharacter)
+        const location = await loadLocation(locationURL)
         if (!location) {
             this.setState(prevState => ({
                 ...prevState,
@@ -34,17 +58,6 @@ class Location extends Component {
         }))
     }
 
-    async loadLocation(id) {
-        console.log(this)
-        const response = await axios.get(`https://rickandmortyapi.com/api/location/${id}`)
-            .then(data => (
-                data.data
-            ))
-            .catch(error => {
-                return false
-            })
-        return response;
-    }
 
     render() {
         const { location, hasLoaded, hasError } = this.state
