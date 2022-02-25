@@ -1,20 +1,24 @@
 import axios from "axios";
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom"
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.search = props.location.search
+    // disabled for error in URLSearchParams
+    // eslint-disable-next-line compat/compat
+    this.page = parseInt(new URLSearchParams(this.search).get("page"), 10) // returns string, needs parseInt 
     this.state = {
-      page: 1,
+      page: this.page ? this.page : 1,
       paginationInfo: null,
       episodes: [],
       hasLoaded: false,
       hasError: false,
       errorMessage: null,
     };
-    this.setPage = this.setPage.bind(this)
   }
 
   async componentDidMount() {
@@ -25,15 +29,6 @@ class Home extends Component {
       hasLoaded: true
     }))
 
-  }
-
-  // is this good???
-  async setPage(newPage) {
-    await this.loadEpisodes(newPage);
-    this.setState(prevState => ({
-      ...prevState,
-      page: newPage
-    }))
   }
 
   async loadEpisodes(page) {
@@ -51,6 +46,21 @@ class Home extends Component {
     );
   }
 
+  checkPageActive(index) {
+    const { page } = this.state
+    if (index === page) {
+      return (
+        <li key={index} className="page-item active">
+          <a className="page-link " href={`?page=${index}`}>{index}</a>
+        </li>
+      )
+    }
+    return (
+      <li key={index + 1} className="page-item">
+        <a className="page-link" href={`?page=${index}`}>{index}</a>
+      </li>
+    )
+  }
 
 
   render() {
@@ -89,33 +99,26 @@ class Home extends Component {
                 <ul className="pagination">
                   {paginationInfo.prev &&
                     <li className="page-item">
-                      <button type="button" onClick={() => this.setPage(page - 1)} className="page-link">Prev</button>
+                      <a className="page-link" href={`?page=${page - 1}`}>Prev</a>
                     </li>
                   }
                   {!paginationInfo.prev &&
                     <li className="page-item disabled">
-                      <button type="button" className="page-link">Prev</button>
+                      <a className="page-link" href={`?page=${page - 1}`}>Prev</a>
                     </li>
                   }
                   {Array.from(Array(paginationInfo.pages), (element, index) => (
                     // maneras de hacer esto!!???
-                    index + 1 === page ?
-                      <li key={index + 1} className="page-item active">
-                        <button type="button" className="page-link">{index + 1}</button>
-                      </li>
-                      : <li key={index + 1} className="page-item">
-                        <button type="button" onClick={() => this.setPage(index + 1)} className="page-link">{index + 1}</button>
-                      </li>
-
+                    this.checkPageActive(index + 1)
                   ))}
                   {paginationInfo.next &&
                     <li className="page-item">
-                      <button type="button" onClick={() => this.setPage(page + 1)} className="page-link">Next</button>
+                      <a className="page-link" href={`?page=${page + 1}`}>Next</a>
                     </li>
                   }
                   {!paginationInfo.next &&
                     <li className="page-item  disabled">
-                      <button type="button" className="page-link">Next</button>
+                      <a className="page-link" href={`?page=${page + 1}`}>Next</a>
                     </li>
                   }
 
@@ -129,4 +132,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);
