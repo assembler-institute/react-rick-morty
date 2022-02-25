@@ -5,6 +5,36 @@ import axios from "axios";
 import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
+async function getCharacter(character) {
+  // this error is because it's bad formulated??
+  const response = await axios.get(character)
+    .then(data => (
+      data.data
+    ));
+  return response;
+}
+
+async function loadEpisode(episode) {
+  const episodeInfo = await axios.get(`https://rickandmortyapi.com/api/episode/${episode}`)
+    .then(data => (
+      data.data
+    ))
+  episodeInfo.characters = await loadCharacters(episodeInfo.characters)
+  return episodeInfo;
+}
+
+
+
+async function loadCharacters(chars) {
+  const characters = await axios.all(chars.map(element => (
+    getCharacter(element)
+  )))
+    .then(data => (
+      data
+    ))
+  return characters
+
+}
 class Episode extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +50,7 @@ class Episode extends Component {
 
   async componentDidMount() {
     const { episode } = this.state
-    const episodeInfo = await this.loadEpisode(episode)
+    const episodeInfo = await loadEpisode(episode)
     this.setState(prevState => ({
       ...prevState,
       episode: episodeInfo,
@@ -30,37 +60,6 @@ class Episode extends Component {
 
   }
 
-  async getCharacter(character) {
-    // this error is because it's bad formulated??
-    console.log(this)
-    const response = await axios.get(character)
-      .then(data => (
-        data.data
-      ));
-    return response;
-  }
-
-  async loadEpisode(episode) {
-    const episodeInfo = await axios.get(`https://rickandmortyapi.com/api/episode/${episode}`)
-      .then(data => (
-        data.data
-      ))
-    episodeInfo.characters = await this.loadCharacters(episodeInfo.characters)
-    return episodeInfo;
-  }
-
-
-
-  async loadCharacters(chars) {
-    const characters = await axios.all(chars.map(element => (
-      this.getCharacter(element)
-    )))
-      .then(data => (
-        data
-      ))
-    return characters
-
-  }
 
   render() {
     const { characters, episode, hasLoaded } = this.state

@@ -5,6 +5,32 @@ import EpisodeCard from "../../components/EpisodeCard";
 import CharacterCard from "../../components/CharacterCard";
 import Layout from "../../components/Layout";
 
+async function getEpisode(url) {
+    const episode = await axios.get(url)
+        .then(data => (
+            data.data
+        ))
+    return episode
+}
+
+async function loadCharacter(id) {
+    const response = await axios.get(`https://rickandmortyapi.com/api/character/${id}`)
+        .then(data => (
+            data.data
+        ))
+    return response
+}
+
+async function loadEpisodes(episodesURL) {
+    const episodesArray = await axios.all(episodesURL.map((episode) => (
+        getEpisode(episode)
+    )))
+        .then(data => (
+            data
+        ))
+
+    return episodesArray;
+}
 class Character extends Component {
     constructor(props) {
         super(props);
@@ -15,12 +41,11 @@ class Character extends Component {
             episodes: [],
             hasLoaded: false,
         }
-        this.loadCharacter = this.loadCharacter.bind(this)
     }
 
     async componentDidMount() {
         const { characterId } = this.state
-        const characterData = await this.loadCharacter(characterId)
+        const characterData = await loadCharacter(characterId)
         this.setState(prevState => ({
             ...prevState,
             character: characterData,
@@ -28,7 +53,7 @@ class Character extends Component {
             hasLoadedCharInfo: true
 
         }))
-        const episodesArray = await this.loadEpisodes(characterData.episode)
+        const episodesArray = await loadEpisodes(characterData.episode)
         this.setState(prevState => ({
             ...prevState,
             episodes: episodesArray,
@@ -36,34 +61,7 @@ class Character extends Component {
         }))
     }
 
-    async getEpisode(url) {
-        console.log(this)
-        const episode = await axios.get(url)
-            .then(data => (
-                data.data
-            ))
-        return episode
-    }
 
-    async loadCharacter(id) {
-        console.log(this)
-        const response = await axios.get(`https://rickandmortyapi.com/api/character/${id}`)
-            .then(data => (
-                data.data
-            ))
-        return response
-    }
-
-    async loadEpisodes(episodesURL) {
-        const episodesArray = await axios.all(episodesURL.map((episode) => (
-            this.getEpisode(episode)
-        )))
-            .then(data => (
-                data
-            ))
-
-        return episodesArray;
-    }
 
     render() {
         const { hasLoadedEpisodes, hasLoadedCharInfo, character, episodes } = this.state
