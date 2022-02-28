@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import axios from "axios";
 // import { Spinner } from "reactstrap";
 import Layout from "../../components/Layout";
@@ -102,4 +101,4 @@ class Episode extends Component {
   }
 }
 
-export default withRouter(Episode);
+export default Episode;

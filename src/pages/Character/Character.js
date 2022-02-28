@@ -1,5 +1,4 @@
 import { React, Component } from "react";
-import { withRouter } from "react-router-dom";
 import axios from "axios";
 import EpisodeCard from "../../components/EpisodeCard";
 import CharacterCard from "../../components/CharacterCard";
@@ -117,4 +116,4 @@ class Character extends Component {
         );
     }
 }
-export default withRouter(Character);
+export default Character;

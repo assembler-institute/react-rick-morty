@@ -1,5 +1,4 @@
 import { React, Component } from "react";
-import { withRouter } from "react-router-dom";
 import axios from "axios";
 import "./location.scss"
 import Layout from "../../components/Layout";
@@ -86,4 +85,4 @@ class Location extends Component {
     }
 }
 
-export default withRouter(Location)
+export default Location

@@ -1,5 +1,6 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom"
+import { Route } from "react-router-dom"
+import { Fragment } from "react/cjs/react.production.min";
 import * as routes from "./constants/routes";
 import Home from "./pages/Home";
 import Episode from "./pages/Episode/Episode";
@@ -8,21 +9,15 @@ import Location from "./pages/Location";
 
 function App() {
   return (
-    <Switch>
-      <Route exact path={routes.HOME}>
-        <Home />
-      </Route>
-      <Route path={`${routes.EPISODE}/:id`}>
-        <Episode />
-      </Route>
+    <Fragment>
+      <Route exact path={routes.HOME} component={Home} />
 
-      <Route path={`${routes.CHARACTER}/:id`}>
-        <Character />
-      </Route>
-      <Route path={`${routes.LOCATION}/:id`}>
-        <Location />
-      </Route>
-    </Switch >
+      <Route path={`${routes.EPISODE}/:id`} component={Episode} />
+
+
+      <Route path={`${routes.CHARACTER}/:id`} component={Character} />
+      <Route path={`${routes.LOCATION}/:id`} component={Location} />
+    </Fragment>
 
   );
 }

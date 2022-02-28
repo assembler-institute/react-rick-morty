@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom"
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
 
@@ -132,4 +131,4 @@ class Home extends Component {
   }
 }
 
-export default withRouter(Home);
+export default Home;
