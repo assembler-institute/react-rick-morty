@@ -9,7 +9,7 @@ async function getLocationURL(id) {
         await axios
             .get(URL)
             .then(data => {
-                const { url } = data.data.location
+                const { url } = data.data.origin
                 return url
             })
     return response
