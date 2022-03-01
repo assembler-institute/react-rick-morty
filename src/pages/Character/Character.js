@@ -1,63 +1,19 @@
 import { React, Component } from "react";
-import axios from "axios";
 import EpisodeCard from "../../components/EpisodeCard";
 import CharacterCard from "../../components/CharacterCard";
+import WithDataClass from "../../HOC/WithData";
 import Layout from "../../components/Layout";
 
-async function getEpisode(url) {
-    const episode = await axios.get(url)
-        .then(data => (
-            data.data
-        ))
-    return episode
-}
-
-async function loadCharacter(id) {
-    const response = await axios.get(`https://rickandmortyapi.com/api/character/${id}`)
-        .then(data => (
-            data.data
-        ))
-    return response
-}
-
-async function loadEpisodes(episodesURL) {
-    const episodesArray = await axios.all(episodesURL.map((episode) => (
-        getEpisode(episode)
-    )))
-        .then(data => (
-            data
-        ))
-
-    return episodesArray;
-}
 class Character extends Component {
     constructor(props) {
         super(props);
-        const { id } = props.match.params
         this.state = {
-            characterId: id,
-            character: null,
-            episodes: [],
-            hasLoaded: false,
+            character: props.character,
+            episodes: props.episodes,
+            hasLoadedCharInfo: props.hasLoadedCharInfo,
+            hasLoadedEpisodes: props.hasLoadedEpisodes,
         }
-    }
 
-    async componentDidMount() {
-        const { characterId } = this.state
-        const characterData = await loadCharacter(characterId)
-        this.setState(prevState => ({
-            ...prevState,
-            character: characterData,
-            episodes: characterData.episode, // gives HATEOAS
-            hasLoadedCharInfo: true
-
-        }))
-        const episodesArray = await loadEpisodes(characterData.episode)
-        this.setState(prevState => ({
-            ...prevState,
-            episodes: episodesArray,
-            hasLoadedEpisodes: true
-        }))
     }
 
 
@@ -116,4 +72,4 @@ class Character extends Component {
         );
     }
 }
-export default Character;
+export default WithDataClass(Character);

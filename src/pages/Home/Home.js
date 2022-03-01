@@ -22,27 +22,20 @@ class Home extends Component {
 
   async componentDidMount() {
     const { page } = this.state
-    await this.loadEpisodes(page);
-    this.setState(prevState => ({
+    const data = await this.loadEpisodes(page);
+    this.setState((prevState) => ({
       ...prevState,
-      hasLoaded: true
+      hasLoaded: true,
+      paginationInfo: data.info,
+      episodes: data.results,
     }))
 
   }
 
   async loadEpisodes(page) {
-    const dataRequest = await axios.get(`https://rickandmortyapi.com/api/episode?page=${page}`)
-      .then(data => {
-        return data.data
-      })
-    return (
-
-      this.setState((prevState) => ({
-        ...prevState,
-        paginationInfo: dataRequest.info,
-        episodes: dataRequest.results,
-      }))
-    );
+    console.log(this);
+    const { data } = await axios.get(`https://rickandmortyapi.com/api/episode?page=${page}`);
+    return data;
   }
 
   checkPageActive(index) {
@@ -81,7 +74,7 @@ class Home extends Component {
             <hr />
           </div>
           {
-            episodes.map((episode) => (
+            episodes?.map((episode) => (
               <EpisodeCard
                 key={episode.id}
                 id={episode.id}
@@ -98,6 +91,7 @@ class Home extends Component {
                 <ul className="pagination">
                   {paginationInfo.prev &&
                     <li className="page-item">
+                      {/* cambiar a link */}
                       <a className="page-link" href={`?page=${page - 1}`}>Prev</a>
                     </li>
                   }

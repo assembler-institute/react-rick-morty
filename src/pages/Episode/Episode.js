@@ -5,21 +5,17 @@ import Layout from "../../components/Layout";
 import CharacterCard from "../../components/CharacterCard";
 
 async function getCharacter(character) {
-  // this error is because it's bad formulated??
-  const response = await axios.get(character)
-    .then(data => (
-      data.data
-    ));
-  return response;
+  const { data } = await axios.get(character)
+
+  return data;
 }
 
 async function loadEpisode(episode) {
-  const episodeInfo = await axios.get(`https://rickandmortyapi.com/api/episode/${episode}`)
-    .then(data => (
-      data.data
-    ))
-  episodeInfo.characters = await loadCharacters(episodeInfo.characters)
-  return episodeInfo;
+  // cambiar a data
+  const { data } = await axios.get(`https://rickandmortyapi.com/api/episode/${episode}`)
+
+  data.characters = await loadCharacters(data.characters)
+  return data;
 }
 
 
