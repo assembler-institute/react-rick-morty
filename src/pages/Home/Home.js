@@ -1,8 +1,11 @@
-import axios from "axios";
+
 import { useLocation } from "react-router-dom"
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useReducer } from "react";
 import Layout from "../../components/Layout";
 import EpisodeCard from "../../components/EpisodeCard";
+// custom hooks
+import useFetch from "../../hooks/useFetch";
+
 
 function reducer(page, action) {
   if(action==="next")return page+1
@@ -11,36 +14,40 @@ function reducer(page, action) {
 }
 
 export default function Home() {
-  // eslint-disable-next-line compat/compat
-  const queryParam = + new URLSearchParams(useLocation().search).get("page")
-  const [pageData, setPageData] = useState({
-    page: queryParam || 1,
-    paginationInfo: null,
-  })
   const [pageReduce, dispatch] = useReducer(reducer, 1)
-  const { paginationInfo, page } = pageData
-  const [episodes, setEpisodes] = useState([])
-  const [hasLoaded, setHasLoaded] = useState(false)
-  const [error, setError] = useState({
-    hasError: false,
-    errorMessage: null
-  })
+    // eslint-disable-next-line compat/compat
+  const queryParam = + new URLSearchParams(useLocation().search).get("page")
+  let episodes; 
+  let paginationInfo;
+  const page = queryParam || 1
+
+  const [fetchState]= useFetch(`https://rickandmortyapi.com/api/episode?page=${page}`)
+  const {data,state} = fetchState
+  // look this later
+  if(state==="success"){
+     paginationInfo = data.info
+     episodes = data.results
+  }
+
+
+ 
+
   // fetch data
-  useEffect(() => {
-    const loadEpisodes = async (query) => {
-      console.log(query)
-      const { data } = await axios.get(`https://rickandmortyapi.com/api/episode?page=${query}`);
-      setEpisodes(data.results);
+  // .useEffect(() => {
+  //   const loadEpisodes = async (query) => {
+  //     console.log(query)
+  //     const { data } = await axios.get();
+  //     setEpisodes(data.results);
 
-      setPageData(prevState => ({
-        ...prevState,
-        paginationInfo: data.info
-      }))
-      setHasLoaded(true)
-    }
-    loadEpisodes(pageReduce)
+  //     setPageData(prevState => ({
+  //       ...prevState,
+  //       paginationInfo: data.info
+  //     }))
+  //     setHasLoaded(true)
+  //   }
+  //   loadEpisodes(pageReduce)
 
-  }, [pageReduce])
+  // }, [pageReduce])
 
   function checkPageActive(index) {
     if (index === page) {
@@ -60,19 +67,27 @@ export default function Home() {
   return (
     <Layout>
       <section className="row">
-      {!hasLoaded &&
+      {state=== "loading" &&
           <div className="spinner-border text-primary" role="status">
             <span className="sr-only">Loading...</span>
           </div>
         }
-        {hasLoaded && (
+        {state==="error" && (
+          <div>
+            <h1>An error has ocurred</h1>
+            </div>
+        )}
+        
+        {state==="success" &&
+        <>
           <div className="col col-12">
             <h1>Episodes loaded!</h1>
-          </div>)}
+          </div>
 
           <div className="col col-12">
           <hr />
         </div>
+        
         {
           episodes?.map((episode) => (
             <EpisodeCard
@@ -84,9 +99,10 @@ export default function Home() {
             />
           ))
         }
+         
+          
         <div className="col col-12">
           <hr />
-          {hasLoaded && (
             <nav>
               <ul className="pagination">
                 {paginationInfo.prev &&
@@ -121,11 +137,12 @@ export default function Home() {
               }
               <button type="button" onClick={ () => dispatch("next")}>Next page</button>
             </nav>
+            </div>
+            </>
+        }
+        
 
-
-          )}
-
-        </div>
+        
       </section>
     </Layout >
   )
