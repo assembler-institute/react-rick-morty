@@ -9,7 +9,7 @@ import Location from "./pages/Location";
 function App() {
   return (
     <>
-      <Route exact path={routes.HOME} component={Home} />
+      <Route component={Home} exact path={routes.HOME} />
 
       <Route path={`${routes.EPISODE}/:id`} component={Episode} />
 
