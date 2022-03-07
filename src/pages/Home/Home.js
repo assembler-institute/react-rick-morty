@@ -15,52 +15,19 @@ function reducer(page, action) {
 
 export default function Home() {
   const [pageReduce, dispatch] = useReducer(reducer, 1)
+
   // eslint-disable-next-line compat/compat
   const queryParam = + new URLSearchParams(useLocation().search).get("page")
-  let episodes;
-  let paginationInfo;
   const page = queryParam || 1
 
-  const [fetchState] = useFetch(`https://rickandmortyapi.com/api/episode?page=${page}`)
-  const { data, state } = fetchState
-  // look this later
-  if (state === "success") {
-    paginationInfo = data.info
-    episodes = data.results
-  }
-
-
-  function checkPageActive(index) {
-    if (index === page) {
+  const {data,state} = useFetch(`https://rickandmortyapi.com/api/episode?page=${page}`)
+  
+  const ShowEpisodes = () => {
+      const episodes = data.results
+      const paginationInfo = data.info
+      
       return (
-        <Link key={index} to={`/?page=${index}`} className="page-item active">
-          <p className="page-link ">{index}</p>
-        </Link>
-      )
-    }
-    return (
-      <Link key={index} to={`/?page=${index}`} className="page-item">
-        <p className="page-link ">{index}</p>
-      </Link>
-    )
-  };
-
-  return (
-    <Layout>
-      <section className="row">
-        {state === "loading" &&
-          <div className="spinner-border text-primary" role="status">
-            <span className="sr-only">Loading...</span>
-          </div>
-        }
-        {state === "error" && (
-          <div>
-            <h1>An error has ocurred</h1>
-          </div>
-        )}
-
-        {state === "success" &&
-          <>
+        <>
             <div className="col col-12">
               <h1>Episodes loaded!</h1>
             </div>
@@ -95,7 +62,7 @@ export default function Home() {
                     checkPageActive(index + 1,)
                   ))}
                   <Link to={`/?page=${page+1}`} className={paginationInfo.next ? "page-item" : "page-item disabled"}>
-                      <p className="page-link ">Prev</p>
+                      <p className="page-link ">Next</p>
                     </Link>
                 </ul>
                 {paginationInfo.prev &&
@@ -105,9 +72,42 @@ export default function Home() {
               </nav>
             </div>
           </>
+      )
+
+
+  }
+
+  function checkPageActive(index) {
+    if (index === page) {
+      return (
+        <Link key={index} to={`/?page=${index}`} className="page-item active">
+          <p className="page-link ">{index}</p>
+        </Link>
+      )
+    }
+    return (
+      <Link key={index} to={`/?page=${index}`} className="page-item">
+        <p className="page-link ">{index}</p>
+      </Link>
+    )
+  };
+
+  return (
+    <Layout>
+      <section className="row">
+        {state === "loading" &&
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
         }
-
-
+        {state === "error" && (
+          <div>
+            <h1>An error has ocurred</h1>
+          </div>
+        )}
+        {state === "success" && (
+          <ShowEpisodes/>
+        )}
 
       </section>
     </Layout >

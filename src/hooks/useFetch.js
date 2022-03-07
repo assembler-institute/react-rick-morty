@@ -34,5 +34,5 @@ export default function useFetch (url) {
         }
         getData()
     },[url])
-    return [fetchState]
+    return fetchState
 }

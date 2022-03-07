@@ -23,7 +23,7 @@ const WithData = (WrappedComponent) => {
                 })
             }
             result()
-        }, [])
+        }, [id])
 
         async function getEpisode(url) {
             const episode = await axios.get(url)
@@ -60,10 +60,6 @@ const WithData = (WrappedComponent) => {
                 {hasLoaded &&
                     <WrappedComponent character={characterInfo} episodes={episodes} hasLoadedCharInfo hasLoadedEpisodes />
                 }
-                dasdkasdkaskdaskdaksdkasd
-                <div className="spinner-border text-primary" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
             </>
         )
     }
